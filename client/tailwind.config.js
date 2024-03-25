@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        KumbhSans: ["Kumbh Sans"],
+        // Add more custom font families as needed
+      },
+    },
   },
   plugins: [],
 };
