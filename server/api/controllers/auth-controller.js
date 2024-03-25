@@ -60,7 +60,6 @@ export const loginAccount = async (req, res) => {
 
 // Controller untuk mendapatkan user yang sedang login
 export const getCurrentUser = async (req, res) => {
-  console.log(req.user);
   try {
     return res.json({
       status: "Berhasil",
