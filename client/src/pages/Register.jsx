@@ -68,10 +68,18 @@ export default function Register() {
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-4 font-bold text-white bg-black"
+              className="w-full px-4 py-4 font-bold mb-4 text-white bg-black"
             >
               Register
             </button>
+            <div className="mb-4 text-center">
+              <p className="font-KumbhSans text-xs">
+                You A Member?{" "}
+                <a href="/login" className="underline">
+                  Login
+                </a>
+              </p>
+            </div>
           </form>
         </div>
       </div>
