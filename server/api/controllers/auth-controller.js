@@ -37,7 +37,13 @@ export const loginAccount = async (req, res) => {
 
       if (isPasswordValid) {
         const token = jwt.sign(result.rows[0], process.env.SECRET_KEY);
-        res.send({
+
+        // Set cookie
+        res.cookie("token", token, {
+          httpOnly: true,
+        });
+
+        res.status(200).json({
           token,
           message: "Login berhasil !!!",
         });
@@ -54,11 +60,12 @@ export const loginAccount = async (req, res) => {
 
 // Controller untuk mendapatkan user yang sedang login
 export const getCurrentUser = async (req, res) => {
+  console.log(req.user);
   try {
     return res.json({
       status: "Berhasil",
-      //   msg: `${req.user.username} sedang login`,
-      //   data: req.user,
+      msg: `${req.user.username} sedang login`,
+      data: req.user,
     });
   } catch (error) {
     res.status(500).json({
