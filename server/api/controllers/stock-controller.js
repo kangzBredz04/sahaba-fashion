@@ -13,7 +13,7 @@ export const addStock = async (req, res) => {
       ]
     );
     res.json({
-      category: result.rows[0],
+      stock: result.rows[0],
       message: "Stok berhasil ditambahkan.",
     });
   } catch (error) {

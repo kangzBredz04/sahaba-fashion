@@ -14,7 +14,7 @@ export const addProduct = async (req, res) => {
       ]
     );
     res.json({
-      student: result.rows[0],
+      product: result.rows[0],
       message: "Produk berhasil ditambahkan.",
     });
   } catch (error) {

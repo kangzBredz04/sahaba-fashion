@@ -8,7 +8,7 @@ export const addSize = async (req, res) => {
       [req.body.name_size]
     );
     res.json({
-      category: result.rows[0],
+      size: result.rows[0],
       message: "Ukuran berhasil ditambahkan.",
     });
   } catch (error) {
