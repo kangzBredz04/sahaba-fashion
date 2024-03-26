@@ -18,4 +18,37 @@ export const addCategory = async (req, res) => {
   }
 };
 
-export const getAllCategory = async (_req, res) => {};
+// Controller untuk mendapatkan semua data kategori
+export const getAllCategory = async (_req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM category");
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+// Controller untuk mengubah data kategori berdasarkan id
+export const updateCategory = async (req, res) => {
+  try {
+    await pool.query("UPDATE category SET name = $1 WHERE id = $2", [
+      req.body.name,
+      req.params.id,
+    ]);
+    res.status(200).json({
+      message: "Kategori berhasil diubah.",
+    });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+// Controller untuk menghapus data kategori berdasarkan id
+export const deleteCategory = async (req, res) => {
+  try {
+    await pool.query("DELETE FROM category WHERE id = $1", [req.params.id]);
+    res.send("Kategori berhasil dihapus.");
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
