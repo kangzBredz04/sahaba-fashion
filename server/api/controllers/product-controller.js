@@ -1,5 +1,3 @@
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
 import { pool } from "../config/db.js";
 
 // Controller untuk menambahkan data produk

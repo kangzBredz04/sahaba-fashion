@@ -6,6 +6,7 @@ import cors from "cors";
 import AuthRoute from "./routes/auth-route.js";
 import ProductRoute from "./routes/product-route.js";
 import CategoryRoute from "./routes/category-route.js";
+import SizeRoute from "./routes/size-route.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/auth", AuthRoute);
 app.use("/product", ProductRoute);
 app.use("/category", CategoryRoute);
+app.use("/size", SizeRoute);
 
 app.listen(process.env.API_PORT, () =>
   console.log("Server berhasil dijalankan.")
