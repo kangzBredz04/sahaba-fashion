@@ -72,3 +72,10 @@ export const getCurrentUser = async (req, res) => {
     });
   }
 };
+
+// Controller untuk logout account
+export const logoutAccount = async (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.clearCookie("token");
+  res.status(200).json({ msg: "Logout berhasil" });
+};
