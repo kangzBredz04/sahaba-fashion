@@ -75,7 +75,7 @@ export default function Login() {
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-4 font-bold mb-4 text-white bg-black"
+                className="w-full px-4 py-4 font-bold mb-4 text-white bg-black hover:bg-gray-500"
               >
                 Login
               </button>
