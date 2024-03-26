@@ -4,8 +4,8 @@ import { pool } from "../config/db.js";
 export const addCategory = async (req, res) => {
   try {
     const result = await pool.query(
-      "INSERT INTO categorys (name) VALUES ($1) RETURNING *",
-      [req.body.name]
+      "INSERT INTO categorys (name_category) VALUES ($1) RETURNING *",
+      [req.body.name_category]
     );
     res.json({
       category: result.rows[0],
@@ -29,8 +29,8 @@ export const getAllCategory = async (_req, res) => {
 // Controller untuk mengubah data kategori berdasarkan id
 export const updateCategory = async (req, res) => {
   try {
-    await pool.query("UPDATE categorys SET name = $1 WHERE id = $2", [
-      req.body.name,
+    await pool.query("UPDATE categorys SET name_category = $1 WHERE id = $2", [
+      req.body.name_category,
       req.params.id,
     ]);
     res.status(200).json({

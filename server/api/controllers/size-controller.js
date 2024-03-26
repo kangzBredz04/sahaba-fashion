@@ -4,8 +4,8 @@ import { pool } from "../config/db.js";
 export const addSize = async (req, res) => {
   try {
     const result = await pool.query(
-      "INSERT INTO sizes (name) VALUES ($1) RETURNING *",
-      [req.body.name]
+      "INSERT INTO sizes (name_size) VALUES ($1) RETURNING *",
+      [req.body.name_size]
     );
     res.json({
       category: result.rows[0],
@@ -29,8 +29,8 @@ export const getAllSize = async (_req, res) => {
 // Controller untuk mengubah data ukuran berdasarkan id
 export const updateSize = async (req, res) => {
   try {
-    await pool.query("UPDATE sizes SET name = $1 WHERE id = $2", [
-      req.body.name,
+    await pool.query("UPDATE sizes SET name_size = $1 WHERE id = $2", [
+      req.body.name_size,
       req.params.id,
     ]);
     res.status(200).json({
