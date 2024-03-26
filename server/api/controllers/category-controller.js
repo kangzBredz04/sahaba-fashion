@@ -6,7 +6,7 @@ import { pool } from "../config/db.js";
 export const addCategory = async (req, res) => {
   try {
     const result = await pool.query(
-      "INSERT INTO category (name) VALUES ($1) RETURNING *",
+      "INSERT INTO categorys (name) VALUES ($1) RETURNING *",
       [req.body.name]
     );
     res.json({
@@ -21,7 +21,7 @@ export const addCategory = async (req, res) => {
 // Controller untuk mendapatkan semua data kategori
 export const getAllCategory = async (_req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM category");
+    const result = await pool.query("SELECT * FROM categorys");
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -31,7 +31,7 @@ export const getAllCategory = async (_req, res) => {
 // Controller untuk mengubah data kategori berdasarkan id
 export const updateCategory = async (req, res) => {
   try {
-    await pool.query("UPDATE category SET name = $1 WHERE id = $2", [
+    await pool.query("UPDATE categorys SET name = $1 WHERE id = $2", [
       req.body.name,
       req.params.id,
     ]);
@@ -46,7 +46,7 @@ export const updateCategory = async (req, res) => {
 // Controller untuk menghapus data kategori berdasarkan id
 export const deleteCategory = async (req, res) => {
   try {
-    await pool.query("DELETE FROM category WHERE id = $1", [req.params.id]);
+    await pool.query("DELETE FROM categorys WHERE id = $1", [req.params.id]);
     res.send("Kategori berhasil dihapus.");
   } catch (error) {
     res.status(500).json({ msg: error.message });
