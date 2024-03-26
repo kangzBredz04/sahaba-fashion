@@ -4,24 +4,28 @@ import { pool } from "../config/db.js";
 export const addCart = async (req, res) => {
   const { id_user, id_product, total_product, id_size } = req.body;
   try {
-    // Query mendapatkan produk dan ukuran yang sama
-    const findProduct = await pool.query(
+    // Query mendapatkan keranjang produk dan ukuran yang sama
+    const findCart = await pool.query(
+      "SELECT * FROM carts WHERE id_user = $1 AND id_product = $2 AND id_size = $3",
+      [id_user, id_product, id_size]
+    );
+
+    const findStock = await pool.query(
       "SELECT * FROM stocks WHERE id_product = $1 AND id_size = $2",
       [id_product, id_size]
     );
 
-    // Jika ada produk dan ukuran yang sama
-    if (findProduct.rows[0]) {
-      // Pengecekan stok
-      if (findProduct.rows[0].quantity < total_product) {
+    // Pengecekan keranjang terhadap user, prooduk dan ukuran yang sama
+    if (findCart.rows[0]) {
+      if (findStock.rows[0].quantity < total_product) {
         res.send("Stok tidak mencukupi");
       } else {
         await pool.query(
-          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
-          [total_product, id_product, id_size]
+          "UPDATE carts SET total_product = total_product + $1 WHERE id_user = $2 AND id_product = $3 AND id_size = $4",
+          [total_product, id_user, id_product, id_size]
         );
-        const result = await pool.query(
-          "UPDATE carts SET total_product = total_product + $1 WHERE id_product = $2 AND id_size = $3",
+        await pool.query(
+          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
           [total_product, id_product, id_size]
         );
         res.status(200).json({
@@ -29,17 +33,16 @@ export const addCart = async (req, res) => {
         });
       }
     } else {
-      // Pengecekan stok
-      if (findProduct.rows[0].quantity < total_product) {
+      if (findStock.rows[0].quantity < total_product) {
         res.send("Stok tidak mencukupi");
       } else {
         await pool.query(
-          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
-          [total_product, id_product, id_size]
-        );
-        const result = await pool.query(
           "INSERT INTO carts (id_user, id_product, total_product, id_size) VALUES ($1, $2, $3, $4) RETURNING *",
           [id_user, id_product, total_product, id_size]
+        );
+        await pool.query(
+          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
+          [total_product, id_product, id_size]
         );
         res.status(200).json({
           msg: "Berhasil ditambahkan ke keranjang",
