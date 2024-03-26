@@ -7,6 +7,7 @@ import AuthRoute from "./routes/auth-route.js";
 import ProductRoute from "./routes/product-route.js";
 import CategoryRoute from "./routes/category-route.js";
 import SizeRoute from "./routes/size-route.js";
+import StockRoute from "./routes/stock-route.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/auth", AuthRoute);
 app.use("/product", ProductRoute);
 app.use("/category", CategoryRoute);
 app.use("/size", SizeRoute);
+app.use("/stock", StockRoute);
 
 app.listen(process.env.API_PORT, () =>
   console.log("Server berhasil dijalankan.")
