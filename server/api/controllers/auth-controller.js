@@ -79,3 +79,49 @@ export const logoutAccount = async (_req, res) => {
   res.clearCookie("token");
   res.status(200).json({ msg: "Logout berhasil" });
 };
+
+export const updateAccount = async (req, res) => {
+  const { first_name, last_name, username, email, password } = req.body;
+  try {
+    const hashPassword = await argon2.hash(password);
+    await pool.query(
+      "UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4, password = $5 WHERE id = $6",
+      [first_name, last_name, username, email, hashPassword, req.params.id]
+    );
+    res.status(200).json({
+      message: "Data berhasil diubah.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const updateRole = async (req, res) => {
+  try {
+    if (req.params.id == 1) {
+      res.send("Role admin utama tidak bisa diubah");
+    } else {
+      await pool.query("UPDATE users SET role = $1 WHERE id = $2", [
+        req.body.role,
+        req.params.id,
+      ]);
+
+      res.status(200).json({
+        message: "Role berhasil diubah.",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  try {
+    await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
+    res.send("Akun berhasil dihapus.");
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
