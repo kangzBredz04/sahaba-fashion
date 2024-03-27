@@ -21,12 +21,8 @@ export const addCart = async (req, res) => {
         res.send("Stok tidak mencukupi");
       } else {
         await pool.query(
-          "UPDATE carts SET total_product = total_product + $1 WHERE id_user = $2 AND id_product = $3 AND id_size = $4",
-          [total_product, id_user, id_product, id_size]
-        );
-        await pool.query(
-          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
-          [total_product, id_product, id_size]
+          "UPDATE carts SET total_product = total_product + $1 WHERE id = $2",
+          [total_product, findCart.rows[0].id]
         );
         res.status(200).json({
           msg: "Berhasil ditambahkan ke keranjang",
@@ -39,10 +35,6 @@ export const addCart = async (req, res) => {
         await pool.query(
           "INSERT INTO carts (id_user, id_product, total_product, id_size) VALUES ($1, $2, $3, $4) RETURNING *",
           [id_user, id_product, total_product, id_size]
-        );
-        await pool.query(
-          "UPDATE stocks SET quantity = quantity - $1 WHERE id_product = $2 AND id_size = $3",
-          [total_product, id_product, id_size]
         );
         res.status(200).json({
           msg: "Berhasil ditambahkan ke keranjang",
@@ -75,18 +67,26 @@ export const getCartByIdUser = async (req, res) => {
 // Controller untuk mengubah data keranjang berdasarkan id
 export const updateCart = async (req, res) => {
   try {
-    await pool.query(
-      "UPDATE carts SET id_user = $1, id_product = $2, total_product = $3 WHERE id = $4",
-      [
-        req.body.id_user,
-        req.body.id_product,
+    const findCart = await pool.query(" SELECT * FROM carts WHERE id = $1", [
+      req.params.id,
+    ]);
+
+    const findStock = await pool.query(
+      "SELECT * FROM stocks WHERE id_product = $1 AND id_size = $2",
+      [findCart.rows[0].id_product, findCart.rows[0].id_size]
+    );
+
+    if (req.body.total_product > findStock.rows[0].quantity) {
+      res.status(404).json({ msg: "Stok tidak mencukupi" });
+    } else {
+      await pool.query("UPDATE carts SET total_product = $1 WHERE id = $2", [
         req.body.total_product,
         req.params.id,
-      ]
-    );
-    res.status(200).json({
-      message: "Keranjang berhasil diubah.",
-    });
+      ]);
+      res.status(200).json({
+        msg: "Keranjang berhasil di ubah",
+      });
+    }
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
