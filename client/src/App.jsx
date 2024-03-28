@@ -14,7 +14,7 @@ function App() {
     api.get("/product/get-all").then((response) => setProducts(response));
   }, []);
 
-  // console.log(products);
+  // products.map((p) => console.log(p.name_product));
   // useEffect(() => {
   //   api
   //     .get("/auth/my-account")

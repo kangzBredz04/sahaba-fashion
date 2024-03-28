@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { AllContext } from "../App";
-import CardProduct from "../components/CardProduct";
+import { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-export default function Home() {
-  const products2 = [
+export default function ImageSlide() {
+  const products = [
     {
       id: 1,
       name: "Bahdiem Long",
@@ -22,7 +21,7 @@ export default function Home() {
     },
     {
       id: 3,
-      name: "Bahdiem Long",
+      name: "Baasa",
       tipe: "KOKO MODERN",
       price: 294000,
       image:
@@ -53,41 +52,38 @@ export default function Home() {
         "https://fadkhera.com/wp-content/uploads/2024/03/koko-modern-bahdiem-long-2.webp",
     },
   ];
-  const { products } = useContext(AllContext);
-  products.map((p) => console.log(p.name_product));
-  return (
-    <div className="font-KumbhSans">
-      <div className="flex flex-col gap-3 py-8 m-auto">
-        <div>
-          <h1 className="text-center font-medium text-xl tracking-wider">
-            DISCOVER THE NEWEST COLLECTION NOW
-          </h1>
-        </div>
-        <div className="text-center">
-          <h3 className="text-sm">Show All</h3>
-        </div>
-      </div>
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-      <div className="grid grid-cols-4">
-        {/* {products.map((p) => (
-          <CardProduct
-            key={p.id}
-            name={p.name_product}
-            image={p.image_1}
-            price={p.price}
-            tipe="Koko"
-          />
-        ))} */}
-        {products.map((p) => (
-          <CardProduct
-            key={p.id}
-            name={p.name_product}
-            image={p.image_2}
-            price={p.price}
-            tipe={"Koko"}
-          />
-        ))}
-      </div>
+  const productsToShow = products.slice(currentIndex, currentIndex + 4);
+
+  const nextSlide = () => {
+    const lastIndex = products.length - 4;
+    setCurrentIndex((prevIndex) =>
+      prevIndex === lastIndex ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    const lastIndex = products.length - 4;
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? lastIndex : prevIndex - 1
+    );
+  };
+  return (
+    <div className="flex justify-center items-center">
+      <button onClick={prevSlide} className="mr-2">
+        &#10094;
+      </button>
+      {productsToShow.map((product) => (
+        <div key={product.id} className="product-card">
+          <img src={product.image} alt={product.name} />
+          <h3>{product.id}</h3>
+          <p>{product.price}</p>
+        </div>
+      ))}
+      <button onClick={nextSlide} className="ml-2">
+        &#10095;
+      </button>
     </div>
   );
 }

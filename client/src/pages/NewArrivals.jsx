@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AllContext } from "../App";
+import ImageSlide from "../components/ImageSlide";
 
 export default function NewArrivals() {
-  const { products, setProducts } = useContext(AllContext);
-  console.log(products);
+  // const { products, setProducts } = useContext(AllContext);
+  // console.log(products);
+
   return (
     <div className="w-full font-KumbhSans flex flex-col">
       <div className="py-8 text-center">
@@ -11,7 +13,7 @@ export default function NewArrivals() {
           NEW ARRIVALS
         </h1>
       </div>
-      <div className="flex flex-wrap"></div>
+      <ImageSlide />
     </div>
   );
 }
