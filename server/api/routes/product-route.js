@@ -15,6 +15,6 @@ router.post("/add", verifyToken, addProduct); // Router untuk menambahkan data p
 router.put("/update/:id", verifyToken, updateProduct); // Router untuk mengubah data produk berdasarkan id
 router.delete("/delete/:id", verifyToken, deleteProduct); // Router untuk menghapus data produk berdasarkan id
 
-router.get("/get-all-2", verifyToken, getAllProduct2); // Router untuk mendapatkan semua produk termasuk stok dan ukuran
+router.get("/get-all-2", getAllProduct2); // Router untuk mendapatkan semua produk termasuk stok dan ukuran
 
 export default router;
