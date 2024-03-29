@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AllContext } from "../App";
 import CardProduct from "../components/CardProduct";
+import Loading from "../components/Loading";
 
 export default function Home() {
   const { products } = useContext(AllContext);
@@ -34,12 +35,6 @@ export default function Home() {
       </div>
     );
   } else {
-    return (
-      <div>
-        <h1 className="text-center font-medium text-xl tracking-wider">
-          LOADING ...
-        </h1>
-      </div>
-    );
+    return <Loading />;
   }
 }

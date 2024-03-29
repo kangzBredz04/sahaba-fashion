@@ -8,6 +8,8 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import NewArrivals from "./pages/NewArrivals.jsx";
 import DetailProduct from "./pages/DetailProduct.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import Admin from "./pages/Admin.jsx";
 // import MyAccount from "./pages/MyAccount.jsx";
 
 const router = createBrowserRouter([
@@ -36,6 +38,12 @@ const router = createBrowserRouter([
         element: <DetailProduct />,
       },
     ],
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
