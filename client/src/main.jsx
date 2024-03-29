@@ -10,6 +10,7 @@ import NewArrivals from "./pages/NewArrivals.jsx";
 import DetailProduct from "./pages/DetailProduct.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Admin from "./pages/Admin.jsx";
+import ProductAdmin from "./pages/ProductAdmin.jsx";
 // import MyAccount from "./pages/MyAccount.jsx";
 
 const router = createBrowserRouter([
@@ -44,6 +45,12 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/admin/product",
+        element: <ProductAdmin />,
+      },
+    ],
   },
 ]);
 

@@ -7,7 +7,7 @@ import { RiShirtLine } from "react-icons/ri";
 
 export default function SideBar() {
   return (
-    <div className="font-KumbhSans border flex flex-col gap-7 shadow-xl h-screen w-36 py-4 px-4">
+    <div className="font-KumbhSans text-black bg-white  flex flex-col gap-7 shadow-xl h-screen w-36 py-4 px-4">
       <div className=" text-center">
         <h1 className="text-xl font-bold tracking-widest">SAHABA</h1>
         <h1 className="text-xl font-bold tracking-widest">FASHION</h1>
