@@ -5,22 +5,22 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineAddBox } from "react-icons/md";
 
 export default function ProductAdmin() {
-  const { products, setProducts } = useContext(AdminContext);
-  const products2 = [
-    {
-      id: 1,
-      name: "Product 1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      description:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    // More data...
-  ];
+  const { products } = useContext(AdminContext);
+  // const products2 = [
+  //   {
+  //     id: 1,
+  //     name: "Product 1",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Product 2",
+  //     description:
+  //       "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  //   },
+  //   // More data...
+  // ];
 
   // console.log(products);
   return (

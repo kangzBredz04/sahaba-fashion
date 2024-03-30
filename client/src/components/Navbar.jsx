@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-10 bg-white text-black py-6 px-5 shadow-md flex justify-between items-center">
       <div className="flex items-center">
         {/* <img src="/logo.png" alt="Logo" className="h-8 mr-4" /> */}
-        <h1 className="text-xl font-bold tracking-widest">DASHBOARD</h1>
+        <h1 className="text-xl font-bold tracking-widest">ADMIN PAGE</h1>
       </div>
       <div className="flex justify-evenly space-x-4 w-1/5">
         <Link to="/profile">
