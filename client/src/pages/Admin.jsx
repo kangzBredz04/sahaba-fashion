@@ -11,6 +11,8 @@ export const AdminContext = createContext();
 export default function Admin() {
   const [products, setProducts] = useState();
   const [loading, setLoading] = useState(true);
+  const [popUp, setPopUp] = useState(false);
+  const [editedProduct, setEditedProduct] = useState();
 
   // useEffect(() => {
   //   api
@@ -37,7 +39,18 @@ export default function Admin() {
   }, [products?.id]);
 
   return (
-    <AdminContext.Provider value={{ products, setProducts }}>
+    <AdminContext.Provider
+      value={{
+        products,
+        setProducts,
+        popUp,
+        setPopUp,
+        editedProduct,
+        setEditedProduct,
+        loading,
+        setLoading,
+      }}
+    >
       <div className="flex h-screen overflow-hidden font-KumbhSans">
         {loading && <Loading2 />}
         {/* Sidebar */}

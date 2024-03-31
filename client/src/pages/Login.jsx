@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { AllContext } from "../App.jsx";
 
 export default function Login() {
-  const { user, setUser } = useContext(AllContext);
+  const { setUser } = useContext(AllContext);
 
   const [login, setLogin] = useState({
     usernameoremail: "",
