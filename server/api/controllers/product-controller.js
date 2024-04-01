@@ -4,13 +4,14 @@ import { pool } from "../config/db.js";
 export const addProduct = async (req, res) => {
   try {
     const result = await pool.query(
-      "INSERT INTO products (name_product, price, description, image_1, image_2) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      "INSERT INTO products (name_product, price, description, image_1, image_2, category) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [
         req.body.name_product,
         req.body.price,
         req.body.description,
         req.body.image_1,
         req.body.image_2,
+        req.body.category,
       ]
     );
     res.json({
