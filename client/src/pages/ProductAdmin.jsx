@@ -4,7 +4,7 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineAddBox } from "react-icons/md";
 import { api } from "../utils";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function ProductAdmin() {
   const {
@@ -33,7 +33,7 @@ export default function ProductAdmin() {
   //   // More data...
   // ];
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div className="p-5 bg-gray-100">
       <div className="flex justify-between">
@@ -100,7 +100,26 @@ export default function ProductAdmin() {
                 >
                   <HiOutlinePencilAlt />
                 </button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">
+                <button
+                  onClick={() => {
+                    if (
+                      confirm(
+                        `Apakah anda yakin ingin menghapus produk ${product.name_product}`
+                      )
+                    ) {
+                      api
+                        .delete(`/product/delete/${product.id}`)
+                        .then(async (res) => {
+                          alert(res.message);
+                        })
+                        .catch((e) => {
+                          console.log(e);
+                        });
+                      window.location.href = "/admin/product";
+                    }
+                  }}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"
+                >
                   <FaRegTrashAlt />
                 </button>
               </td>
@@ -130,7 +149,15 @@ export default function ProductAdmin() {
                       console.log(e);
                     });
                 } else {
-                  console.log(editedProduct);
+                  api
+                    .post("/product/add/", editedProduct)
+                    .then(async (res) => {
+                      alert(res.message);
+                      window.location.href = "/admin/product";
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                 }
                 setPopUp(!popUp);
               }}
@@ -217,6 +244,9 @@ export default function ProductAdmin() {
                   <option>Koko Modern</option>
                   <option>Kurta Modern</option>
                   <option>Essential</option>
+                  <option>Sarung</option>
+                  <option>Pants</option>
+                  <option>Kolaborasi</option>
                 </select>
               </div>
               <div className="mb-4 flex justify-between gap-3">
