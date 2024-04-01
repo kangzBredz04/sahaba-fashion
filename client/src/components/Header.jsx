@@ -7,7 +7,7 @@ import { SlBag } from "react-icons/sl";
 export default function Header() {
   return (
     <header className="bg-white border  sticky top-0 z-50 font-KumbhSans">
-      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div className="container mx-auto  py-2 flex justify-between items-center">
         <div className="flex items-center w-1/5">
           <Link to="/" className="text-xl font-bold tracking-widest">
             SAHABA FASHION
