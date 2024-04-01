@@ -54,13 +54,14 @@ export const getAllProduct2 = async (_req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     await pool.query(
-      "UPDATE products SET name_product = $1, price = $2, description = $3, image_1 = $4, image_2 = $5 WHERE id = $6",
+      "UPDATE products SET name_product = $1, price = $2, description = $3, image_1 = $4, image_2 = $5, category= $6 WHERE id = $7",
       [
         req.body.name_product,
         req.body.price,
         req.body.description,
         req.body.image_1,
         req.body.image_2,
+        req.body.category,
         req.params.id,
       ]
     );
@@ -76,12 +77,8 @@ export const updateProduct = async (req, res) => {
 // Controller untuk menghapus data produk berdasarkan id
 export const deleteProduct = async (req, res) => {
   try {
-    if (req.params.id == 1) {
-      res.send("Admin utama tidak bisa dihapus");
-    } else {
-      await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
-      res.send("Produk berhasil dihapus.");
-    }
+    await pool.query("DELETE FROM products WHERE id = $1", [req.params.id]);
+    res.send("Produk berhasil dihapus.");
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
