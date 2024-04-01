@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../utils.js";
 import { useContext, useState } from "react";
 import { AllContext } from "../App.jsx";
@@ -19,6 +19,7 @@ export default function Login() {
     });
   }
 
+  // const decode = jwt.decode();
   const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,11 +29,11 @@ export default function Login() {
       } else {
         alert(response.message);
         const data = await api.get("/auth/my-account").then((res) => {
-          console.log(res.data.role);
+          // console.log(res.data.role);
           localStorage.setItem("role", res.data.role);
         });
         setUser(data);
-        localStorage.setItem("data", response.token);
+        localStorage.setItem("token", response.token);
 
         if (localStorage.getItem("role") === "admin") {
           console.log("Masuk sebagai admin");

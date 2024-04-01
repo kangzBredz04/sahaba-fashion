@@ -12,7 +12,12 @@ function App() {
 
   useEffect(() => {
     api.get("/product/get-all").then((response) => setProducts(response));
+    // api.get("/auth/my-account").then((response) => setUser(response.data));
   }, []);
+
+  // useEffect(() => {
+  //   api.get("/auth/my-account").then((response) => setUser(response.data));
+  // }, []);
 
   return (
     <AllContext.Provider value={{ user, setUser, products, setProducts }}>
