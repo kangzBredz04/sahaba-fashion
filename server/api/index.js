@@ -5,7 +5,6 @@ import cors from "cors";
 
 import AuthRoute from "./routes/auth-route.js";
 import ProductRoute from "./routes/product-route.js";
-import CategoryRoute from "./routes/category-route.js";
 import SizeRoute from "./routes/size-route.js";
 import StockRoute from "./routes/stock-route.js";
 import CartRoute from "./routes/cart-route.js";
@@ -25,7 +24,6 @@ app.use(cookieParser());
 
 app.use("/auth", AuthRoute);
 app.use("/product", ProductRoute);
-app.use("/category", CategoryRoute);
 app.use("/size", SizeRoute);
 app.use("/stock", StockRoute);
 app.use("/cart", CartRoute);
