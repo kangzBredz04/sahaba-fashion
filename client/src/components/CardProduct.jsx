@@ -1,4 +1,4 @@
-import { GoBookmark } from "react-icons/go";
+import { FaBookmark } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 export default function CardProduct({ id, name, image, tipe, price }) {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function CardProduct({ id, name, image, tipe, price }) {
         // console.log(name);
       }}
     >
-      <GoBookmark className="absolute text-2xl text-gray-600 ml-1 mt-2" />
+      <FaBookmark className="absolute border  text-2xl text-gray-400 ml-1 mt-2" />
       <div className="w-full">
         <img src={image} alt="" />
       </div>

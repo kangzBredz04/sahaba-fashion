@@ -4,6 +4,7 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineAddBox } from "react-icons/md";
 import { api } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductAdmin() {
   const {
@@ -13,8 +14,8 @@ export default function ProductAdmin() {
     setPopUp,
     editedProduct,
     setEditedProduct,
-    loading,
-    setLoading,
+    // loading,
+    // setLoading,
   } = useContext(AdminContext);
   // const products2 = [
   //   {
@@ -32,7 +33,7 @@ export default function ProductAdmin() {
   //   // More data...
   // ];
 
-  // console.log(products);
+  const navigate = useNavigate();
   return (
     <div className="p-5 bg-gray-100">
       <div className="flex justify-between">
@@ -119,18 +120,15 @@ export default function ProductAdmin() {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (editedProduct.id) {
-                  console.log(`Edit data ${editedProduct.id}`);
-                  setTimeout(() => {
-                    api
-                      .put(`/product/update/${editedProduct.id}`, editedProduct)
-                      .then(async (res) => {
-                        alert(res);
-                        setLoading(!loading);
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                      });
-                  }, 500);
+                  api
+                    .put(`/product/update/${editedProduct.id}`, editedProduct)
+                    .then(async (res) => {
+                      alert(res.message);
+                      window.location.href = "/admin/product";
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                 } else {
                   console.log(editedProduct);
                 }
