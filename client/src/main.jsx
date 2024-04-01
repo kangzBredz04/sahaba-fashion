@@ -13,6 +13,7 @@ import Admin from "./pages/Admin.jsx";
 import ProductAdmin from "./pages/ProductAdmin.jsx";
 import DashboardAdmin from "./pages/DashboardAdmin.jsx";
 import ErrorPageAdmin from "./pages/ErrorPageAdmin.jsx";
+import MyAccount from "./pages/MyAccount.jsx";
 // import MyAccount from "./pages/MyAccount.jsx";
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/new-arrivals",
         element: <NewArrivals />,
+      },
+      {
+        path: "/profile",
+        element: <MyAccount />,
       },
       {
         path: "/product/:id",

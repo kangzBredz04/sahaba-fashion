@@ -14,22 +14,6 @@ function App() {
     api.get("/product/get-all").then((response) => setProducts(response));
   }, []);
 
-  // products.map((p) => console.log(p.name_product));
-  // useEffect(() => {
-  //   api
-  //     .get("/auth/my-account")
-  //     .then((me) => {
-  //       if (me) {
-  //         console.log(me);
-  //       } else {
-  //         console.log("Salah");
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }, []);
-
   return (
     <AllContext.Provider value={{ user, setUser, products, setProducts }}>
       <Header />
