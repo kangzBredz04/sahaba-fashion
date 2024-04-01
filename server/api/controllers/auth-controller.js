@@ -119,8 +119,12 @@ export const updateRole = async (req, res) => {
 
 export const deleteAccount = async (req, res) => {
   try {
-    await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
-    res.send("Akun berhasil dihapus.");
+    if (req.params.id == 1) {
+      res.send("Admin utama tidak bisa dihapus");
+    } else {
+      await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
+      res.send("User berhasil dihapus.");
+    }
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
