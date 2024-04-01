@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../utils.js";
 import { useContext, useState } from "react";
 import { AllContext } from "../App.jsx";
@@ -19,15 +19,28 @@ export default function Login() {
     });
   }
 
+  const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
     api.post("/auth/login", login).then(async (response) => {
       if (!response.token) {
         alert(response.msg);
       } else {
-        const data = await api.get("/auth/my-account");
+        alert(response.message);
+        const data = await api.get("/auth/my-account").then((res) => {
+          console.log(res.data.role);
+          localStorage.setItem("role", res.data.role);
+        });
         setUser(data);
         localStorage.setItem("data", response.token);
+
+        if (localStorage.getItem("role") === "admin") {
+          console.log("Masuk sebagai admin");
+          navigate("/admin");
+        } else {
+          console.log("Masuk sebagai user");
+          navigate("/");
+        }
       }
     });
   }
