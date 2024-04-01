@@ -4,13 +4,8 @@ import { pool } from "../config/db.js";
 export const addStock = async (req, res) => {
   try {
     const result = await pool.query(
-      "INSERT INTO stocks (id_product, id_size, quantity, id_category) VALUES ($1, $2, $3, $4) RETURNING *",
-      [
-        req.body.id_product,
-        req.body.id_size,
-        req.body.quantity,
-        req.body.id_category,
-      ]
+      "INSERT INTO stocks (id_product, id_size, quantity) VALUES ($1, $2, $3) RETURNING *",
+      [req.body.id_product, req.body.id_size, req.body.quantity]
     );
     res.json({
       stock: result.rows[0],
@@ -35,14 +30,8 @@ export const getAllStock = async (_req, res) => {
 export const updateStock = async (req, res) => {
   try {
     await pool.query(
-      "UPDATE stocks SET id_product = $1, id_size = $2, quantity = $3, id_category = $4 WHERE id = $5",
-      [
-        req.body.id_product,
-        req.body.id_size,
-        req.body.quantity,
-        req.body.id_category,
-        req.params.id,
-      ]
+      "UPDATE stocks SET id_product = $1, id_size = $2, quantity = $3 WHERE id = $4",
+      [req.body.id_product, req.body.id_size, req.body.quantity, req.params.id]
     );
     res.status(200).json({
       message: "Stok berhasil diubah.",
