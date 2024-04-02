@@ -1,31 +1,42 @@
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { api } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export default function MyAccount() {
   const [user, setUser] = useState();
   const [editedUser, setEditedUser] = useState({});
 
+  const navigate = useNavigate();
   useEffect(() => {
-    api.get("/auth/my-account").then((response) => {
-      setUser(response.data);
-      setEditedUser({
-        first_name: response.data?.first_name,
-        last_name: response.data?.last_name,
-        username: response.data?.username,
-        email: response.data?.email,
+    api
+      .get("/auth/my-account")
+      .then((response) => {
+        setUser(response.data);
+        setEditedUser({
+          first_name: response.data?.first_name,
+          last_name: response.data?.last_name,
+          username: response.data?.username,
+          email: response.data?.email,
+        });
+      })
+      .catch(() => {
+        navigate("/login");
       });
-    });
   }, []);
 
-  console.log(editedUser);
+  console.log(user);
 
   if (user?.id) {
     return (
       <div className="py-6 px-7 font-KumbhSans bg-gray-100">
         <h2 className="text-2xl font-bold mb-4">My Account</h2>
         {/* Form untuk mengubah data user */}
-        <form>
+        <form
+          onSubmit={() => {
+            console.log(`Edit data id ${editedUser.id}`);
+          }}
+        >
           <div className="flex gap-5">
             {/* Nama Depan */}
             <div className="grow mb-4">
@@ -132,6 +143,5 @@ export default function MyAccount() {
     );
   } else {
     return <Loading />;
-    // window.location.reload();
   }
 }

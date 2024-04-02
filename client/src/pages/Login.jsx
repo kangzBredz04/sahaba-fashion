@@ -53,7 +53,7 @@ export default function Login() {
     <div className="container mx-auto">
       <div className="flex justify-center items-center p-10">
         {/* pemisah */}
-        <div className="w-full md:w-1/2 lg:w-1/3 p-6">
+        <div className="w-full md:w-1/3 lg:w-1/2 p-6">
           <h1 className="text-xl font-bold mb-6 font-KumbhSans text-center">
             LOGIN
           </h1>
