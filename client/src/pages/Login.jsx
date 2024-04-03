@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { api } from "../utils.js";
 import { useContext, useState } from "react";
 import { AllContext } from "../App.jsx";
 
 export default function Login() {
-  const { setUser } = useContext(AllContext);
+  const [user, setUser] = useOutletContext();
 
   const [login, setLogin] = useState({
     usernameoremail: "",
@@ -31,6 +31,7 @@ export default function Login() {
         const data = await api.get("/auth/my-account").then((res) => {
           // console.log(res.data.role);
           localStorage.setItem("role", res.data.role);
+          localStorage.setItem("id", res.data.id);
         });
         setUser(data);
         localStorage.setItem("token", response.token);
