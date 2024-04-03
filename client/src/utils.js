@@ -7,7 +7,6 @@ async function send(endpoint, method, body, header = "application/json") {
     },
     body: JSON.stringify(body),
   });
-  console.log(header);
   const data = await (method === "GET" ? response.json() : response.json());
   return data;
 }

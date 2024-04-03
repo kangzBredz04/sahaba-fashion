@@ -14,6 +14,7 @@ import ProductAdmin from "./pages/ProductAdmin.jsx";
 import DashboardAdmin from "./pages/DashboardAdmin.jsx";
 import ErrorPageAdmin from "./pages/ErrorPageAdmin.jsx";
 import MyAccount from "./pages/MyAccount.jsx";
+import CartUser from "./pages/CartUser.jsx";
 // import MyAccount from "./pages/MyAccount.jsx";
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <DetailProduct />,
+      },
+      {
+        path: "/cart",
+        element: <CartUser />,
       },
     ],
   },
