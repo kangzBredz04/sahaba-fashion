@@ -1,15 +1,17 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { AllContext } from "../App";
 import { GoPlus, GoShareAndroid } from "react-icons/go";
 import { HiMinusSmall } from "react-icons/hi2";
 import { GoBookmark } from "react-icons/go";
+import { api } from "../utils";
 
 export default function DetailProduct() {
   const { id } = useParams();
   const { products } = useContext(AllContext);
+  const [user, setUser] = useOutletContext();
   const product = products.find((p) => p.id == parseInt(id));
-  //   console.log(product);
+  console.log(user);
   return (
     <div className="grid grid-cols-3 font-KumbhSans">
       <div className="border border-gray-200 hover:cursor-pointe">
@@ -39,12 +41,10 @@ export default function DetailProduct() {
           </div>
         </div>
         <div className="my-10 mx-8 flex gap-5">
-          <div className="flex items-center border border-gray-400 py-3 gap-5 px-2">
-            <GoPlus />
-            <div>1</div>
-            <HiMinusSmall />
-          </div>
-          <div className=" w-full flex items-center bg-black">
+          <div
+            onClick={() => {}}
+            className=" w-full flex items-center py-3 px-2 bg-black"
+          >
             <h1 className="text-white m-auto">ADD TO CART</h1>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function MyAccount() {
       .catch(() => {
         navigate("/login");
       });
-  }, []);
+  }, [navigate]);
 
   console.log(user);
 
@@ -34,7 +34,9 @@ export default function MyAccount() {
         {/* Form untuk mengubah data user */}
         <form
           onSubmit={() => {
-            console.log(`Edit data id ${editedUser.id}`);
+            api
+              .put(`/auth/update/${user.id}`, editedUser)
+              .then((res) => console.log(res));
           }}
         >
           <div className="flex gap-5">
