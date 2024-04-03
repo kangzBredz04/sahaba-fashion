@@ -34,7 +34,7 @@ export const addCart = async (req, res) => {
       } else {
         await pool.query(
           "INSERT INTO carts (id_user, id_product, total_product, id_size) VALUES ($1, $2, $3, $4) RETURNING *",
-          [id_user, id_product, total_product, id_size]
+          [id_user, id_product, 1, id_size]
         );
         res.status(200).json({
           msg: "Berhasil ditambahkan ke keranjang",
@@ -94,6 +94,7 @@ export const updateCart = async (req, res) => {
 
 // Controller untuk menghapus data stok berdasarkan id
 export const deleteCart = async (req, res) => {
+  k;
   try {
     await pool.query("DELETE FROM carts WHERE id = $1", [req.params.id]);
     res.send("Keranjang berhasil dihapus.");

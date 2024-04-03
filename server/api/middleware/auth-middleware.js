@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 export const verifyToken = async (req, res, next) => {
+  // console.log(req.headers);
   if (req.headers.cookie) {
     const token = req.headers.cookie.split("=")[1];
     try {
