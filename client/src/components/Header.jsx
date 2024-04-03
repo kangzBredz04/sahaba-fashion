@@ -7,8 +7,8 @@ import { SlBag } from "react-icons/sl";
 export default function Header() {
   return (
     <header className="bg-white border  sticky top-0 z-50 font-KumbhSans">
-      <div className="container mx-auto  py-2 flex justify-between items-center">
-        <div className="flex items-center w-1/5">
+      <div className="container mx-auto  py-4 flex justify-between items-center">
+        <div className="flex items-center ">
           <Link to="/" className="text-xl font-bold tracking-widest">
             SAHABA FASHION
           </Link>
@@ -40,10 +40,22 @@ export default function Header() {
           <Link to="/profile" className="text-gray-700 hover:text-gray-900 ">
             <FiUser className="text-xl" />
           </Link>
-          <Link to="/wishlist" className="text-gray-700 hover:text-gray-900">
+          <Link
+            to="/wishlist"
+            className="text-gray-700 hover:text-gray-900 relative"
+          >
+            <div className="absolute -right-1 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
+              4
+            </div>
             <GoBookmark className="text-xl" />
           </Link>
-          <Link to="/cart" className="text-gray-700 hover:text-gray-900">
+          <Link
+            to="/cart"
+            className="text-gray-700 hover:text-gray-900 relative"
+          >
+            <div className="absolute -right-2 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
+              2
+            </div>
             <SlBag className="text-xl" />
           </Link>
         </div>
