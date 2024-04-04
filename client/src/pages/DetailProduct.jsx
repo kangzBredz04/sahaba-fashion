@@ -8,9 +8,10 @@ import { api } from "../utils";
 
 export default function DetailProduct() {
   const { id } = useParams();
-  const { products } = useContext(AllContext);
+  const { products, wishlist } = useContext(AllContext);
   const [user, setUser] = useOutletContext();
   const product = products.find((p) => p.id == parseInt(id));
+
   console.log(user);
   return (
     <div className="grid grid-cols-3 font-KumbhSans">

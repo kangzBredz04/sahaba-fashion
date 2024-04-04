@@ -4,8 +4,10 @@ import CardProduct from "../components/CardProduct";
 import Loading from "../components/Loading";
 
 export default function Home() {
-  const { products } = useContext(AllContext);
+  const { products, wishlist } = useContext(AllContext);
   const productsToShow = products.slice(2, 6);
+
+  console.log(wishlist);
 
   if (products[0]?.id) {
     return (
@@ -29,6 +31,9 @@ export default function Home() {
               image={p.image_2}
               price={p.price}
               tipe={"Koko"}
+              status={
+                wishlist.find((item) => item.id_product === p.id) ? true : false
+              }
             />
           ))}
         </div>

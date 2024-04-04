@@ -11,7 +11,7 @@ function App() {
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState();
+  const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
     api.get("/product/get-all").then((response) => setProducts(response));
