@@ -39,9 +39,11 @@ export default function Login() {
         if (localStorage.getItem("role") === "admin") {
           console.log("Masuk sebagai admin");
           navigate("/admin");
+          window.location.reload();
         } else {
           console.log("Masuk sebagai user");
           navigate("/");
+          window.location.reload();
         }
       }
     });
