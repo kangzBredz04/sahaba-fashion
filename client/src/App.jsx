@@ -11,6 +11,7 @@ function App() {
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [products, setProducts] = useState([]);
+  const [wishlist, setWishlist] = useState();
 
   useEffect(() => {
     api.get("/product/get-all").then((response) => setProducts(response));
@@ -18,17 +19,21 @@ function App() {
     api
       .get(`/cart/get/${localStorage.getItem("id")}`)
       .then((response) => console.log(response));
+    api
+      .get(`/wishlist/get/${localStorage.getItem("id")}`)
+      .then((response) => setWishlist(response));
   }, [user?.id, cart]);
 
+  console.log(wishlist);
   // useEffect(() => {
   //   api
   //     .get(`/cart/get/${localStorage.getItem("id")}`)
   //     .then((response) => console.log(response));
   // }, [cart]);
-
-  console.log(user);
   return (
-    <AllContext.Provider value={{ products, setProducts }}>
+    <AllContext.Provider
+      value={{ products, setProducts, wishlist, setWishlist }}
+    >
       <Header />
       <Outlet context={[user, setUser]} />
       <Footer />
