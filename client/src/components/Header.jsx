@@ -23,7 +23,7 @@ export default function Header() {
           >
             NEW ARRIVALS
           </Link>
-          <Link to="/produk" className="font-bold hover:text-gray-500 text-sm">
+          <Link to="/shop" className="font-bold hover:text-gray-500 text-sm">
             PRODUCT
           </Link>
           <Link to="/about" className="font-bold hover:text-gray-500 text-sm">

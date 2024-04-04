@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { AllContext } from "../App";
-import { GoPlus, GoShareAndroid } from "react-icons/go";
-import { HiMinusSmall } from "react-icons/hi2";
+import { GoShareAndroid } from "react-icons/go";
 import { GoBookmark } from "react-icons/go";
-import { api } from "../utils";
+// import { api } from "../utils";
 
 export default function DetailProduct() {
   const { id } = useParams();
-  const { products, wishlist } = useContext(AllContext);
-  const [user, setUser] = useOutletContext();
+  const { products } = useContext(AllContext);
+  const [user] = useOutletContext();
   const product = products.find((p) => p.id == parseInt(id));
 
   console.log(user);

@@ -2,6 +2,7 @@
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { api } from "../utils";
+import Loading2 from "./Loading2";
 export default function CardProduct({ id, name, image, tipe, price, status }) {
   const navigate = useNavigate();
 
