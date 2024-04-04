@@ -16,4 +16,5 @@ export const api = {
   post: (endpoint, body) => send(endpoint, "POST", body),
   put: (endpoint, body) => send(endpoint, "PUT", body),
   delete: (endpoint) => send(endpoint, "DELETE"),
+  delete2: (endpoint, body) => send(endpoint, "DELETE", body),
 };

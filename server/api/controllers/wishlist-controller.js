@@ -49,7 +49,7 @@ export const deleteWishlistByIdUser = async (req, res) => {
       "DELETE FROM wishlists WHERE id_user = $1 AND id_product = $2",
       [req.body.id_user, req.body.id_product]
     );
-    res.send("Produk berhasil dihapus dari wishlist.");
+    res.status(200).json({ msg: "Produk berhasil dihapus dari wishlist" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }

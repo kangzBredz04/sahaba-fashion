@@ -17,7 +17,17 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
     <div className="border border-gray-200 hover:cursor-pointer">
       {status ? (
         <IoBookmark
-          onClick={() => {alert(``)}}
+          onClick={() => {
+            api
+              .delete2("/wishlist/delete", {
+                id_user: localStorage.getItem("id"),
+                id_product: id,
+              })
+              .then(() => {
+                // alert(res.msg);
+                window.location.reload();
+              });
+          }}
           className="absolute text-2xl  ml-1 mt-2"
         />
       ) : (
@@ -28,7 +38,10 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
                 id_user: localStorage.getItem("id"),
                 id_product: id,
               })
-              .then((res) => alert(res));
+              .then((res) => {
+                alert(res.msg);
+                window.location.reload();
+              });
           }}
           className="absolute text-2xl  ml-1 mt-2"
         />
