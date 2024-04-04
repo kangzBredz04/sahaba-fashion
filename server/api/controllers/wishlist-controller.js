@@ -30,7 +30,7 @@ export const getWishlistByIdUser = async (req, res) => {
   try {
     const result = await pool.query(
       `
-      SELECT w.id, p.image_1, p.name_product, p.price, w.status
+      SELECT w.id, w.id_product, p.image_1, p.name_product, p.price, w.status
       FROM wishlists w
       JOIN products p ON w.id_product = p.id
       WHERE w.id_user = $1
@@ -45,7 +45,10 @@ export const getWishlistByIdUser = async (req, res) => {
 
 export const deleteWishlistByIdUser = async (req, res) => {
   try {
-    await pool.query("DELETE FROM wishlists WHERE id = $1", [req.params.id]);
+    await pool.query(
+      "DELETE FROM wishlists WHERE id_user = $1 AND id_product = $2",
+      [req.body.id_user, req.body.id_product]
+    );
     res.send("Produk berhasil dihapus dari wishlist.");
   } catch (error) {
     res.status(500).json({ msg: error.message });
