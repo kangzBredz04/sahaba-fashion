@@ -245,6 +245,7 @@ export default function MyAccount() {
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
                   navigate("/login");
+                  window.location.reload();
                 });
               }
             }}
