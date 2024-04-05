@@ -12,10 +12,10 @@ export default function Navbar() {
         <Link to="/profile">
           <FiMoon className="text-2xl" />
         </Link>
-        <Link to="/profile">
+        <Link to="/admin/a">
           <MdOutlineLanguage className="text-2xl" />
         </Link>
-        <Link to="/profile">
+        <Link to="/admin/profile">
           <FiUser className="text-2xl" />
         </Link>
       </div>
