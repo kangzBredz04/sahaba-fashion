@@ -8,7 +8,7 @@ import Loading from "./components/Loading";
 export const AllContext = createContext();
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [cart, setCart] = useState();
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -24,7 +24,8 @@ function App() {
       .then((response) => setWishlist(response));
   }, [user?.id, cart]);
 
-  console.log(wishlist);
+  console.log(user);
+  // console.log(wishlist);
   // useEffect(() => {
   //   api
   //     .get(`/cart/get/${localStorage.getItem("id")}`)

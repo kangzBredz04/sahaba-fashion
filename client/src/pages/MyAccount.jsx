@@ -1,58 +1,22 @@
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { api } from "../utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function MyAccount() {
-  const order = [
-    {
-      id: 1,
-      user: "Wahyu",
-      name_product: "Baju",
-      price: 10000,
-      size: "L",
-      total_product: 10,
-      status: "Processed",
-    },
-    {
-      id: 2,
-      user: "Wahyu",
-      name_product: "Baju",
-      price: 10000,
-      size: "L",
-      total_product: 10,
-      status: "Shipped",
-    },
-    {
-      id: 3,
-      user: "Wahyu",
-      name_product: "Baju",
-      price: 10000,
-      size: "L",
-      total_product: 10,
-      status: "Finished",
-    },
-  ];
-  const [user, setUser] = useState();
+  const [user, setUser] = useOutletContext();
   const [editedUser, setEditedUser] = useState({});
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    api
-      .get("/auth/my-account")
-      .then((response) => {
-        setUser(response.data);
-        setEditedUser({
-          first_name: response.data?.first_name,
-          last_name: response.data?.last_name,
-          username: response.data?.username,
-          email: response.data?.email,
-        });
-      })
-      .catch(() => {
-        navigate("/login");
-      });
-  }, [navigate]);
+    setEditedUser({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      username: user.username,
+      email: user.email,
+    });
+  }, [user]);
 
   console.log(user);
 
@@ -240,12 +204,13 @@ export default function MyAccount() {
               if (confirm("Apakah yakin anda akan logout")) {
                 api.get("/auth/logout").then((res) => {
                   alert(res.msg);
-                  setUser();
+                  setUser({});
                   localStorage.removeItem("token");
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
                   navigate("/login");
-                  window.location.reload();
+                  console.log(user);
+                  // window.location.reload();
                 });
               }
             }}
@@ -257,6 +222,13 @@ export default function MyAccount() {
       </div>
     );
   } else {
-    return <Loading />;
+    return (
+      <div>
+        <Loading />;
+        {setTimeout(() => {
+          navigate("/login");
+        }, 500)}
+      </div>
+    );
   }
 }

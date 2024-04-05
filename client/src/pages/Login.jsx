@@ -1,7 +1,6 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { api } from "../utils.js";
-import { useContext, useState } from "react";
-import { AllContext } from "../App.jsx";
+import { useState } from "react";
 
 export default function Login() {
   const [user, setUser] = useOutletContext();
@@ -23,13 +22,14 @@ export default function Login() {
   const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
-    api.post("/auth/login", login).then(async (response) => {
+    api.post("/auth/login", login).then((response) => {
       if (!response.token) {
         alert(response.msg);
       } else {
         alert(response.message);
-        const data = await api.get("/auth/my-account").then((res) => {
+        const data = api.get("/auth/my-account").then((res) => {
           // console.log(res.data.role);
+          setUser(res.data);
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res.data.id);
         });
@@ -39,11 +39,11 @@ export default function Login() {
         if (localStorage.getItem("role") === "admin") {
           console.log("Masuk sebagai admin");
           navigate("/admin");
-          window.location.reload();
+          // window.location.reload();
         } else {
           console.log("Masuk sebagai user");
           navigate("/");
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });
