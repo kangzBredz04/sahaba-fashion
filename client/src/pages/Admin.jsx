@@ -19,10 +19,10 @@ export default function Admin() {
   useEffect(() => {
     // Simulasi pengambilan data produk
     setTimeout(() => {
-      api.get("/product/get-all").then((pr) => setProducts(pr));
-      api.get("/auth/my-account").then((pr) => console.log(pr));
+      api.get("/product/get-all").then((res) => setProducts(res));
+      api.get("/auth/my-account").then((res) => setAdmin(res.data));
       setLoading(false);
-    }, 500); // Simulasi loading selama 2 detik
+    }, 500);
   }, [products?.id]);
 
   if (localStorage.getItem("role") == "admin") {
@@ -48,7 +48,7 @@ export default function Admin() {
             {/* Navbar */}
             <Navbar />
             {/* Main Content */}
-            <Outlet />
+            <Outlet context={[admin, setAdmin]} />
             <Footer />
           </div>
         </div>

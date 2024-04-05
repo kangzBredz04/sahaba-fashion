@@ -4,8 +4,8 @@ import { api } from "../utils";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function MyAccountAdmin() {
-  // const [user, setUser] = useOutletContext();
-  const [user, setUser] = useState();
+  const [user, setUser] = useOutletContext();
+  // const [user, setUser] = useState();
   const [editedUser, setEditedUser] = useState({});
 
   const navigate = useNavigate();
@@ -132,70 +132,6 @@ export default function MyAccountAdmin() {
           </div>
         </form>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">My Orders</h2>
-          <div className="flex flex-col gap-4">
-            <div>
-              <h1 className="font-semibold text-orange-400 mb-3">Processed</h1>
-              <div className="flex flex-col gap-3">
-                <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                    alt=""
-                    className="w-10"
-                  />
-                  <p>Azraq Long</p>
-                  <p>Rp.294.000</p>
-                  <p>L</p>
-                  <p>2</p>
-                  <p>Processed</p>
-                </div>
-                <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                    alt=""
-                    className="w-10"
-                  />
-                  <p>Azraq Long</p>
-                  <p>Rp.294.000</p>
-                  <p>L</p>
-                  <p>2</p>
-                  <p>Processed</p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h1 className="font-semibold text-green-400 mb-3">Shipped</h1>
-              <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                <img
-                  src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                  alt=""
-                  className="w-10"
-                />
-                <p>Azraq Long</p>
-                <p>Rp.294.000</p>
-                <p>L</p>
-                <p>2</p>
-                <p>Shipped</p>
-              </div>
-            </div>
-            <div>
-              <h1 className="font-semibold text-blue-400 mb-3">Finished</h1>
-              <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                <img
-                  src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                  alt=""
-                  className="w-10"
-                />
-                <p>Azraq Long</p>
-                <p>Rp.294.000</p>
-                <p>L</p>
-                <p>2</p>
-                <p>Finished</p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="w-full flex mt-5 justify-end gap-3">
           <button className="w-1/3 bg-black text-white py-3">
             Delete Account
