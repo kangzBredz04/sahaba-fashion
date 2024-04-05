@@ -30,21 +30,20 @@ export default function Login() {
         const data = api.get("/auth/my-account").then((res) => {
           // console.log(res.data.role);
           setUser(res.data);
+          if (res.data.role === "admin") {
+            console.log("Masuk sebagai admin");
+            navigate("/admin");
+            // window.location.reload();
+          } else {
+            console.log("Masuk sebagai user");
+            navigate("/");
+            // window.location.reload();
+          }
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res.data.id);
         });
         setUser(data);
         localStorage.setItem("token", response.token);
-
-        if (localStorage.getItem("role") === "admin") {
-          console.log("Masuk sebagai admin");
-          navigate("/admin");
-          // window.location.reload();
-        } else {
-          console.log("Masuk sebagai user");
-          navigate("/");
-          // window.location.reload();
-        }
       }
     });
   }

@@ -14,28 +14,14 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [popUp, setPopUp] = useState(false);
   const [editedProduct, setEditedProduct] = useState();
-
-  // useEffect(() => {
-  //   api
-  //     .get("/product/get-all")
-  //     .then((pr) => setProducts(pr))
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }, []);
+  const [admin, setAdmin] = useState({});
 
   useEffect(() => {
     // Simulasi pengambilan data produk
     setTimeout(() => {
-      api
-        .get("/product/get-all")
-        .then((pr) => {
-          setProducts(pr);
-          setLoading(false);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      api.get("/product/get-all").then((pr) => setProducts(pr));
+      api.get("/auth/my-account").then((pr) => console.log(pr));
+      setLoading(false);
     }, 500); // Simulasi loading selama 2 detik
   }, [products?.id]);
 
