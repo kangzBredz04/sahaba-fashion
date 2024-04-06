@@ -19,30 +19,42 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
       {status ? (
         <IoBookmark
           onClick={() => {
-            api
-              .delete2("/wishlist/delete", {
-                id_user: localStorage.getItem("id"),
-                id_product: id,
-              })
-              .then(() => {
-                // alert(res.msg);
-                window.location.reload();
-              });
+            if (localStorage.getItem("id")) {
+              console.log("masuk");
+              api
+                .delete2("/wishlist/delete", {
+                  id_user: localStorage.getItem("id"),
+                  id_product: id,
+                })
+                .then(() => {
+                  // alert(res.msg);
+                  window.location.reload();
+                });
+            } else {
+              alert("Anda harus login dahulu");
+              navigate("/login");
+            }
           }}
           className="absolute text-2xl  ml-1 mt-2"
         />
       ) : (
         <IoBookmarkOutline
           onClick={() => {
-            api
-              .post("/wishlist/add", {
-                id_user: localStorage.getItem("id"),
-                id_product: id,
-              })
-              .then((res) => {
-                alert(res.msg);
-                window.location.reload();
-              });
+            if (localStorage.getItem("id")) {
+              console.log("masuk");
+              api
+                .post("/wishlist/add", {
+                  id_user: localStorage.getItem("id"),
+                  id_product: id,
+                })
+                .then((res) => {
+                  alert(res.msg);
+                  window.location.reload();
+                });
+            } else {
+              alert("Anda harus login dahulu");
+              navigate("/login");
+            }
           }}
           className="absolute text-2xl  ml-1 mt-2"
         />
