@@ -3,8 +3,8 @@ import { FaPlus, FaMinus } from "react-icons/fa6";
 export default function CartUser() {
   return (
     <div className="flex flex-col gap-5 py-5 bg-gray-100">
-      <h1 className="text-center font-bold tracking-widest text-xl">CART</h1>
-      <div className="flex gap-4 black py-5 px-5">
+      <h1 className="text-center font-bold tracking-widest text-2xl">CART</h1>
+      <div className="flex gap-4 py-5 px-5">
         <div className="w-3/4 p-3  flex flex-col gap-3">
           <div className="flex flex-row items-center">
             <h1 className="w-3/5 text-center text-base font-extrabold tracking-wider">
