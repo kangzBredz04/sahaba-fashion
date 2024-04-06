@@ -1,7 +1,10 @@
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { MdGridView } from "react-icons/md";
+import { useContext } from "react";
+import { AllContext } from "../App";
+import CardWishlist from "../components/CardWishlist";
 
 export default function Wishlist() {
+  const { wishlist, setWishlist } = useContext(AllContext);
+  console.log(wishlist);
   return (
     <div className="flex flex-col gap-5 py-5 bg-gray-100">
       <h1 className="text-center font-bold tracking-widest text-2xl">
@@ -25,35 +28,17 @@ export default function Wishlist() {
       </div>
       <div className="flex flex-col">
         <div className="px-10">
-          <div className="flex flex-row items-center justify-between py-4  border-b-[1px] border-black">
-            <div className="flex items-center gap-3">
-              <IoMdCloseCircleOutline className="text-xl" />
-              <img
-                src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long-200x200.webp"
-                alt=""
-                className="w-12"
-              />
-              <h1 className="text-base font-extrabold tracking-wider">
-                Azraq Long
-              </h1>
-            </div>
-            <div>
-              <h1 className="text-base font-extrabold tracking-wider">
-                RP294,000
-              </h1>
-            </div>
-            <div>
-              <h1 className="text-base font-extrabold tracking-wider">
-                IN STOCK
-              </h1>
-            </div>
-            <div className="flex items-center gap-3 border cursor-pointer border-black py-2 px-2">
-              <MdGridView />
-              <button className="text-base font-extrabold tracking-wider">
-                VIEW PRODUCT
-              </button>
-            </div>
-          </div>
+          {wishlist.map((w) => (
+            <CardWishlist
+              key={w.id}
+              id={w.id}
+              id_product={w.id_product}
+              image_1={w.image_1}
+              name_product={w.name_product}
+              price={w.price}
+              status={w.status}
+            />
+          ))}
         </div>
       </div>
     </div>
