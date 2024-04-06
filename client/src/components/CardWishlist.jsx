@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+=======
+>>>>>>> b73f9fe49ca52b8bd429e11bccc3a99b093260f2
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdGridView } from "react-icons/md";
 
