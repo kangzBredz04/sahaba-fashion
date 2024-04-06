@@ -204,13 +204,15 @@ export default function MyAccount() {
               if (confirm("Apakah yakin anda akan logout")) {
                 api.get("/auth/logout").then((res) => {
                   alert(res.msg);
-                  setUser({});
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("role");
-                  localStorage.removeItem("id");
-                  navigate("/login");
-                  console.log(user);
-                  // window.location.reload();
+                  window.location.reload();
+                  setTimeout(() => {
+                    setUser({});
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    localStorage.removeItem("id");
+                    navigate("/login");
+                  }, 1000);
+                  // console.log(user);
                 });
               }
             }}

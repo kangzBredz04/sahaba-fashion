@@ -5,7 +5,6 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function MyAccountAdmin() {
   const [user, setUser] = useOutletContext();
-  // const [user, setUser] = useState();
   const [editedUser, setEditedUser] = useState({});
 
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ export default function MyAccountAdmin() {
 
   console.log(user);
 
-  if (user?.id) {
+  if (user) {
     return (
       <div className="py-6 px-7 font-KumbhSans bg-gray-100">
         <h2 className="text-2xl font-bold mb-4">My Account</h2>
