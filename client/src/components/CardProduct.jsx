@@ -5,14 +5,6 @@ import { api } from "../utils";
 export default function CardProduct({ id, name, image, tipe, price, status }) {
   const navigate = useNavigate();
 
-  // const dataProduct = {
-  //   id: id,
-  //   name: name,
-  //   image: image,
-  //   tipe: tipe,
-  //   price: price,
-  // };
-
   return (
     <div className="border border-gray-200 hover:cursor-pointer">
       {status ? (

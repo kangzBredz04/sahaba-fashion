@@ -17,6 +17,7 @@ import MyAccount from "./pages/MyAccount.jsx";
 import CartUser from "./pages/CartUser.jsx";
 import Shop from "./pages/Shop.jsx";
 import MyAccountAdmin from "./pages/MyAccountAdmin.jsx";
+import Wishlist from "./pages/Wishlist.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <DetailProduct />,
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
       },
       {
         path: "/cart",
