@@ -205,13 +205,11 @@ export default function MyAccount() {
                 api.get("/auth/logout").then((res) => {
                   alert(res.msg);
                   window.location.reload();
-                  setTimeout(() => {
-                    setUser({});
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("role");
-                    localStorage.removeItem("id");
-                    navigate("/login");
-                  }, 1000);
+                  setUser({});
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("role");
+                  localStorage.removeItem("id");
+                  navigate("/login");
                   // console.log(user);
                 });
               }
