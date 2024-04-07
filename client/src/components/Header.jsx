@@ -3,8 +3,11 @@ import { GoBookmark } from "react-icons/go";
 import { MdOutlineLanguage } from "react-icons/md";
 import { FiUser, FiMoon } from "react-icons/fi";
 import { SlBag } from "react-icons/sl";
+import { useContext } from "react";
+import { AllContext } from "../App";
 
 export default function Header() {
+  const { wishlist } = useContext(AllContext);
   return (
     <header className="bg-white border  sticky top-0 z-50 font-KumbhSans">
       <div className="container mx-auto  py-4 flex justify-between items-center">
@@ -44,9 +47,13 @@ export default function Header() {
             to="/wishlist"
             className="text-gray-700 hover:text-gray-900 relative"
           >
-            <div className="absolute -right-1 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
-              4
-            </div>
+            {wishlist.length < 1 ? (
+              ""
+            ) : (
+              <div className="absolute -right-1 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
+                {wishlist?.length}
+              </div>
+            )}
             <GoBookmark className="text-xl" />
           </Link>
           <Link
