@@ -18,6 +18,7 @@ import CartUser from "./pages/CartUser.jsx";
 import Shop from "./pages/Shop.jsx";
 import MyAccountAdmin from "./pages/MyAccountAdmin.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
+import UserAdmin from "./pages/UserAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/profile",
         element: <MyAccountAdmin />,
+      },
+      {
+        path: "/admin/user",
+        element: <UserAdmin />,
       },
       {
         path: "/admin/product",

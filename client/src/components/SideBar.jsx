@@ -18,7 +18,10 @@ export default function SideBar() {
           <MdOutlineDashboard className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Dashboard</h1>
         </Link>
-        <Link className="text-center flex flex-col gap-1 hover:cursor-pointer">
+        <Link
+          to="/admin/user"
+          className="text-center flex flex-col gap-1 hover:cursor-pointer"
+        >
           <FiUsers className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Users</h1>
         </Link>
