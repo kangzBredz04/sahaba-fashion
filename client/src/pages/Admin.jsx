@@ -11,15 +11,18 @@ export const AdminContext = createContext();
 
 export default function Admin() {
   const [products, setProducts] = useState();
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [popUp, setPopUp] = useState(false);
   const [editedProduct, setEditedProduct] = useState();
+  const [editedUser, setEditedUser] = useState();
   const [admin, setAdmin] = useState({});
 
   useEffect(() => {
     // Simulasi pengambilan data produk
     setTimeout(() => {
       api.get("/product/get-all").then((res) => setProducts(res));
+      api.get("/auth/get-all").then((res) => setUser(res));
       api.get("/auth/my-account").then((res) => setAdmin(res.data));
       setLoading(false);
     }, 500);
@@ -37,6 +40,10 @@ export default function Admin() {
           setEditedProduct,
           loading,
           setLoading,
+          user,
+          setUser,
+          editedUser,
+          setEditedUser,
         }}
       >
         <div className="flex h-screen overflow-hidden font-KumbhSans">
