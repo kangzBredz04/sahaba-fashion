@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteAccount,
+  getAllUser,
   getCurrentUser,
   loginAccount,
   logoutAccount,
@@ -16,6 +17,7 @@ router.get("/my-account", verifyToken, getCurrentUser); // Router untuk mendapat
 router.post("/register", registerAccount); // Router untuk daftar akun (register)
 router.post("/login", loginAccount); // Router untuk login akun
 router.get("/logout", verifyToken, logoutAccount); // Router untuk logout account
+router.get("/get-all", verifyToken, getAllUser); // Router untuk mendapatkan semua user
 router.put("/update/:id", verifyToken, updateAccount);
 router.put("/update-role/:id", verifyToken, updateRole);
 router.delete("/delete/:id", verifyToken, deleteAccount);
