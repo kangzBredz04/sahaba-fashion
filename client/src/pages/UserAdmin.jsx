@@ -87,11 +87,11 @@ export default function UserAdmin() {
                   onClick={() => {
                     if (
                       confirm(
-                        `Apakah anda yakin ingin menghapus produk ${u.username}`
+                        `Apakah anda yakin ingin menghapus data atas username ${u.username}`
                       )
                     ) {
                       api
-                        .delete(`/product/delete/${u.id}`)
+                        .delete(`/auth/delete/${u.id}`)
                         .then(async (res) => {
                           alert(res.message);
                         })
@@ -123,20 +123,20 @@ export default function UserAdmin() {
                 e.preventDefault();
                 if (editedUser.id) {
                   api
-                    .put(`/product/update/${editedUser.id}`, editedUser)
+                    .put(`/auth/update/${editedUser.id}`, editedUser)
                     .then(async (res) => {
                       alert(res.message);
-                      window.location.href = "/admin/product";
+                      window.location.href = "/admin/user";
                     })
                     .catch((e) => {
                       console.log(e);
                     });
                 } else {
                   api
-                    .post("/product/add/", editedUser)
+                    .post("/auth/add/", editedUser)
                     .then(async (res) => {
                       alert(res.message);
-                      window.location.href = "/admin/product";
+                      window.location.href = "/admin/user";
                     })
                     .catch((e) => {
                       console.log(e);
@@ -150,13 +150,13 @@ export default function UserAdmin() {
                   htmlFor="name"
                   className="block text-black font-bold mb-2"
                 >
-                  Name
+                  First Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                  value={editedUser.name_product}
+                  value={editedUser.first_name}
                   onChange={(e) =>
                     setEditedUser({
                       ...editedUser,
@@ -171,17 +171,17 @@ export default function UserAdmin() {
                   htmlFor="price"
                   className="block text-black font-bold mb-2"
                 >
-                  Price
+                  Last Name
                 </label>
                 <input
                   type="number"
                   id="price"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                  value={editedProduct.price}
+                  value={editedUser.last_name}
                   onChange={(e) =>
-                    setEditedProduct({
-                      ...editedProduct,
-                      price: e.target.value,
+                    setEditedUser({
+                      ...editedUser,
+                      last_name: e.target.value,
                     })
                   }
                 />
@@ -191,46 +191,40 @@ export default function UserAdmin() {
                   htmlFor="description"
                   className="block text-black font-bold mb-2"
                 >
-                  Description
+                  Username
                 </label>
                 <input
                   type="text"
                   id="description"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                  value={editedProduct.description}
+                  value={editedUser.username}
                   onChange={(e) =>
-                    setEditedProduct({
-                      ...editedProduct,
-                      description: e.target.value,
+                    setEditedUser({
+                      ...editedUser,
+                      username: e.target.value,
                     })
                   }
                 />
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="category"
+                  htmlFor="description"
                   className="block text-black font-bold mb-2"
                 >
-                  Category
+                  Email
                 </label>
-                <select
-                  id="category"
+                <input
+                  type="text"
+                  id="description"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                  value={editedProduct.category}
+                  value={editedUser.email}
                   onChange={(e) =>
-                    setEditedProduct({
-                      ...editedProduct,
-                      category: e.target.value,
+                    setEditedUser({
+                      ...editedUser,
+                      email: e.target.value,
                     })
                   }
-                >
-                  <option>Koko Modern</option>
-                  <option>Kurta Modern</option>
-                  <option>Essential</option>
-                  <option>Sarung</option>
-                  <option>Pants</option>
-                  <option>Kolaborasi</option>
-                </select>
+                />
               </div>
               <div className="mb-4 flex justify-between gap-3">
                 <div>
@@ -243,35 +237,38 @@ export default function UserAdmin() {
                   <input
                     type="text"
                     id="image1"
+                    disabled
                     className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                    value={editedProduct.image_1}
+                    value={editedUser.password}
                     onChange={(e) =>
-                      setEditedProduct({
-                        ...editedProduct,
-                        image_1: e.target.value,
+                      setEditedUser({
+                        ...editedUser,
+                        password: e.target.value,
                       })
                     }
                   />
                 </div>
-                <div>
+                <div className="mb-4">
                   <label
-                    htmlFor="image2"
+                    htmlFor="category"
                     className="block text-black font-bold mb-2"
                   >
-                    Image 2
+                    Category
                   </label>
-                  <input
-                    type="text"
-                    id="image2"
+                  <select
+                    id="category"
                     className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                    value={editedProduct.image_2}
+                    value={editedUser.role}
                     onChange={(e) =>
-                      setEditedProduct({
-                        ...editedProduct,
-                        image_2: e.target.value,
+                      setEditedUser({
+                        ...editedUser,
+                        role: e.target.value,
                       })
                     }
-                  />
+                  >
+                    <option>User</option>
+                    <option>Admin</option>
+                  </select>
                 </div>
               </div>
               <div className="flex justify-end">
