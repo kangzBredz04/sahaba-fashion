@@ -16,6 +16,7 @@ export default function Admin() {
   const [popUp, setPopUp] = useState(false);
   const [editedProduct, setEditedProduct] = useState();
   const [editedUser, setEditedUser] = useState();
+  const [editedStock, setEditedStock] = useState();
   const [admin, setAdmin] = useState({});
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -43,6 +44,8 @@ export default function Admin() {
     );
   }, [theme]);
 
+
+
   if (localStorage.getItem("role") == "admin") {
     return (
       <AdminContext.Provider
@@ -61,6 +64,8 @@ export default function Admin() {
           setEditedUser,
           stocks,
           setStocks,
+          editedStock,
+          setEditedStock,
           sizes,
           setSizes,
           theme,

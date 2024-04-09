@@ -7,16 +7,8 @@ import { api } from "../utils";
 // import { useNavigate } from "react-router-dom";
 
 export default function ProductAdmin() {
-  const {
-    products,
-    // setProducts,
-    popUp,
-    setPopUp,
-    editedProduct,
-    setEditedProduct,
-    // loading,
-    // setLoading,
-  } = useContext(AdminContext);
+  const { products, popUp, setPopUp, editedProduct, setEditedProduct } =
+    useContext(AdminContext);
 
   return (
     <div className="p-5 bg-gray-100">

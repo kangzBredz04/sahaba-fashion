@@ -19,7 +19,7 @@ import Shop from "./pages/Shop.jsx";
 import MyAccountAdmin from "./pages/MyAccountAdmin.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
 import UserAdmin from "./pages/UserAdmin.jsx";
-import StockAdmin from "./pages/StockAAdmin.jsx";
+import StockAdmin from "./pages/StockAdmin.jsx";
 
 const router = createBrowserRouter([
   {

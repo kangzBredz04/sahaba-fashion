@@ -8,13 +8,9 @@ import { useContext } from "react";
 import { AdminContext } from "../pages/Admin";
 
 export default function Footer() {
-  const { theme } = useContext(AdminContext);
+  // const { theme } = useContext(AdminContext);
   return (
-    <footer
-      className={`py-12 px-4 font-KumbhSans ${
-        theme === "dark" ? "bg-black text-white " : "bg-white text-black"
-      }`}
-    >
+    <footer className={`py-12 px-4 font-KumbhSans`}>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h2 className="text-lg font-semibold mb-4">Bantuan</h2>
