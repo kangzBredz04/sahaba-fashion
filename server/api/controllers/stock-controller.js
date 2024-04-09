@@ -19,7 +19,12 @@ export const addStock = async (req, res) => {
 // Controller untuk mendapatkan semua data stok
 export const getAllStock = async (_req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM stocks");
+    const result = await pool.query(
+      `SELECT p.name_product, s.name_size, st.quantity 
+      FROM stocks st 
+      JOIN products p ON st.id_product = p.id
+      JOIN sizes s ON st.id_size = s.id`
+    );
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ msg: error.message });
