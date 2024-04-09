@@ -39,7 +39,10 @@ export default function SideBar() {
           <RiShirtLine className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Products</h1>
         </Link>
-        <Link className="text-center flex flex-col gap-1 hover:cursor-pointer">
+        <Link
+          to="/admin/order"
+          className="text-center flex flex-col gap-1 hover:cursor-pointer"
+        >
           <LiaFileInvoiceDollarSolid className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Orders</h1>
         </Link>

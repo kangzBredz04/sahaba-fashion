@@ -20,6 +20,7 @@ import MyAccountAdmin from "./pages/MyAccountAdmin.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
 import UserAdmin from "./pages/UserAdmin.jsx";
 import StockAdmin from "./pages/StockAdmin.jsx";
+import OrderAdmin from "./pages/OrderAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/stock",
         element: <StockAdmin />,
+      },
+      {
+        path: "/admin/order",
+        element: <OrderAdmin />,
       },
       {
         path: "/admin/product",
