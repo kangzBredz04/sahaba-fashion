@@ -100,14 +100,14 @@ export const logoutAccount = async (_req, res) => {
 };
 
 export const updateAccount = async (req, res) => {
-  const { first_name, last_name, username, email } = req.body;
+  const { first_name, last_name, username, role, email } = req.body;
   try {
     await pool.query(
-      "UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4 WHERE id = $5",
-      [first_name, last_name, username, email, req.params.id]
+      "UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4, role= $5 WHERE id = $6",
+      [first_name, last_name, username, email, role, req.params.id]
     );
     res.status(200).json({
-      message: "Data berhasil diubah.",
+      msg: "Data berhasil diubah.",
     });
   } catch (error) {
     console.log(error);
