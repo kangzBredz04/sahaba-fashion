@@ -67,11 +67,7 @@ export default function DashboardAdmin() {
     };
   }, []);
   return (
-    <div
-      className={`flex-1 ${
-        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
-      }`}
-    >
+    <div className={`flex-1 `}>
       {/* Main Content */}
       <div className="p-4">
         <h2 className="text-2xl font-bold mb-4">Dashboard</h2>

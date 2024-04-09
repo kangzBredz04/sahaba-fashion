@@ -7,9 +7,11 @@ import { RiShirtLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AdminContext } from "../pages/Admin";
+import { api } from "../utils";
 
 export default function SideBar() {
-  const { theme } = useContext(AdminContext);
+  const { theme, user, setUser } = useContext(AdminContext);
+
   return (
     <div
       className={`font-KumbhSans flex flex-col gap-7  h-screen w-36 py-4 px-4 ${
@@ -53,7 +55,23 @@ export default function SideBar() {
           <LuBoxes className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Stocks</h1>
         </Link>
-        <Link className="text-center flex flex-col gap-1 hover:cursor-pointer">
+        <Link
+          onClick={() => {
+            if (confirm("Apakah yakin anda akan logout")) {
+              api.get("/auth/logout").then((res) => {
+                alert(res.msg);
+                localStorage.removeItem("token");
+                localStorage.removeItem("role");
+                localStorage.removeItem("id");
+                setUser({});
+                window.location.reload();
+                window.location.href = "/login";
+                console.log(user);
+              });
+            }
+          }}
+          className="text-center flex flex-col gap-1 hover:cursor-pointer"
+        >
           <GrLogout className="m-auto text-3xl" />
           <h1 className="text-base font-medium">Logout</h1>
         </Link>
