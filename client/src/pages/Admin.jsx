@@ -17,6 +17,8 @@ export default function Admin() {
   const [editedProduct, setEditedProduct] = useState();
   const [editedUser, setEditedUser] = useState();
   const [admin, setAdmin] = useState({});
+  const [stocks, setStocks] = useState([]);
+  const [sizes, setSizes] = useState([]);
 
   useEffect(() => {
     // Simulasi pengambilan data produk
@@ -24,9 +26,13 @@ export default function Admin() {
       api.get("/product/get-all").then((res) => setProducts(res));
       api.get("/auth/get-all").then((res) => setUser(res));
       api.get("/auth/my-account").then((res) => setAdmin(res.data));
+      api.get("/stock/get-all").then((res) => setStocks(res));
+      api.get("/size/get-all").then((res) => setStocks(res));
       setLoading(false);
     }, 500);
   }, [products?.id]);
+
+  // console.log(stocks);
 
   if (localStorage.getItem("role") == "admin") {
     return (
@@ -44,6 +50,10 @@ export default function Admin() {
           setUser,
           editedUser,
           setEditedUser,
+          stocks,
+          setStocks,
+          sizes,
+          setSizes,
         }}
       >
         <div className="flex h-screen overflow-hidden font-KumbhSans">
