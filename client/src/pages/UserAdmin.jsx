@@ -21,7 +21,7 @@ export default function UserAdmin() {
   } = useContext(AdminContext);
 
   return (
-    <div className="p-5 bg-gray-100">
+    <div className="p-5 bg-gray-100 min-h-64">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-4">User List</h2>
         <div>
