@@ -18,14 +18,15 @@ export default function StockAdmin() {
     sizes,
   } = useContext(AdminContext);
 
+  console.log(sizes);
   const getProductNameById = (id) => {
-    const product = products.find((p) => p.id === id);
-    return product.name_product;
+    const product = products?.find((p) => p.id === id);
+    return product?.name_product;
   };
 
   const getSizeNameById = (id) => {
-    const size = sizes.find((s) => s.id === id);
-    return size.name_size;
+    const size = sizes?.find((s) => s.id === id);
+    return size?.name_size;
   };
 
   return (
@@ -49,10 +50,10 @@ export default function StockAdmin() {
         <thead>
           <tr>
             <th className="border border-gray-300">No</th>
-            <th className="border border-gray-300 ">Product</th>
-            <th className="border border-gray-300 ">Size</th>
-            <th className="border border-gray-300 ">Quantity</th>
-            <th className="border border-gray-300 ">Action</th>
+            <th className="border border-gray-300">Product</th>
+            <th className="border border-gray-300">Size</th>
+            <th className="border border-gray-300">Quantity</th>
+            <th className="border border-gray-300">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +76,6 @@ export default function StockAdmin() {
                 <button
                   onClick={() => {
                     setEditedStock(s);
-                    // console.log(editedStock);
                     setPopUp(!popUp);
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
@@ -86,18 +86,20 @@ export default function StockAdmin() {
                   onClick={() => {
                     if (
                       confirm(
-                        `Apakah anda yakin ingin menghapus stock produk ${s.name_product} dengan ukuran ${s.name_size}`
+                        `Apakah anda yakin ingin menghapus stock produk ${getProductNameById(
+                          s.id_product
+                        )} dengan ukuran ${getSizeNameById(s.id_size)}`
                       )
                     ) {
                       api
-                        .delete(`/auth/delete/${s.id}`)
+                        .delete(`/stock/delete/${s.id}`)
                         .then(async (res) => {
                           alert(res.message);
                         })
                         .catch((e) => {
                           console.log(e);
                         });
-                      window.location.href = "/admin/user";
+                      window.location.href = "/admin/stock";
                     }
                   }}
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"
@@ -121,26 +123,26 @@ export default function StockAdmin() {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (editedStock.id) {
-                  // api
-                  //   .put(`/stock/update/${editedStock.id}`, editedStock)
-                  //   .then(async (res) => {
-                  //     alert(res.message);
-                  //     window.location.href = "/admin/stock";
-                  //   })
-                  //   .catch((e) => {
-                  //     console.log(e);
-                  //   });
+                  api
+                    .put(`/stock/update/${editedStock.id}`, editedStock)
+                    .then(async (res) => {
+                      alert(res.message);
+                      window.location.href = "/admin/stock";
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                   console.log(editedStock);
                 } else {
-                  // api
-                  //   .post("/stock/add", editedStock)
-                  //   .then(async (res) => {
-                  //     alert(res.message);
-                  //     window.location.href = "/admin/stock";
-                  //   })
-                  //   .catch((e) => {
-                  //     console.log(e);
-                  //   });
+                  api
+                    .post("/stock/add", editedStock)
+                    .then(async (res) => {
+                      alert(res.message);
+                      window.location.href = "/admin/stock";
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                   console.log(editedStock);
                 }
                 setPopUp(!popUp);
@@ -156,7 +158,7 @@ export default function StockAdmin() {
                 <select
                   id="product"
                   className="w-full border border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-500"
-                  // value={editedStock.id_product}
+                  value={editedStock.id_product}
                   onChange={(e) =>
                     setEditedStock({
                       ...editedStock,
@@ -181,7 +183,7 @@ export default function StockAdmin() {
                 <select
                   id="size"
                   className="w-full border border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-500"
-                  // value={editedStock.name_size}
+                  value={editedStock.id_size}
                   onChange={(e) =>
                     setEditedStock({
                       ...editedStock,

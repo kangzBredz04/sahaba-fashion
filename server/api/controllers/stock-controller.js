@@ -51,7 +51,7 @@ export const updateStock = async (req, res) => {
 export const deleteStock = async (req, res) => {
   try {
     await pool.query("DELETE FROM stocks WHERE id = $1", [req.params.id]);
-    res.send("Stock berhasil dihapus.");
+    res.json({ message: "Stock berhasil dihapus." });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
