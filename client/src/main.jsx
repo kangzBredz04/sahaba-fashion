@@ -19,6 +19,7 @@ import Shop from "./pages/Shop.jsx";
 import MyAccountAdmin from "./pages/MyAccountAdmin.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
 import UserAdmin from "./pages/UserAdmin.jsx";
+import StockAdmin from "./pages/StockAAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/user",
         element: <UserAdmin />,
+      },
+      {
+        path: "/admin/stock",
+        element: <StockAdmin />,
       },
       {
         path: "/admin/product",
