@@ -18,6 +18,25 @@ export const registerAccount = async (req, res) => {
   }
 };
 
+// Controller untuk daftar akun melalui admin
+export const addAccount = async (req, res) => {
+  const { first_name, last_name, username, email, password, role } = req.body;
+  try {
+    const hashPassword = await argon2.hash(password);
+    const result = await pool.query(
+      "INSERT INTO users (first_name,last_name, username, email, password, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [first_name, last_name, username, email, hashPassword, role]
+    );
+    res.status(201).json({
+      msg: "Pendaftaran akun melalui admin telah berhasil",
+      data: result.rows[0],
+    });
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({ error });
+  }
+};
+
 // Controller untuk login
 export const loginAccount = async (req, res) => {
   const { usernameoremail, password } = req.body;
