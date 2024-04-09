@@ -27,7 +27,7 @@ export default function Admin() {
       api.get("/auth/get-all").then((res) => setUser(res));
       api.get("/auth/my-account").then((res) => setAdmin(res.data));
       api.get("/stock/get-all").then((res) => setStocks(res));
-      api.get("/size/get-all").then((res) => setStocks(res));
+      api.get("/size/get-all").then((res) => setSizes(res));
       setLoading(false);
     }, 500);
   }, [products?.id]);
