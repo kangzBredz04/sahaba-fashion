@@ -18,7 +18,16 @@ export default function StockAdmin() {
     sizes,
   } = useContext(AdminContext);
 
-  console.log(stocks);
+  const getProductNameById = (id) => {
+    const product = products.find((p) => p.id === id);
+    return product.name_product;
+  };
+
+  const getSizeNameById = (id) => {
+    const size = sizes.find((s) => s.id === id);
+    return size.name_size;
+  };
+
   return (
     <div className="p-5 bg-gray-100 min-h-64">
       <div className="flex justify-between">
@@ -54,10 +63,10 @@ export default function StockAdmin() {
                 {index + 1}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {s.name_product}
+                {getProductNameById(s.id_product)}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {s.name_size}
+                {getSizeNameById(s.id_size)}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
                 {s.quantity}
