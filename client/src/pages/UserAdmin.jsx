@@ -17,7 +17,7 @@ export default function UserAdmin() {
     // loading,
     // setLoading,
     user,
-    setUser,
+    // setUser,
   } = useContext(AdminContext);
 
   return (
@@ -55,22 +55,23 @@ export default function UserAdmin() {
           {user?.map((u, index) => (
             <tr key={u.id}>
               <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-center">
                 {u.first_name ? u.first_name : "-"}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-center">
                 {u.last_name ? u.last_name : "-"}
               </td>
-              <td className="border border-gray-300 px-4 py-2">{u.username}</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {u.username}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
                 {u.email.slice(0, 25)}
                 {u.email.length > 25 && "..."}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {u.password.slice(0, 15)}
-                {u.password.length > 15 && "..."}
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                ******
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 px-4 py-2 text-center">
                 {u.role ? u.role : "-"}
               </td>
               <td className="border border-gray-300 px-4 py-2 flex justify-evenly">
@@ -125,7 +126,7 @@ export default function UserAdmin() {
                   api
                     .put(`/auth/update/${editedUser.id}`, editedUser)
                     .then(async (res) => {
-                      alert(res.message);
+                      alert(res.msg);
                       window.location.href = "/admin/user";
                     })
                     .catch((e) => {
@@ -133,9 +134,9 @@ export default function UserAdmin() {
                     });
                 } else {
                   api
-                    .post("/auth/add/", editedUser)
+                    .post("/auth/add", editedUser)
                     .then(async (res) => {
-                      alert(res.message);
+                      alert(res.msg);
                       window.location.href = "/admin/user";
                     })
                     .catch((e) => {
@@ -147,14 +148,14 @@ export default function UserAdmin() {
             >
               <div className="mb-4">
                 <label
-                  htmlFor="name"
+                  htmlFor="first_name"
                   className="block text-black font-bold mb-2"
                 >
                   First Name
                 </label>
                 <input
                   type="text"
-                  id="name"
+                  id="first_name"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
                   value={editedUser.first_name}
                   onChange={(e) =>
@@ -168,14 +169,14 @@ export default function UserAdmin() {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="price"
+                  htmlFor="last_name"
                   className="block text-black font-bold mb-2"
                 >
                   Last Name
                 </label>
                 <input
-                  type="number"
-                  id="price"
+                  type="text"
+                  id="last_name"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
                   value={editedUser.last_name}
                   onChange={(e) =>
@@ -188,14 +189,14 @@ export default function UserAdmin() {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="description"
+                  htmlFor="username"
                   className="block text-black font-bold mb-2"
                 >
                   Username
                 </label>
                 <input
                   type="text"
-                  id="description"
+                  id="username"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
                   value={editedUser.username}
                   onChange={(e) =>
@@ -208,14 +209,14 @@ export default function UserAdmin() {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="description"
+                  htmlFor="email"
                   className="block text-black font-bold mb-2"
                 >
                   Email
                 </label>
                 <input
                   type="text"
-                  id="description"
+                  id="email"
                   className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
                   value={editedUser.email}
                   onChange={(e) =>
@@ -226,39 +227,42 @@ export default function UserAdmin() {
                   }
                 />
               </div>
-              <div className="mb-4 flex justify-between gap-3">
-                <div>
+              <div className="mb-4 flex gap-4 items-center">
+                {editedUser.id ? (
+                  ""
+                ) : (
+                  <div>
+                    <label
+                      htmlFor="password"
+                      className="block text-black font-bold mb-2"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
+                      value={editedUser.password}
+                      onChange={(e) =>
+                        setEditedUser({
+                          ...editedUser,
+                          password: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                )}
+                <div className="flex-grow">
                   <label
-                    htmlFor="image1"
+                    htmlFor="role"
                     className="block text-black font-bold mb-2"
                   >
-                    Image 1
-                  </label>
-                  <input
-                    type="text"
-                    id="image1"
-                    disabled
-                    className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                    value={editedUser.password}
-                    onChange={(e) =>
-                      setEditedUser({
-                        ...editedUser,
-                        password: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="category"
-                    className="block text-black font-bold mb-2"
-                  >
-                    Category
+                    Role
                   </label>
                   <select
-                    id="category"
+                    id="role"
                     className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                    value={editedUser.role}
+                    value={editedUser.role == null ? "" : editedUser.role}
                     onChange={(e) =>
                       setEditedUser({
                         ...editedUser,
@@ -266,8 +270,8 @@ export default function UserAdmin() {
                       })
                     }
                   >
-                    <option>User</option>
-                    <option>Admin</option>
+                    <option value={null}>User</option>
+                    <option value={"admin"}>Admin</option>
                   </select>
                 </div>
               </div>
