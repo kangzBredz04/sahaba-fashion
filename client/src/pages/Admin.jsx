@@ -19,6 +19,7 @@ export default function Admin() {
   const [admin, setAdmin] = useState({});
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     // Simulasi pengambilan data produk
@@ -32,7 +33,15 @@ export default function Admin() {
     }, 500);
   }, [products?.id]);
 
-  // console.log(stocks);
+  useEffect(() => {
+    console.log(
+      `${
+        theme === "light"
+          ? "Berhasil mengubah tema menjadi terang"
+          : "Berhasil mengubah tema menjadi gelap"
+      }`
+    );
+  }, [theme]);
 
   if (localStorage.getItem("role") == "admin") {
     return (
@@ -54,9 +63,13 @@ export default function Admin() {
           setStocks,
           sizes,
           setSizes,
+          theme,
+          setTheme,
         }}
       >
-        <div className="flex h-screen overflow-hidden font-KumbhSans">
+        <div
+          className={`flex h-screen overflow-hidden font-KumbhSans theme === "dark" ? "bg-[#1a1a29] text-white" : "bg-white text-black"`}
+        >
           {loading && <Loading2 />}
           {/* Sidebar */}
           <SideBar />

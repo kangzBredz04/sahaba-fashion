@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import { AdminContext } from "./Admin";
 
 export default function DashboardAdmin() {
   const productCount = 100;
@@ -7,6 +8,8 @@ export default function DashboardAdmin() {
   const stockCount = 500;
 
   const chartRef = useRef();
+
+  const { theme } = useContext(AdminContext);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
@@ -64,7 +67,11 @@ export default function DashboardAdmin() {
     };
   }, []);
   return (
-    <div className="flex-1">
+    <div
+      className={`flex-1 ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
       {/* Main Content */}
       <div className="p-4">
         <h2 className="text-2xl font-bold mb-4">Dashboard</h2>

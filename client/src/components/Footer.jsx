@@ -4,10 +4,17 @@ import { FiFacebook, FiYoutube } from "react-icons/fi";
 import { FaInstagram } from "react-icons/fa6";
 import { AiOutlineMail } from "react-icons/ai";
 import { LuMapPin } from "react-icons/lu";
+import { useContext } from "react";
+import { AdminContext } from "../pages/Admin";
 
 export default function Footer() {
+  const { theme } = useContext(AdminContext);
   return (
-    <footer className="bg-gray-100 text-black py-12 px-4 font-KumbhSans">
+    <footer
+      className={`py-12 px-4 font-KumbhSans ${
+        theme === "dark" ? "bg-black text-white " : "bg-white text-black"
+      }`}
+    >
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h2 className="text-lg font-semibold mb-4">Bantuan</h2>
