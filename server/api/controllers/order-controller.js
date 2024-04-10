@@ -17,3 +17,27 @@ export const getOrderByIdUser = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
+export const addOrderUser = async (req, res) => {
+  const { id_user, orders, payment_method, address, status } = req.body;
+  try {
+    for (const order of orders) {
+      const { id_product, id_size, quantity } = order;
+      await pool.query(
+        "INSERT INTO orders (id_user, id_product, id_size, quantity, payment_method, address, status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+        [
+          id_user,
+          id_product,
+          id_size,
+          quantity,
+          payment_method,
+          address,
+          status,
+        ]
+      );
+    }
+    res.status(200).json({ msg: "Pesanan telah berhasil" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
