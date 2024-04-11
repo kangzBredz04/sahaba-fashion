@@ -1,32 +1,44 @@
 import { useContext } from "react";
 import { AdminContext } from "./Admin";
-import { HiOutlinePencilAlt } from "react-icons/hi";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { HiOutlinePencilAlt } from "react-icons/hi";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineAddBox } from "react-icons/md";
-import { api } from "../utils";
+// import { api } from "../utils";
 // import { useNavigate } from "react-router-dom";
 
 export default function OrderAdmin() {
   const {
     popUp,
     setPopUp,
-    stocks,
+    // stocks,
     // setStocks,
     editedStock,
     setEditedStock,
-    products,
-    sizes,
+    // products,
+    // sizes,
+    orders,
+    setOrders,
   } = useContext(AdminContext);
 
-  console.log(sizes);
-  const getProductNameById = (id) => {
-    const product = products?.find((p) => p.id === id);
-    return product?.name_product;
-  };
+  console.log(orders);
 
-  const getSizeNameById = (id) => {
-    const size = sizes?.find((s) => s.id === id);
-    return size?.name_size;
+  const getColorStatus = (status) => {
+    let color;
+    switch (status) {
+      case "Processed":
+        color = "bg-orange-400";
+        break;
+      case "Shipped":
+        color = "bg-blue-400";
+        break;
+      case "Finished":
+        color = "bg-green-400";
+        break;
+      default:
+        color = "bg-red-400";
+        break;
+    }
+    return color;
   };
 
   return (
@@ -59,53 +71,31 @@ export default function OrderAdmin() {
         </thead>
         <tbody>
           {/* Data rows */}
-          {stocks?.map((s, index) => (
-            <tr key={s.id}>
+          {orders?.map((o, index) => (
+            <tr key={o.id}>
               <td className="border border-gray-300 px-4 py-2 text-center">
                 {index + 1}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {getProductNameById(s.id_product)}
+                {o.username}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {getSizeNameById(s.id_size)}
+                {o.name_product}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {s.quantity}
+                {o.name_size}
               </td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-evenly">
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {o.quantity}
+              </td>
+              <td
+                className={`border border-gray-300 px-1 py-2 text-center font-semibold`}
+              >
                 <button
-                  onClick={() => {
-                    setEditedStock(s);
-                    setPopUp(!popUp);
-                  }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                  className={`${getColorStatus(o.status)} rounded py-1 w-28`}
+                  onClick={() => setPopUp(!popUp)}
                 >
-                  <HiOutlinePencilAlt />
-                </button>
-                <button
-                  onClick={() => {
-                    if (
-                      confirm(
-                        `Apakah anda yakin ingin menghapus stock produk ${getProductNameById(
-                          s.id_product
-                        )} dengan ukuran ${getSizeNameById(s.id_size)}`
-                      )
-                    ) {
-                      api
-                        .delete(`/stock/delete/${s.id}`)
-                        .then(async (res) => {
-                          alert(res.message);
-                        })
-                        .catch((e) => {
-                          console.log(e);
-                        });
-                      window.location.href = "/admin/stock";
-                    }
-                  }}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"
-                >
-                  <FaRegTrashAlt />
+                  {o.status}
                 </button>
               </td>
             </tr>
@@ -118,107 +108,9 @@ export default function OrderAdmin() {
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white py-4 px-4 w-96 rounded-2xl shadow-lg z-50">
             <h2 className="text-xl font-bold mb-4 text-center tracking-wider">
-              {editedStock.id ? "EDIT" : "ADD NEW"} STOCK
+              EDIT STATUS ORDER
             </h2>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (editedStock.id) {
-                  api
-                    .put(`/stock/update/${editedStock.id}`, editedStock)
-                    .then(async (res) => {
-                      alert(res.message);
-                      window.location.href = "/admin/stock";
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                    });
-                  console.log(editedStock);
-                } else {
-                  api
-                    .post("/stock/add", editedStock)
-                    .then(async (res) => {
-                      alert(res.message);
-                      window.location.href = "/admin/stock";
-                    })
-                    .catch((e) => {
-                      console.log(e);
-                    });
-                  console.log(editedStock);
-                }
-                setPopUp(!popUp);
-              }}
-            >
-              <div className="mb-4">
-                <label
-                  htmlFor="product"
-                  className="block text-black font-bold mb-2"
-                >
-                  Product
-                </label>
-                <select
-                  id="product"
-                  className="w-full border border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-500"
-                  value={editedStock.id_product}
-                  onChange={(e) =>
-                    setEditedStock({
-                      ...editedStock,
-                      id_product: e.target.value,
-                    })
-                  }
-                >
-                  {products.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name_product}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="size"
-                  className="block text-black font-bold mb-2"
-                >
-                  Size
-                </label>
-                <select
-                  id="size"
-                  className="w-full border border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-500"
-                  value={editedStock.id_size}
-                  onChange={(e) =>
-                    setEditedStock({
-                      ...editedStock,
-                      id_size: e.target.value,
-                    })
-                  }
-                >
-                  {sizes.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.name_size}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="quantity"
-                  className="block text-black font-bold mb-2"
-                >
-                  Quantity
-                </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
-                  value={editedStock.quantity}
-                  onChange={(e) =>
-                    setEditedStock({
-                      ...editedStock,
-                      quantity: e.target.value,
-                    })
-                  }
-                />
-              </div>
+            <form>
               <div className="flex justify-end">
                 <button
                   type="button"

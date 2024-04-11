@@ -20,6 +20,7 @@ export default function Admin() {
   const [admin, setAdmin] = useState({});
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -30,21 +31,24 @@ export default function Admin() {
       api.get("/auth/my-account").then((res) => setAdmin(res.data));
       api.get("/stock/get-all").then((res) => setStocks(res));
       api.get("/size/get-all").then((res) => setSizes(res));
+      api
+        .get(`/order/get/${localStorage.getItem("id")}`)
+        .then((res) => setOrders(res));
       setLoading(false);
     }, 500);
   }, [products?.id]);
 
-  useEffect(() => {
-    console.log(
-      `${
-        theme === "light"
-          ? "Berhasil mengubah tema menjadi terang"
-          : "Berhasil mengubah tema menjadi gelap"
-      }`
-    );
-  }, [theme]);
+  // console.log(orders);
 
-
+  // useEffect(() => {
+  //   console.log(
+  //     `${
+  //       theme === "light"
+  //         ? "Berhasil mengubah tema menjadi terang"
+  //         : "Berhasil mengubah tema menjadi gelap"
+  //     }`
+  //   );
+  // }, [theme]);
 
   if (localStorage.getItem("role") == "admin") {
     return (
@@ -68,6 +72,8 @@ export default function Admin() {
           setEditedStock,
           sizes,
           setSizes,
+          orders,
+          setOrders,
           theme,
           setTheme,
         }}
