@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdminContext } from "./Admin";
 import { FiPrinter } from "react-icons/fi";
 import { api } from "../utils.js";
@@ -37,6 +37,11 @@ export default function OrderAdmin() {
     return color;
   };
 
+  const [status, setStatus] = useState("All");
+  const filterOrders = orders.filter(
+    (order) => status === "All" || order.status === status
+  );
+
   return (
     <div className="p-5 bg-gray-100 min-h-64">
       <div className="flex justify-between mb-4">
@@ -47,13 +52,8 @@ export default function OrderAdmin() {
             <select
               id="status"
               className=" border rounded border-gray-300 py-1  focus:outline-none focus:border-gray-500"
-              // value={editedUser.role == null ? "" : editedUser.role}
-              // onChange={(e) =>
-              //   setEditedUser({
-              //     ...editedUser,
-              //     role: e.target.value,
-              //   })
-              // }
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
             >
               <option>All</option>
               <option>Processed</option>
@@ -87,7 +87,7 @@ export default function OrderAdmin() {
         </thead>
         <tbody>
           {/* Data rows */}
-          {orders?.map((o, index) => (
+          {filterOrders?.map((o, index) => (
             <tr key={o.id}>
               <td className="border border-gray-300 px-4 py-2 text-center">
                 {index + 1}
@@ -147,8 +147,6 @@ export default function OrderAdmin() {
                   .catch((e) => {
                     console.log(e);
                   });
-                // console.log(editedStatus);
-                // setPopUp(!popUp);
               }}
             >
               <div className="flex-grow mb-4">
