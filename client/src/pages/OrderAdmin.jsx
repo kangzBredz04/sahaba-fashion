@@ -1,23 +1,19 @@
 import { useContext } from "react";
 import { AdminContext } from "./Admin";
-// import { HiOutlinePencilAlt } from "react-icons/hi";
-// import { FaRegTrashAlt } from "react-icons/fa";
-import { MdOutlineAddBox } from "react-icons/md";
-// import { api } from "../utils";
+import { FiPrinter } from "react-icons/fi";
+import { api } from "../utils.js";
 // import { useNavigate } from "react-router-dom";
 
 export default function OrderAdmin() {
   const {
     popUp,
     setPopUp,
-    // stocks,
-    // setStocks,
-    editedStock,
-    setEditedStock,
+    editedStatus,
+    setEditedStatus,
     // products,
     // sizes,
     orders,
-    setOrders,
+    // setOrders,
   } = useContext(AdminContext);
 
   console.log(orders);
@@ -43,17 +39,36 @@ export default function OrderAdmin() {
 
   return (
     <div className="p-5 bg-gray-100 min-h-64">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-bold mb-4">Order List</h2>
-        <div>
+      <div className="flex justify-between mb-4">
+        <h2 className="text-2xl font-bold ">Order List</h2>
+        <div className="flex gap-2 w-fit">
+          <div className="flex items-center gap-2">
+            <label htmlFor="status">Category : </label>
+            <select
+              id="status"
+              className=" border rounded border-gray-300 py-1  focus:outline-none focus:border-gray-500"
+              // value={editedUser.role == null ? "" : editedUser.role}
+              // onChange={(e) =>
+              //   setEditedUser({
+              //     ...editedUser,
+              //     role: e.target.value,
+              //   })
+              // }
+            >
+              <option>All</option>
+              <option>Processed</option>
+              <option>Shipped</option>
+              <option>Finished</option>
+            </select>
+          </div>
           <button
             onClick={() => {
-              setEditedStock({});
+              setEditedStatus({});
               setPopUp(!popUp);
             }}
             className="flex justify-between gap-2 items-center bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
           >
-            <MdOutlineAddBox /> Add Stock
+            <FiPrinter /> Print Order List
           </button>
         </div>
       </div>
@@ -65,6 +80,7 @@ export default function OrderAdmin() {
             <th className="border border-gray-300">Username</th>
             <th className="border border-gray-300">Product</th>
             <th className="border border-gray-300">Size</th>
+            <th className="border border-gray-300">Address</th>
             <th className="border border-gray-300">Quantity</th>
             <th className="border border-gray-300">Status</th>
           </tr>
@@ -86,6 +102,9 @@ export default function OrderAdmin() {
                 {o.name_size}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
+                {o.address}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
                 {o.quantity}
               </td>
               <td
@@ -93,7 +112,13 @@ export default function OrderAdmin() {
               >
                 <button
                   className={`${getColorStatus(o.status)} rounded py-1 w-28`}
-                  onClick={() => setPopUp(!popUp)}
+                  onClick={() => {
+                    setEditedStatus({
+                      id: o.id,
+                      status: o.status,
+                    });
+                    setPopUp(!popUp);
+                  }}
                 >
                   {o.status}
                 </button>
@@ -110,7 +135,45 @@ export default function OrderAdmin() {
             <h2 className="text-xl font-bold mb-4 text-center tracking-wider">
               EDIT STATUS ORDER
             </h2>
-            <form>
+            <form
+              onSubmit={() => {
+                api
+                  .put(`/order/update-status`, editedStatus)
+                  .then(async (res) => {
+                    setPopUp(!popUp);
+                    alert(res.msg);
+                    window.location.href = "/admin/order";
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+                // console.log(editedStatus);
+                // setPopUp(!popUp);
+              }}
+            >
+              <div className="flex-grow mb-4">
+                <label
+                  htmlFor="status"
+                  className="block text-black font-bold mb-2"
+                >
+                  Status Order
+                </label>
+                <select
+                  id="status"
+                  className="w-full border rounded border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-500"
+                  value={editedStatus.status}
+                  onChange={(e) =>
+                    setEditedStatus({
+                      ...editedStatus,
+                      status: e.target.value,
+                    })
+                  }
+                >
+                  <option>Processed</option>
+                  <option>Shipped</option>
+                  <option>Finished</option>
+                </select>
+              </div>
               <div className="flex justify-end">
                 <button
                   type="button"

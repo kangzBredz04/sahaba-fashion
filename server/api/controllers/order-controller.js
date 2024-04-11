@@ -22,7 +22,7 @@ export const getAllOrder = async (req, res) => {
   try {
     const result = await pool.query(
       `
-      SELECT u.username, p.name_product, s.name_size, o.quantity, o.payment_method, o.address, o.status
+      SELECT o.id, u.username, p.name_product, s.name_size, o.quantity, o.payment_method, o.address, o.status
       FROM orders o
       JOIN users u ON o.id_user = u.id
       JOIN products p ON o.id_product = p.id

@@ -17,6 +17,7 @@ export default function Admin() {
   const [editedProduct, setEditedProduct] = useState();
   const [editedUser, setEditedUser] = useState();
   const [editedStock, setEditedStock] = useState();
+  const [editedStatus, setEditedStatus] = useState();
   const [admin, setAdmin] = useState({});
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -31,9 +32,7 @@ export default function Admin() {
       api.get("/auth/my-account").then((res) => setAdmin(res.data));
       api.get("/stock/get-all").then((res) => setStocks(res));
       api.get("/size/get-all").then((res) => setSizes(res));
-      api
-        .get(`/order/get/${localStorage.getItem("id")}`)
-        .then((res) => setOrders(res));
+      api.get("/order/get-all").then((res) => setOrders(res));
       setLoading(false);
     }, 500);
   }, [products?.id]);
@@ -74,6 +73,8 @@ export default function Admin() {
           setSizes,
           orders,
           setOrders,
+          editedStatus,
+          setEditedStatus,
           theme,
           setTheme,
         }}
