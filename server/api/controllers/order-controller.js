@@ -51,6 +51,17 @@ export const addOrderUser = async (req, res) => {
   }
 };
 
-const updateStatus = async (req, res) => {
-  // const {}
+export const updateStatus = async (req, res) => {
+  const { id, status } = req.body;
+  try {
+    await pool.query("UPDATE orders SET status = $1 WHERE id = $2", [
+      status,
+      id,
+    ]);
+    res.status(200).json({
+      msg: "Status berhasil diubah.",
+    });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
 };
