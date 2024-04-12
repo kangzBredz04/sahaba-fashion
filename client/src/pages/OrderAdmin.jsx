@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { AdminContext } from "./Admin";
-import { FiPrinter } from "react-icons/fi";
 import { api } from "../utils.js";
 // import { useNavigate } from "react-router-dom";
 
@@ -46,30 +45,20 @@ export default function OrderAdmin() {
     <div className="p-5 bg-gray-100 min-h-64">
       <div className="flex justify-between mb-4">
         <h2 className="text-2xl font-bold ">Order List</h2>
-        <div className="flex gap-2 w-fit">
-          <div className="flex items-center gap-2">
-            <label htmlFor="status">Category : </label>
-            <select
-              id="status"
-              className=" border rounded border-gray-300 py-1  focus:outline-none focus:border-gray-500"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option>All</option>
-              <option>Processed</option>
-              <option>Shipped</option>
-              <option>Finished</option>
-            </select>
-          </div>
-          <button
-            onClick={() => {
-              setEditedStatus({});
-              setPopUp(!popUp);
-            }}
-            className="flex justify-between gap-2 items-center bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="status">Category : </label>
+          <select
+            id="status"
+            className=" border rounded border-gray-300 py-1  focus:outline-none focus:border-gray-500"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
           >
-            <FiPrinter /> Print Order List
-          </button>
+            <option>All</option>
+            <option>Processed</option>
+            <option>Shipped</option>
+            <option>Finished</option>
+          </select>
         </div>
       </div>
       {/* Table for CRUD Data */}
@@ -101,7 +90,7 @@ export default function OrderAdmin() {
               <td className="border border-gray-300 px-4 py-2 text-center">
                 {o.name_size}
               </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
+              <td className="border border-gray-300 px-4 py-2 break-words w-64">
                 {o.address}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
