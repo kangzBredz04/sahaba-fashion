@@ -5,18 +5,16 @@ import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { LuBoxes } from "react-icons/lu";
 import { RiShirtLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AdminContext } from "../pages/Admin";
+// import { useContext } from "react";
+// import { AdminContext } from "../pages/Admin";
 // import { api } from "../utils";
 
 export default function SideBar() {
-  const { theme } = useContext(AdminContext);
+  // const { theme } = useContext(AdminContext);
 
   return (
     <div
-      className={`font-KumbhSans flex flex-col gap-7  h-screen w-36 py-4 px-4 ${
-        theme === "dark" ? "bg-black text-white " : "bg-white text-black"
-      }`}
+      className={`font-KumbhSans flex flex-col gap-7  h-screen w-36 py-4 px-4 bg-gray-200`}
     >
       <div className=" text-center">
         <h1 className="text-xl font-bold tracking-widest">SAHABA</h1>
