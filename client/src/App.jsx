@@ -10,6 +10,7 @@ export const AllContext = createContext();
 function App() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState();
+  const [register, setRegister] = useState({});
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
@@ -33,7 +34,14 @@ function App() {
   // }, [cart]);
   return (
     <AllContext.Provider
-      value={{ products, setProducts, wishlist, setWishlist }}
+      value={{
+        products,
+        setProducts,
+        wishlist,
+        setWishlist,
+        register,
+        setRegister,
+      }}
     >
       <Header />
       <Outlet context={[user, setUser]} />
