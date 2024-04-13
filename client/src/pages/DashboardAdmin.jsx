@@ -7,12 +7,15 @@ import { Link } from "react-router-dom";
 
 export default function DashboardAdmin() {
   const { products, user, orders, stocks } = useContext(AdminContext);
+  // const [countStatus, setCountStatus] = useState({});
 
   const countStatus = orders?.reduce((accumulator, order) => {
     const { status } = order;
     accumulator[status] = (accumulator[status] || 0) + 1;
     return accumulator;
   }, {});
+
+  console.log(countStatus);
 
   const totalStock = stocks.reduce((total, stock) => {
     return total + parseInt(stock.quantity);
@@ -32,9 +35,9 @@ export default function DashboardAdmin() {
           {
             label: "Orders",
             data: [
-              countStatus.Processed,
-              countStatus.Shipped,
-              countStatus.Finished,
+              countStatus?.Processed,
+              countStatus?.Shipped,
+              countStatus?.Finished,
             ],
             fill: false,
             backgroundColor: [
@@ -64,7 +67,7 @@ export default function DashboardAdmin() {
     return () => {
       myChart.destroy();
     };
-  }, []);
+  }, [countStatus?.Finished, countStatus?.Processed, countStatus?.Shipped]);
   return (
     <div className={`flex-1 `}>
       {/* Main Content */}
