@@ -24,6 +24,7 @@ export default function Login() {
     e.preventDefault();
     api.post("/auth/login", login).then((response) => {
       if (!response.token) {
+        console.log(response);
         alert(response.msg);
       } else {
         alert(response.message);
