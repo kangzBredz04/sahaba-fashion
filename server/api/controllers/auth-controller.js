@@ -48,11 +48,11 @@ export const loginAccount = async (req, res) => {
     );
 
     if (result.rows[0]) {
+      // console.log(result.rows[0].password);
+      // console.log(password);
+      // console.log(await argon2.hash(password));
       // Verifikasi antara password yang diinputkan di client dengan database
-      const isPasswordValid = await argon2.verify(
-        result.rows[0].password,
-        password
-      );
+      const isPasswordValid = argon2.verify(result.rows[0].password, password);
 
       if (isPasswordValid) {
         const token = jwt.sign(result.rows[0], process.env.SECRET_KEY);

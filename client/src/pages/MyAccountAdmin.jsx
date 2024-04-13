@@ -4,7 +4,7 @@ import { api } from "../utils";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function MyAccountAdmin() {
-  const [user, setUser] = useOutletContext();
+  const [user, setUser, idAdmin] = useOutletContext();
   const [editedUser, setEditedUser] = useState({});
 
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function MyAccountAdmin() {
     });
   }, [user]);
 
-  console.log(user);
+  console.log(idAdmin);
 
   if (user) {
     return (
@@ -132,12 +132,24 @@ export default function MyAccountAdmin() {
         </form>
 
         <div className="w-full flex mt-5 justify-end gap-3">
-          {localStorage.getItem("id") === 1 ? (
-            <button className="w-1/3 bg-black text-white py-3">
+          {idAdmin != 1 && (
+            <button
+              className="w-1/3 bg-black text-white py-3"
+              onClick={() => {
+                if (confirm("Apakah yakin anda akan menghapus akun anda ?")) {
+                  api.delete(`/auth/delete/${idAdmin}`).then((res) => {
+                    alert(res.msg);
+                    setUser();
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    localStorage.removeItem("id");
+                    navigate("/login");
+                  });
+                }
+              }}
+            >
               Delete Account
             </button>
-          ) : (
-            ""
           )}
           <button
             onClick={() => {
