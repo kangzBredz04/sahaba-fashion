@@ -14,12 +14,14 @@ export default function Admin() {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [popUp, setPopUp] = useState(false);
+  const [popUp2, setPopUp2] = useState(false);
   const [editedProduct, setEditedProduct] = useState();
   const [editedUser, setEditedUser] = useState();
   const [editedStock, setEditedStock] = useState();
   const [editedStatus, setEditedStatus] = useState();
   const [editedSize, setEditedSize] = useState();
   const [admin, setAdmin] = useState({});
+  const [idAdmin, setIdAdmin] = useState(0);
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -30,15 +32,16 @@ export default function Admin() {
     setTimeout(() => {
       api.get("/product/get-all").then((res) => setProducts(res));
       api.get("/auth/get-all").then((res) => setUser(res));
-      api.get("/auth/my-account").then((res) => setAdmin(res.data));
+      api.get("/auth/my-account").then((res) => {
+        setAdmin(res.data);
+        setIdAdmin(res.data.id);
+      });
       api.get("/stock/get-all").then((res) => setStocks(res));
       api.get("/size/get-all").then((res) => setSizes(res));
       api.get("/order/get-all").then((res) => setOrders(res));
       setLoading(false);
     }, 500);
   }, [products?.id]);
-
-  // console.log(orders);
 
   // useEffect(() => {
   //   console.log(
@@ -58,6 +61,8 @@ export default function Admin() {
           setProducts,
           popUp,
           setPopUp,
+          popUp2,
+          setPopUp2,
           editedProduct,
           setEditedProduct,
           loading,
@@ -93,7 +98,7 @@ export default function Admin() {
             {/* Navbar */}
             <Navbar />
             {/* Main Content */}
-            <Outlet context={[admin, setAdmin]} />
+            <Outlet context={[admin, setAdmin, idAdmin]} />
             <Footer />
           </div>
         </div>

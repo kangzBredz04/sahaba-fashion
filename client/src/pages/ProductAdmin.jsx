@@ -11,6 +11,8 @@ export default function ProductAdmin() {
     products,
     popUp,
     setPopUp,
+    popUp2,
+    setPopUp2,
     editedProduct,
     setEditedProduct,
     sizes,
@@ -308,7 +310,7 @@ export default function ProductAdmin() {
             <button
               onClick={() => {
                 setEditedSize({});
-                setPopUp(!popUp);
+                setPopUp2(!popUp2);
               }}
               className="flex justify-between gap-2 items-center bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
             >
@@ -339,7 +341,7 @@ export default function ProductAdmin() {
                   <button
                     onClick={() => {
                       setEditedSize(s);
-                      setPopUp(!popUp);
+                      setPopUp2(!popUp2);
                     }}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
                   >
@@ -372,6 +374,79 @@ export default function ProductAdmin() {
             ))}
           </tbody>
         </table>
+        {popUp2 && (
+          <div className="fixed inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="bg-white py-4 px-4 w-96 rounded-2xl shadow-lg z-50">
+              <h2 className="text-xl font-bold mb-4 text-center tracking-wider">
+                {editedSize.id ? "EDIT" : "ADD NEW"} SIZE
+              </h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (editedSize.id) {
+                    api
+                      .put(`/size/update/${editedSize.id}`, editedSize)
+                      .then(async (res) => {
+                        alert(res.message);
+                        window.location.href = "/admin/product";
+                      })
+                      .catch((e) => {
+                        console.log(e);
+                      });
+                  } else {
+                    api
+                      .post("/size/add", editedSize)
+                      .then(async (res) => {
+                        alert(res.message);
+                        window.location.href = "/admin/product";
+                      })
+                      .catch((e) => {
+                        console.log(e);
+                      });
+                  }
+                  setPopUp2(!popUp2);
+                }}
+              >
+                <div className="mb-4 ">
+                  <label
+                    htmlFor="name_size"
+                    className="block text-black font-bold mb-2"
+                  >
+                    Name Size
+                  </label>
+                  <input
+                    type="text"
+                    id="name_size"
+                    className="w-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-500"
+                    value={editedSize.name_size}
+                    onChange={(e) =>
+                      setEditedSize({
+                        ...editedSize,
+                        name_size: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setPopUp2(!popUp2)}
+                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-4 py-2 rounded mr-2"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
