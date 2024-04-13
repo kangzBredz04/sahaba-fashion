@@ -132,9 +132,13 @@ export default function MyAccountAdmin() {
         </form>
 
         <div className="w-full flex mt-5 justify-end gap-3">
-          <button className="w-1/3 bg-black text-white py-3">
-            Delete Account
-          </button>
+          {localStorage.getItem("id") === 1 ? (
+            <button className="w-1/3 bg-black text-white py-3">
+              Delete Account
+            </button>
+          ) : (
+            ""
+          )}
           <button
             onClick={() => {
               if (confirm("Apakah yakin anda akan logout")) {
@@ -145,8 +149,6 @@ export default function MyAccountAdmin() {
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
                   navigate("/login");
-                  console.log(user);
-                  // window.location.reload();
                 });
               }
             }}
