@@ -13,6 +13,7 @@ function App() {
   const [register, setRegister] = useState({});
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     api.get("/product/get-all").then((response) => setProducts(response));
@@ -23,15 +24,12 @@ function App() {
     api
       .get(`/wishlist/get/${localStorage.getItem("id")}`)
       .then((response) => setWishlist(response));
+    api
+      .get(`/order/get/${localStorage.getItem("id")}`)
+      .then((res) => setOrders(res));
   }, [user?.id, cart]);
 
-  console.log(user);
-  // console.log(wishlist);
-  // useEffect(() => {
-  //   api
-  //     .get(`/cart/get/${localStorage.getItem("id")}`)
-  //     .then((response) => console.log(response));
-  // }, [cart]);
+  // console.log(orders);
   return (
     <AllContext.Provider
       value={{
@@ -41,6 +39,8 @@ function App() {
         setWishlist,
         register,
         setRegister,
+        orders,
+        setOrders,
       }}
     >
       <Header />
