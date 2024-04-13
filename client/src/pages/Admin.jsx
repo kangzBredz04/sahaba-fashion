@@ -18,6 +18,7 @@ export default function Admin() {
   const [editedUser, setEditedUser] = useState();
   const [editedStock, setEditedStock] = useState();
   const [editedStatus, setEditedStatus] = useState();
+  const [editedSize, setEditedSize] = useState();
   const [admin, setAdmin] = useState({});
   const [stocks, setStocks] = useState([]);
   const [sizes, setSizes] = useState([]);
@@ -71,6 +72,8 @@ export default function Admin() {
           setEditedStock,
           sizes,
           setSizes,
+          editedSize,
+          setEditedSize,
           orders,
           setOrders,
           editedStatus,
