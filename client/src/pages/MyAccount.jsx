@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { api } from "../utils";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { AllContext } from "../App";
 
 export default function MyAccount() {
   const [user, setUser] = useOutletContext();
+  const { orders, setOrders } = useContext(AllContext);
   const [editedUser, setEditedUser] = useState({});
 
   const navigate = useNavigate();
@@ -18,9 +20,15 @@ export default function MyAccount() {
     });
   }, [user]);
 
-  console.log(user);
+  function filterOrders(status) {
+    return orders.filter((order) => order.status === status);
+  }
 
-  if (user?.id) {
+  console.log(filterOrders("Finsihed").length != 0 ? "ada" : "tidak ada");
+  console.log(filterOrders("Shipped"));
+  console.log(filterOrders("Processed"));
+
+  if (localStorage.getItem("id")) {
     return (
       <div className="py-6 px-7 font-KumbhSans bg-gray-100">
         <h2 className="text-2xl font-bold mb-4">My Account</h2>
@@ -136,62 +144,99 @@ export default function MyAccount() {
           <div className="flex flex-col gap-4">
             <div>
               <h1 className="font-semibold text-orange-400 mb-3">Processed</h1>
-              <div className="flex flex-col gap-3">
-                <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                    alt=""
-                    className="w-10"
-                  />
-                  <p>Azraq Long</p>
-                  <p>Rp.294.000</p>
-                  <p>L</p>
-                  <p>2</p>
-                  <p>Processed</p>
+              <table className="w-full">
+                <div className="flex flex-col gap-3">
+                  {filterOrders("Processed").length != 0 ? (
+                    filterOrders("Processed")?.map((o) => (
+                      <tr
+                        key={o.id}
+                        className="border border-gray-300 py-2 px-4 flex justify-between items-center"
+                      >
+                        <td className="text-center">
+                          <img src={o.image_1} alt="" className="w-10" />
+                        </td>
+                        <td className="text-center">{o.name_product}</td>
+                        <td className="text-center">
+                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                        </td>
+                        <td className="text-center">{o.name_size}</td>
+                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.status}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <div className="py-1 mb-4">
+                      <h1 className="text-center font-bold text-xl">
+                        Tidak ada pesanan yang sedang dalam proses
+                      </h1>
+                    </div>
+                  )}
                 </div>
-                <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                    alt=""
-                    className="w-10"
-                  />
-                  <p>Azraq Long</p>
-                  <p>Rp.294.000</p>
-                  <p>L</p>
-                  <p>2</p>
-                  <p>Processed</p>
-                </div>
-              </div>
+              </table>
             </div>
             <div>
               <h1 className="font-semibold text-green-400 mb-3">Shipped</h1>
-              <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                <img
-                  src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                  alt=""
-                  className="w-10"
-                />
-                <p>Azraq Long</p>
-                <p>Rp.294.000</p>
-                <p>L</p>
-                <p>2</p>
-                <p>Shipped</p>
-              </div>
+              <table className="w-full">
+                <div className="flex flex-col gap-3">
+                  {filterOrders("Shipped").length != 0 ? (
+                    filterOrders("Shipped")?.map((o) => (
+                      <tr
+                        key={o.id}
+                        className="border border-gray-300 py-2 px-4 flex justify-between items-center"
+                      >
+                        <td className="text-center">
+                          <img src={o.image_1} alt="" className="w-10" />
+                        </td>
+                        <td className="text-center">{o.name_product}</td>
+                        <td className="text-center">
+                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                        </td>
+                        <td className="text-center">{o.name_size}</td>
+                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.status}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <div className="py-1 mb-4">
+                      <h1 className="text-center font-bold text-xl">
+                        Tidak ada pesanan yang sedang dalam pengiriman
+                      </h1>
+                    </div>
+                  )}
+                </div>
+              </table>
             </div>
             <div>
               <h1 className="font-semibold text-blue-400 mb-3">Finished</h1>
-              <div className="border border-gray-300 py-2 px-4 flex justify-between items-center">
-                <img
-                  src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                  alt=""
-                  className="w-10"
-                />
-                <p>Azraq Long</p>
-                <p>Rp.294.000</p>
-                <p>L</p>
-                <p>2</p>
-                <p>Finished</p>
-              </div>
+              <table className="w-full">
+                <div className="flex flex-col gap-3">
+                  {filterOrders("Finsihed").length != 0 ? (
+                    filterOrders("Finished")?.map((o) => (
+                      <tr
+                        key={o.id}
+                        className="border border-gray-300 py-2 px-4 flex items-center"
+                      >
+                        <td className="text-center">
+                          <img src={o.image_1} alt="" className="w-10" />
+                        </td>
+                        <td className="text-center">{o.name_product}</td>
+                        <td className="text-center">
+                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                        </td>
+                        <td className="text-center">{o.name_size}</td>
+                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.status}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <div className="py-1 mb-4">
+                      <h1 className="text-center font-bold text-xl">
+                        Tidak ada pesanan yang sudah selesai
+                      </h1>
+                    </div>
+                  )}
+                </div>
+              </table>
             </div>
           </div>
         </div>
@@ -210,7 +255,6 @@ export default function MyAccount() {
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
                   navigate("/login");
-                  // console.log(user);
                 });
               }
             }}
