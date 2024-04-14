@@ -17,7 +17,7 @@ export default function CartUser() {
     );
     setSubTotal(sum);
   }, [cart]);
-  // console.log(subTotal);
+  console.log(cart);
   if (localStorage.getItem("token")) {
     return (
       <div className="flex flex-col gap-5 py-5 bg-gray-100">
@@ -46,6 +46,7 @@ export default function CartUser() {
                   name_size={c.name_size}
                   total_product={c.total_product}
                   price={c.price}
+                  id_size={c.id_size}
                 />
               ))}
             </div>

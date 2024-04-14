@@ -12,6 +12,7 @@ export default function CardCart({
   name_size,
   total_product,
   price,
+  id_size,
 }) {
   return (
     <div className="flex flex-row items-center justify-between gap-5 py-2 border-b-[1px] border-black">
@@ -39,9 +40,43 @@ export default function CardCart({
       </Link>
       <div className="w-1/5">
         <div className="flex flex-row items-center py-3 px-2 justify-between ">
-          <FaMinus className="cursor-pointer" />
-          <h1>1</h1>
-          <FaPlus className="cursor-pointer" />
+          <FaMinus
+            className="cursor-pointer"
+            onClick={() => {
+              if (total_product > 1) {
+                api
+                  .put(`/cart/update/${id_cart}`, {
+                    id_user: localStorage.getItem("id"),
+                    id_product: id_product,
+                    total_product: parseInt(total_product) - 1,
+                    id_size: id_size,
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  });
+              }
+            }}
+          />
+          <h1>{total_product}</h1>
+          <FaPlus
+            className="cursor-pointer"
+            onClick={() => {
+              api
+                .put(`/cart/update/${id_cart}`, {
+                  id_user: localStorage.getItem("id"),
+                  id_product: id_product,
+                  total_product: parseInt(total_product) + 1,
+                  id_size: id_size,
+                })
+                .then((res) => {
+                  if (res.status === 404) {
+                    alert(res.msg);
+                  } else {
+                    window.location.reload();
+                  }
+                });
+            }}
+          />
         </div>
       </div>
       <div className="w-1/5">
