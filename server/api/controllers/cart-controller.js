@@ -51,7 +51,7 @@ export const getCartByIdUser = async (req, res) => {
   try {
     const result = await pool.query(
       `
-      SELECT c.id, c.id_product, p.image_1, p.name_product, s.name_size, c.total_product, p.price 
+      SELECT c.id, c.id_product, c.id_size, p.image_1, p.name_product, s.name_size, c.total_product, p.price 
       FROM carts c 
       JOIN products p ON c.id_product = p.id
       JOIN sizes s ON c.id_size = s.id WHERE c.id_user = $1
@@ -77,7 +77,7 @@ export const updateCart = async (req, res) => {
     );
 
     if (req.body.total_product > findStock.rows[0].quantity) {
-      res.status(404).json({ msg: "Stok tidak mencukupi" });
+      res.status(404).json({ status: 404, msg: "Stok tidak mencukupi" });
     } else {
       await pool.query("UPDATE carts SET total_product = $1 WHERE id = $2", [
         req.body.total_product,
