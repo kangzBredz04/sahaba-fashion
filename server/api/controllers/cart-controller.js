@@ -51,7 +51,7 @@ export const getCartByIdUser = async (req, res) => {
   try {
     const result = await pool.query(
       `
-      SELECT p.image_1, p.name_product, s.name_size, c.total_product, p.price 
+      SELECT c.id, c.id_product, p.image_1, p.name_product, s.name_size, c.total_product, p.price 
       FROM carts c 
       JOIN products p ON c.id_product = p.id
       JOIN sizes s ON c.id_size = s.id WHERE c.id_user = $1
@@ -94,10 +94,9 @@ export const updateCart = async (req, res) => {
 
 // Controller untuk menghapus data stok berdasarkan id
 export const deleteCart = async (req, res) => {
-  k;
   try {
     await pool.query("DELETE FROM carts WHERE id = $1", [req.params.id]);
-    res.send("Keranjang berhasil dihapus.");
+    res.status(200).json({ msg: "Keranjang berhasil dihapus." });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
