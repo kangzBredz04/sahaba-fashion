@@ -3,6 +3,7 @@
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdGridView } from "react-icons/md";
 import { api } from "../utils";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CardWishlist({
   id,
@@ -12,6 +13,7 @@ export default function CardWishlist({
   price,
   status,
 }) {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-row items-center justify-between py-4  border-b-[1px] border-black">
       <div className="flex items-center gap-3">
@@ -39,12 +41,15 @@ export default function CardWishlist({
       <div>
         <h1 className="text-base font-extrabold tracking-wider">{status}</h1>
       </div>
-      <div className="flex items-center gap-3 border cursor-pointer border-black py-2 px-2">
+      <Link
+        to={`/product/${id_product}`}
+        className="flex items-center gap-3 border cursor-pointer border-black py-2 px-2"
+      >
         <MdGridView />
         <button className="text-base font-extrabold tracking-wider">
           VIEW PRODUCT
         </button>
-      </div>
+      </Link>
     </div>
   );
 }
