@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { AllContext } from "../App";
 import CardWishlist from "../components/CardWishlist";
 import NotLogin from "./NotLogin";
-import { GoBookmark } from "react-icons/go";
 import NotWishlist from "./NotWishlist";
 
 export default function Wishlist() {
