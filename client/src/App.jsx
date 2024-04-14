@@ -3,16 +3,17 @@ import { Outlet } from "react-router-dom";
 import { api } from "./utils";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Loading from "./components/Loading";
+// import Loading from "./components/Loading";
 
 export const AllContext = createContext();
 
 function App() {
   const [user, setUser] = useState({});
-  const [cart, setCart] = useState();
+  const [cart, setCart] = useState([]);
   const [register, setRegister] = useState({});
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  // const [carts, setCarts] = useState([]);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ function App() {
     api.get("/auth/my-account").then((response) => setUser(response.data));
     api
       .get(`/cart/get/${localStorage.getItem("id")}`)
-      .then((response) => console.log(response));
+      .then((response) => setCart(response));
     api
       .get(`/wishlist/get/${localStorage.getItem("id")}`)
       .then((response) => setWishlist(response));
@@ -41,6 +42,8 @@ function App() {
         setRegister,
         orders,
         setOrders,
+        cart,
+        setCart,
       }}
     >
       <Header />

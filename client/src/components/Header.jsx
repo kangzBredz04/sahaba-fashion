@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { AllContext } from "../App";
 
 export default function Header() {
-  const { wishlist } = useContext(AllContext);
+  const { wishlist, cart } = useContext(AllContext);
   return (
     <header className="bg-white border  sticky top-0 z-50 font-KumbhSans">
       <div className="container mx-auto  py-4 flex justify-between items-center">
@@ -60,9 +60,13 @@ export default function Header() {
             to="/cart"
             className="text-gray-700 hover:text-gray-900 relative"
           >
-            <div className="absolute -right-2 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
-              2
-            </div>
+            {cart.length < 1 ? (
+              ""
+            ) : (
+              <div className="absolute -right-2 -top-2 text-white px-1 bg-red-600 rounded-full text-xs">
+                {cart?.length}
+              </div>
+            )}
             <SlBag className="text-xl" />
           </Link>
         </div>
