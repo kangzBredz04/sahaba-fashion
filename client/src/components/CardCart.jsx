@@ -1,7 +1,55 @@
-export default function CardCart() {
+/* eslint-disable react/prop-types */
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { api } from "../utils";
+
+export default function CardCart({
+  id_cart,
+  id_product,
+  name_product,
+  image,
+  name_size,
+  total_product,
+  price,
+}) {
   return (
-    <div>
-      <h1>Card Cart</h1>
+    <div className="flex flex-row items-center justify-between gap-5 py-2 border-b-[1px] border-black">
+      <IoMdCloseCircleOutline
+        className="text-2xl cursor-pointer"
+        onClick={() => {
+          api.delete(`/cart/delete/${id_cart}`).then(() => {
+            window.location.reload();
+          });
+        }}
+      />
+      <Link
+        to={`/product/${id_product}`}
+        className="w-3/5 flex flex-row items-center gap-7 py-2"
+      >
+        <img src={image} alt="" className="w-12" />
+        <div className="flex flex-col gap-1">
+          <h1 className="text-base font-extrabold tracking-wider">
+            {name_product} - {name_size}
+          </h1>
+          <h1 className="text-sm text-gray-600 font-semibold tracking-wider">
+            {total_product} x Rp{parseInt(price).toLocaleString("id-ID")}
+          </h1>
+        </div>
+      </Link>
+      <div className="w-1/5">
+        <div className="flex flex-row items-center py-3 px-2 justify-between ">
+          <FaMinus className="cursor-pointer" />
+          <h1>1</h1>
+          <FaPlus className="cursor-pointer" />
+        </div>
+      </div>
+      <div className="w-1/5">
+        <h1 className="text-base text-center font-extrabold tracking-wider">
+          Rp
+          {(parseInt(price) * parseInt(total_product)).toLocaleString("id-ID")}
+        </h1>
+      </div>
     </div>
   );
 }
