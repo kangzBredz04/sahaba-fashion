@@ -57,12 +57,14 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
           // console.log(name);
         }}
       >
-        <img src={image} alt="" />
+        <img src={image} alt="" className="h-1/2" />
       </div>
       <div className="p-4 flex flex-col gap-2">
         <p className="text-sm">{tipe}</p>
         <p className="text-sm font-semibold">{name}</p>
-        <p className="text-sm font-light">Rp{price}</p>
+        <p className="text-sm font-light">
+          Rp{parseInt(price).toLocaleString("id-ID")}
+        </p>
         {/* <p>{status}</p> */}
       </div>
     </div>

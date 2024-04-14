@@ -23,7 +23,9 @@ export default function DetailProduct() {
       <div>
         <div className="my-10 mx-8 flex flex-col gap-5">
           <h1 className="text-2xl font-bold">{product.name_product}</h1>
-          <h1 className="font-semibold">Rp{product.price}</h1>
+          <h1 className="font-semibold">
+            Rp{parseInt(product.price).toLocaleString("id-ID")}
+          </h1>
           <p className="font-light">{product.description}</p>
         </div>
         <div className="my-10 mx-8 flex flex-col gap-5">
