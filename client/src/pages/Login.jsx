@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { api } from "../utils.js";
 import { useState } from "react";
