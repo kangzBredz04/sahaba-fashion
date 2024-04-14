@@ -28,7 +28,7 @@ export default function Home() {
               key={p.id}
               id={p.id}
               name={p.name_product}
-              image={p.image_2}
+              image={p.image_1}
               price={p.price}
               tipe={"Koko"}
               status={

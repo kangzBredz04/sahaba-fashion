@@ -1,4 +1,4 @@
-import { FaPlus, FaMinus } from "react-icons/fa6";
+/* eslint-disable no-unused-vars */
 import NotLogin from "./NotLogin";
 import { useContext, useEffect, useState } from "react";
 import { AllContext } from "../App";
