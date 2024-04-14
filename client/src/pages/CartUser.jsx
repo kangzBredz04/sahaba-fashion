@@ -1,7 +1,23 @@
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import NotLogin from "./NotLogin";
+import { useContext, useEffect, useState } from "react";
+import { AllContext } from "../App";
+import CardCart from "../components/CardCart";
 
 export default function CartUser() {
+  const { cart } = useContext(AllContext);
+
+  const [subTotal, setSubTotal] = useState(0);
+  const [diskon, setDiskon] = useState(0);
+
+  useEffect(() => {
+    const sum = cart.reduce(
+      (acc, curr) => acc + parseInt(curr.price) * parseInt(curr.total_product),
+      0
+    );
+    setSubTotal(sum);
+  }, [cart]);
+  // console.log(subTotal);
   if (localStorage.getItem("token")) {
     return (
       <div className="flex flex-col gap-5 py-5 bg-gray-100">
@@ -20,64 +36,18 @@ export default function CartUser() {
               </h1>
             </div>
             <div className="flex flex-col">
-              <div className="flex flex-row items-center justify-between gap-5 py-2 border-b-[1px] border-black">
-                <div className="w-3/5 flex flex-row items-center gap-7 py-2">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/04/koko-modern-azraq-long.webp"
-                    alt=""
-                    className="w-12"
-                  />
-                  <div className="flex flex-col gap-1">
-                    <h1 className="text-base font-extrabold tracking-wider">
-                      Azraq Long - L
-                    </h1>
-                    <h1 className="text-sm text-gray-600 font-semibold tracking-wider">
-                      1 x Rp294.000
-                    </h1>
-                  </div>
-                </div>
-                <div className="w-1/5">
-                  <div className="flex flex-row items-center py-3 px-2 justify-between ">
-                    <FaMinus className="cursor-pointer" />
-                    <h1>1</h1>
-                    <FaPlus className="cursor-pointer" />
-                  </div>
-                </div>
-                <div className="w-1/5">
-                  <h1 className="text-base text-center font-extrabold tracking-wider">
-                    Rp294.000
-                  </h1>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between gap-5 py-2 border-b-[1px] border-black">
-                <div className="w-3/5 flex flex-row items-center gap-7 py-2">
-                  <img
-                    src="https://fadkhera.com/wp-content/uploads/2024/03/Sarong-Navy.webp"
-                    alt=""
-                    className="w-12"
-                  />
-                  <div className="flex flex-col gap-1">
-                    <h1 className="text-base font-extrabold tracking-wider">
-                      Sarong Navy
-                    </h1>
-                    <h1 className="text-sm text-gray-600 font-semibold tracking-wider">
-                      1 x Rp119.000
-                    </h1>
-                  </div>
-                </div>
-                <div className="w-1/5">
-                  <div className="flex flex-row items-center py-3 px-2 justify-between ">
-                    <FaMinus className="cursor-pointer" />
-                    <h1>1</h1>
-                    <FaPlus className="cursor-pointer" />
-                  </div>
-                </div>
-                <div className="w-1/5">
-                  <h1 className="text-base text-center font-extrabold tracking-wider">
-                    Rp119.000
-                  </h1>
-                </div>
-              </div>
+              {cart.map((c) => (
+                <CardCart
+                  key={c.id}
+                  id_cart={c.id}
+                  id_product={c.id_product}
+                  name_product={c.name_product}
+                  image={c.image_1}
+                  name_size={c.name_size}
+                  total_product={c.total_product}
+                  price={c.price}
+                />
+              ))}
             </div>
           </div>
           <div className="w-1/4 border border-gray-700 px-4 py-2">
@@ -101,7 +71,7 @@ export default function CartUser() {
                 SUBTOTAL
               </h1>
               <h1 className="text-base font-extrabold tracking-wider">
-                Rp413.000
+                Rp{subTotal.toLocaleString("id-ID")}
               </h1>
             </div>
             <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
@@ -113,7 +83,7 @@ export default function CartUser() {
             <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
               <h1 className="text-base font-extrabold tracking-wider">TOTAL</h1>
               <h1 className="text-base font-extrabold tracking-wider">
-                Rp413.000
+                Rp{(subTotal - diskon).toLocaleString("id-ID")}
               </h1>
             </div>
             <div className="flex justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800">

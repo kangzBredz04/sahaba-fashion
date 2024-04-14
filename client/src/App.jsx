@@ -28,7 +28,7 @@ function App() {
     api
       .get(`/order/get/${localStorage.getItem("id")}`)
       .then((res) => setOrders(res));
-  }, [user?.id, cart]);
+  }, [user?.id]);
 
   // console.log(orders);
   return (
