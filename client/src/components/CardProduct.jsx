@@ -11,14 +11,12 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
         <IoBookmark
           onClick={() => {
             if (localStorage.getItem("id")) {
-              console.log("masuk");
               api
                 .delete2("/wishlist/delete", {
                   id_user: localStorage.getItem("id"),
                   id_product: id,
                 })
                 .then(() => {
-                  // alert(res.msg);
                   window.location.reload();
                 });
             } else {
@@ -32,7 +30,6 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
         <IoBookmarkOutline
           onClick={() => {
             if (localStorage.getItem("id")) {
-              console.log("masuk");
               api
                 .post("/wishlist/add", {
                   id_user: localStorage.getItem("id"),
