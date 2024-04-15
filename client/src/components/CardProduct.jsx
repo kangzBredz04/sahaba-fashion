@@ -50,6 +50,7 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
       <div
         className="w-full"
         onClick={() => {
+          // window.location.reload();
           localStorage.setItem("id_product", id);
           navigate(`/product/${localStorage.getItem("id_product")}`);
           // console.log(name);
