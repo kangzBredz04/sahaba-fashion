@@ -2,16 +2,24 @@ import { useContext } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { AllContext } from "../App";
 import { GoShareAndroid } from "react-icons/go";
-import { GoBookmark } from "react-icons/go";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { api } from "../utils";
 // import { api } from "../utils";
 
 export default function DetailProduct() {
   const { id } = useParams();
-  const { products } = useContext(AllContext);
+  const { products, wishlist } = useContext(AllContext);
   const [user] = useOutletContext();
   const product = products.find((p) => p.id == parseInt(id));
 
-  console.log(user);
+  // console.log(wishlist);
+
+  const result = wishlist.find(
+    (w) => w.id_product == localStorage.getItem("id_product")
+  );
+
+  console.log(result);
+
   return (
     <div className="grid grid-cols-3 font-KumbhSans">
       <div className="border border-gray-200 hover:cursor-pointe">
@@ -51,10 +59,41 @@ export default function DetailProduct() {
           </div>
         </div>
         <div className="my-10 mx-8 flex gap-10">
-          <div className="flex gap-2">
-            <GoBookmark />
-            <p className="text-xs">ADD TO WISHLIST</p>
-          </div>
+          {result == undefined ? (
+            <div
+              className="flex gap-2 cursor-pointer"
+              onClick={() => {
+                api
+                  .post("/wishlist/add", {
+                    id_user: localStorage.getItem("id"),
+                    id_product: id,
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  });
+              }}
+            >
+              <IoBookmarkOutline />
+              <p className="text-xs">ADD TO WISHLIST</p>
+            </div>
+          ) : (
+            <div
+              className="flex gap-2 cursor-pointer"
+              onClick={() => {
+                api
+                  .delete2("/wishlist/delete", {
+                    id_user: localStorage.getItem("id"),
+                    id_product: id,
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  });
+              }}
+            >
+              <IoBookmark />
+              <p className="text-xs">REMOVE FROM WISHLIST</p>
+            </div>
+          )}
           <div className="flex gap-2">
             <GoShareAndroid />
             <p className="text-xs">SHARE</p>
