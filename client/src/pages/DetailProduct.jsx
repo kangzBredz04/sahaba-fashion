@@ -15,18 +15,18 @@ export default function DetailProduct() {
   return (
     <div className="grid grid-cols-3 font-KumbhSans">
       <div className="border border-gray-200 hover:cursor-pointe">
-        <img src={product.image_1} alt="" />
+        <img src={product?.image_1} alt="" />
       </div>
       <div className="border border-gray-200 hover:cursor-pointe">
-        <img src={product.image_2} alt="" />
+        <img src={product?.image_2} alt="" />
       </div>
       <div>
         <div className="my-10 mx-8 flex flex-col gap-5">
-          <h1 className="text-2xl font-bold">{product.name_product}</h1>
+          <h1 className="text-2xl font-bold">{product?.name_product}</h1>
           <h1 className="font-semibold">
-            Rp{parseInt(product.price).toLocaleString("id-ID")}
+            Rp{parseInt(product?.price).toLocaleString("id-ID")}
           </h1>
-          <p className="font-light">{product.description}</p>
+          <p className="font-light">{product?.description}</p>
         </div>
         <div className="my-10 mx-8 flex flex-col gap-5">
           <div className="flex justify-between">
