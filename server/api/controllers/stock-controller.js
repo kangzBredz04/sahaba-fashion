@@ -32,6 +32,21 @@ export const getAllStock = async (_req, res) => {
   }
 };
 
+export const getSizeBydIdProduct = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT st.id, st.id_size, s.name_size, st.quantity
+      FROM stocks st
+      JOIN products p ON st.id_product = p.id
+      JOIN sizes s ON st.id_size = s.id WHERE st.id_product = $1`,
+      [req.params.id]
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 // Controller untuk mengubah data stok berdasarkan id
 export const updateStock = async (req, res) => {
   try {
