@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { api } from "../utils";
@@ -21,12 +22,8 @@ export default function MyAccount() {
   }, [user]);
 
   function filterOrders(status) {
-    return orders.filter((order) => order.status === status);
+    return orders?.filter((order) => order.status === status);
   }
-
-  console.log(filterOrders("Finsihed").length != 0 ? "ada" : "tidak ada");
-  console.log(filterOrders("Shipped"));
-  console.log(filterOrders("Processed"));
 
   if (localStorage.getItem("id")) {
     return (
