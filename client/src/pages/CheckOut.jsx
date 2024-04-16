@@ -50,8 +50,6 @@ export default function CheckOut() {
     setSubTotal(sum);
   }, [cart]);
 
-  //   console.log(cart);
-
   useEffect(() => {
     fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
       .then((response) => response.json())
@@ -105,7 +103,26 @@ export default function CheckOut() {
     setVillages(v.name);
   }
 
-  console.log(ordersUser);
+  useEffect(() => {
+    setOrdersUser({
+      id_user: localStorage.getItem("id"),
+      orders: cart,
+      payment_method: payment,
+      no_telp: telp,
+      address: `${detailAddress}, ${villages}, ${district}, ${regencies}, ${postcode}, ${province}, ${country}.`,
+    });
+  }, [
+    cart,
+    country,
+    detailAddress,
+    district,
+    payment,
+    postcode,
+    province,
+    regencies,
+    telp,
+    villages,
+  ]);
 
   return (
     <div className="flex flex-col gap-8 py-8 mx-6">
@@ -117,25 +134,7 @@ export default function CheckOut() {
           <h1 className="text-base font-extrabold tracking-wider">
             BILLING DETAILS
           </h1>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (payment) {
-                setOrdersUser({
-                  id_user: localStorage.getItem("id"),
-                  orders: cart,
-                  payment_method: payment,
-                  no_telp: telp,
-                  address: `${detailAddress}, ${villages}, ${district}, ${regencies}, ${postcode}, ${province}, ${country}.`,
-                });
-                api
-                  .post("/order/add", ordersUser)
-                  .then((res) => alert(res.msg));
-              } else {
-                alert("Belum mengisi metode pembayaran");
-              }
-            }}
-          >
+          <form>
             <div className="flex gap-5">
               {/* Nama Depan */}
               <div className="grow mb-4">
@@ -356,7 +355,28 @@ export default function CheckOut() {
               />
             </div>
             <button
-              type="submit"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                if (payment) {
+                  setOrdersUser({
+                    id_user: localStorage.getItem("id"),
+                    orders: cart,
+                    payment_method: payment,
+                    no_telp: telp,
+                    address: `${detailAddress}, ${villages}, ${district}, ${regencies}, ${postcode}, ${province}, ${country}.`,
+                  });
+                  console.log(cart);
+                  console.log(ordersUser);
+                  api.post("/order/add", ordersUser).then((res) => {
+                    alert(res.msg);
+                    setOrdersUser({});
+                    window.location.href = "/profile";
+                  });
+                } else {
+                  alert("Belum mengisi metode pembayaran");
+                }
+              }}
               className="flex w-full justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
             >
               <h1 className="text-base font-extrabold tracking-wider">
