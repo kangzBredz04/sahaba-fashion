@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { AllContext } from "../App";
 import { GoShareAndroid } from "react-icons/go";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { PiHandsPrayingBold } from "react-icons/pi";
 import { api } from "../utils";
 import CardProduct from "../components/CardProduct";
 import Loading from "../components/Loading";
@@ -15,6 +16,9 @@ export default function DetailProduct() {
   const [user] = useOutletContext();
   const product = products.find((p) => p.id == parseInt(id));
 
+  const [cartProduct, setCartProduct] = useState({});
+  const [nameSize, setNameSize] = useState([]);
+
   const result = wishlist.find(
     (w) => w.id_product == localStorage.getItem("id_product")
   );
@@ -24,6 +28,21 @@ export default function DetailProduct() {
     .slice(0, 4);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    api
+      .get(`/stock/get-size/${localStorage.getItem("id_product")}`)
+      .then((res) => setNameSize(res));
+
+    setCartProduct({
+      id_user: localStorage.getItem("id"),
+      id_product: localStorage.getItem("id_product"),
+      total_product: 0,
+      id_size: 0,
+    });
+  }, []);
+
+  console.log(cartProduct);
 
   if (products[0]?.id) {
     return (
@@ -43,28 +62,66 @@ export default function DetailProduct() {
               </h1>
               <p className="font-light">{product.description}</p>
             </div>
-            <div className="my-10 mx-8 flex flex-col gap-5">
-              <div className="flex justify-between">
-                <h1 className="font-bold">SIZE</h1>
-                <h1 className="text-xs">SIZE GUIDE</h1>
+            {nameSize?.length > 0 ? (
+              <div className="my-1 mx-8 flex flex-col gap-5">
+                <div className="flex justify-between">
+                  <h1 className="font-bold">SIZE</h1>
+                  <h1 className="text-xs">SIZE GUIDE</h1>
+                </div>
+                <div className="flex justify-between">
+                  <select
+                    name="name_size"
+                    className="w-full py-3 px-2 border border-gray-400 rounded-md"
+                    onChange={(e) =>
+                      setCartProduct({
+                        ...cartProduct,
+                        total_product: 1,
+                        id_size: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="" disabled selected hidden>
+                      Pilih opsi ukuran...
+                    </option>
+                    {nameSize.map((s) => (
+                      <option
+                        key={s.id}
+                        value={s.id_size}
+                        className="w-full py-3 px-2 border border-gray-400 rounded-md"
+                      >
+                        {s.name_size}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <h1 className="border border-gray-400 py-1 px-3">S</h1>
-                <h1 className="border border-gray-400 py-1 px-3">M</h1>
-                <h1 className="border border-gray-400 py-1 px-3">L</h1>
-                <h1 className="border border-gray-400 py-1 px-3">XL</h1>
-                <h1 className="border border-gray-400 py-1 px-3">XXL</h1>
-                <h1 className="border border-gray-400 py-1 px-3">XXXL</h1>
+            ) : (
+              <div className="my-1 mx-8 flex flex-row items-center gap-3">
+                <h1 className="text-center text-md font-bold">
+                  MOHON MAAF STOK LAGI KOSONG
+                </h1>
+                <PiHandsPrayingBold className="text-xl" />
               </div>
-            </div>
-            <div className="my-10 mx-8 flex gap-5">
-              <div
-                onClick={() => {}}
-                className=" w-full flex items-center py-3 px-2 bg-black"
-              >
-                <h1 className="text-white m-auto">ADD TO CART</h1>
+            )}
+            {nameSize.length > 0 && (
+              <div className="my-10 mx-8 flex gap-5">
+                <div
+                  onClick={() => {
+                    if (cartProduct.total_product == 0) {
+                      alert("Harap pilih dulu ukuran");
+                    } else {
+                      api.post("/cart/add", cartProduct).then((res) => {
+                        alert(res.msg);
+                        window.location.reload();
+                      });
+                    }
+                  }}
+                  className=" w-full flex items-center py-3 px-2 bg-black cursor-pointer"
+                >
+                  <h1 className="text-white m-auto">ADD TO CART</h1>
+                </div>
               </div>
-            </div>
+            )}
             <div className="my-10 mx-8 flex gap-10">
               {result == undefined ? (
                 <div
