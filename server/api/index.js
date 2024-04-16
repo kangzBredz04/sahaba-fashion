@@ -23,13 +23,16 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth", AuthRoute);
-app.use("/product", ProductRoute);
-app.use("/size", SizeRoute);
-app.use("/stock", StockRoute);
-app.use("/cart", CartRoute);
-app.use("/wishlist", WishlistRoute);
-app.use("/order", OrderRoute);
+const router = express.Router();
+app.use("/api", router);
+
+router.use("/auth", AuthRoute);
+router.use("/product", ProductRoute);
+router.use("/size", SizeRoute);
+router.use("/stock", StockRoute);
+router.use("/cart", CartRoute);
+router.use("/wishlist", WishlistRoute);
+router.use("/order", OrderRoute);
 
 app.listen(process.env.API_PORT, () =>
   console.log("Server berhasil dijalankan.")
