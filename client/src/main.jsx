@@ -21,6 +21,7 @@ import Wishlist from "./pages/Wishlist.jsx";
 import UserAdmin from "./pages/UserAdmin.jsx";
 import StockAdmin from "./pages/StockAdmin.jsx";
 import OrderAdmin from "./pages/OrderAdmin.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/new-arrivals",
         element: <NewArrivals />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
       {
         path: "/profile",
