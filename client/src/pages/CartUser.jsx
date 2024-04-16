@@ -3,6 +3,7 @@ import NotLogin from "./NotLogin";
 import { useContext, useEffect, useState } from "react";
 import { AllContext } from "../App";
 import CardCart from "../components/CardCart";
+import { useNavigate } from "react-router-dom";
 
 export default function CartUser() {
   const { cart } = useContext(AllContext);
@@ -17,10 +18,12 @@ export default function CartUser() {
     );
     setSubTotal(sum);
   }, [cart]);
-  console.log(cart);
+
+  const navigate = useNavigate();
+
   if (localStorage.getItem("token")) {
     return (
-      <div className="flex flex-col gap-5 py-5 bg-gray-100">
+      <div className="flex flex-col gap-5 py-5 bg-white">
         <h1 className="text-center font-bold tracking-widest text-2xl">CART</h1>
         <div className="flex gap-4 py-5 px-5">
           <div className="w-3/4 p-3  flex flex-col gap-3">
@@ -51,8 +54,8 @@ export default function CartUser() {
               ))}
             </div>
           </div>
-          <div className="w-1/4 border border-gray-700 px-4 py-2">
-            <div className="flex flex-col gap-2  justify-between py-4 border-b-[1px] border-black">
+          <div className="w-1/4 border h-fit border-gray-700 px-4 py-2">
+            {/* <div className="flex flex-col gap-2  justify-between py-4 border-b-[1px] border-black">
               <h1 className="text-base font-extrabold tracking-wider">
                 COUPON CODE
               </h1>
@@ -66,7 +69,7 @@ export default function CartUser() {
                   APPLY
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
               <h1 className="text-base font-extrabold tracking-wider">
                 SUBTOTAL
@@ -87,7 +90,13 @@ export default function CartUser() {
                 Rp{(subTotal - diskon).toLocaleString("id-ID")}
               </h1>
             </div>
-            <div className="flex justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800">
+            <div
+              onClick={() => {
+                // window.location.href = "/checkout";
+                navigate("/checkout");
+              }}
+              className="flex justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
+            >
               <h1 className="text-base font-extrabold tracking-wider">
                 CHECKOUT
               </h1>
