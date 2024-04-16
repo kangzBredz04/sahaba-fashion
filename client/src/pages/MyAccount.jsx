@@ -9,17 +9,18 @@ export default function MyAccount() {
   const [user, setUser] = useOutletContext();
   const { orders, setOrders } = useContext(AllContext);
   const [editedUser, setEditedUser] = useState({});
+  const [allUser, setAllUser] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setEditedUser({
-      first_name: user.first_name,
-      last_name: user.last_name,
-      username: user.username,
-      email: user.email,
+    api.get("/auth/get-all").then((res) => {
+      setAllUser(res);
+      console.log(allUser.find((us) => us.id == localStorage.getItem("id")));
     });
-  }, [user]);
+  }, [allUser]);
+
+  console.log(editedUser);
 
   function filterOrders(status) {
     return orders?.filter((order) => order.status === status);
@@ -31,10 +32,14 @@ export default function MyAccount() {
         <h2 className="text-2xl font-bold mb-4">My Account</h2>
         {/* Form untuk mengubah data user */}
         <form
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault();
             api
-              .put(`/auth/update/${user.id}`, editedUser)
-              .then((res) => console.log(res));
+              .put(`/auth/update/${localStorage.getItem("id")}`, editedUser)
+              .then((res) => {
+                alert(res.msg);
+                window.location.href = "/profile";
+              });
           }}
         >
           <div className="flex gap-5">
@@ -154,10 +159,13 @@ export default function MyAccount() {
                         </td>
                         <td className="text-center">{o.name_product}</td>
                         <td className="text-center">
-                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                          Rp
+                          {(
+                            parseInt(o.price) * parseInt(o.total_product)
+                          ).toLocaleString("id-ID")}
                         </td>
                         <td className="text-center">{o.name_size}</td>
-                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.total_product}</td>
                         <td className="text-center">{o.status}</td>
                       </tr>
                     ))
@@ -186,10 +194,13 @@ export default function MyAccount() {
                         </td>
                         <td className="text-center">{o.name_product}</td>
                         <td className="text-center">
-                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                          Rp
+                          {(
+                            parseInt(o.price) * parseInt(o.total_product)
+                          ).toLocaleString("id-ID")}
                         </td>
                         <td className="text-center">{o.name_size}</td>
-                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.total_product}</td>
                         <td className="text-center">{o.status}</td>
                       </tr>
                     ))
@@ -207,21 +218,25 @@ export default function MyAccount() {
               <h1 className="font-semibold text-blue-400 mb-3">Finished</h1>
               <table className="w-full">
                 <div className="flex flex-col gap-3">
-                  {filterOrders("Finsihed").length != 0 ? (
+                  {filterOrders("Finished").length != 0 ? (
                     filterOrders("Finished")?.map((o) => (
                       <tr
                         key={o.id}
-                        className="border border-gray-300 py-2 px-4 flex items-center"
+                        className="border border-gray-300 py-2 px-4 flex justify-between items-center"
                       >
                         <td className="text-center">
                           <img src={o.image_1} alt="" className="w-10" />
                         </td>
                         <td className="text-center">{o.name_product}</td>
                         <td className="text-center">
-                          Rp{parseInt(o.price).toLocaleString("id-ID")}
+                          {" "}
+                          Rp
+                          {(
+                            parseInt(o.price) * parseInt(o.total_product)
+                          ).toLocaleString("id-ID")}
                         </td>
                         <td className="text-center">{o.name_size}</td>
-                        <td className="text-center">{o.quantity}</td>
+                        <td className="text-center">{o.total_product}</td>
                         <td className="text-center">{o.status}</td>
                       </tr>
                     ))
