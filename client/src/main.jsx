@@ -22,6 +22,7 @@ import UserAdmin from "./pages/UserAdmin.jsx";
 import StockAdmin from "./pages/StockAdmin.jsx";
 import OrderAdmin from "./pages/OrderAdmin.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
+import CheckOut from "./pages/CheckOut.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/checkout",
+        element: <CheckOut />,
       },
     ],
   },
