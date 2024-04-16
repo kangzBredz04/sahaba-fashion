@@ -139,6 +139,7 @@ export default function MyAccountAdmin() {
                 if (confirm("Apakah yakin anda akan menghapus akun anda ?")) {
                   api.delete(`/auth/delete/${idAdmin}`).then((res) => {
                     alert(res.msg);
+                    window.location.reload();
                     setUser();
                     localStorage.removeItem("token");
                     localStorage.removeItem("role");
