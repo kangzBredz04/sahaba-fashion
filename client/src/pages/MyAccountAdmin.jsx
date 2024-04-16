@@ -156,12 +156,12 @@ export default function MyAccountAdmin() {
             onClick={() => {
               if (confirm("Apakah yakin anda akan logout")) {
                 api.get("/auth/logout").then((res) => {
-                  alert(res.msg);
-                  setUser({});
                   localStorage.removeItem("token");
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
-                  navigate("/login");
+                  alert(res.msg);
+                  window.location.href = "/login";
+                  // setUser();
                 });
               }
             }}
@@ -178,7 +178,7 @@ export default function MyAccountAdmin() {
         <Loading />;
         {setTimeout(() => {
           navigate("/login");
-        }, 500)}
+        }, 1000)}
       </div>
     );
   }
