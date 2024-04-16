@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { AllContext } from "../App";
+import { api } from "../utils";
 
 export default function CheckOut() {
   const [user, setUser] = useOutletContext();
@@ -10,14 +11,6 @@ export default function CheckOut() {
 
   const [subTotal, setSubTotal] = useState(0);
   const [diskon, setDiskon] = useState(0);
-
-  useEffect(() => {
-    const sum = cart.reduce(
-      (acc, curr) => acc + parseInt(curr.price) * parseInt(curr.total_product),
-      0
-    );
-    setSubTotal(sum);
-  }, [cart]);
 
   //   const navigate = useNavigate();
 
@@ -31,14 +24,33 @@ export default function CheckOut() {
   const [idD, setIdD] = useState(0);
   const [idV, setIdV] = useState(0);
 
-  const [fName, setFName] = useState("");
-  const [lName, setLName] = useState("");
-  const [country, setCountry] = useState("");
-  const [province, setProvince] = useState("");
-  const [regencies, setRegencies] = useState("");
-  const [district, setDistrict] = useState("");
-  const [villages, setVillages] = useState("");
-  //   const [address, setAddress] = useState({});
+  const [fName, setFName] = useState();
+  const [lName, setLName] = useState();
+  const [country, setCountry] = useState();
+  const [province, setProvince] = useState();
+  const [regencies, setRegencies] = useState();
+  const [district, setDistrict] = useState();
+  const [villages, setVillages] = useState();
+  const [detailAddress, setDetailAddress] = useState();
+  const [postcode, setPoscode] = useState();
+  const [telp, setTelp] = useState();
+
+  const [ordersUser, setOrdersUser] = useState({});
+
+  const [payment, setPayment] = useState("");
+  const handleOptionPayment = (e) => {
+    setPayment(e.target.value);
+  };
+
+  useEffect(() => {
+    const sum = cart.reduce(
+      (acc, curr) => acc + parseInt(curr.price) * parseInt(curr.total_product),
+      0
+    );
+    setSubTotal(sum);
+  }, [cart]);
+
+  //   console.log(cart);
 
   useEffect(() => {
     fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
@@ -92,10 +104,9 @@ export default function CheckOut() {
     const v = listVillages.find((item) => item.id === id);
     setVillages(v.name);
   }
-  console.log(province);
-  console.log(regencies);
-  console.log(district);
-  console.log(villages);
+
+  console.log(ordersUser);
+
   return (
     <div className="flex flex-col gap-8 py-8 mx-6">
       <h1 className="text-center font-bold tracking-widest text-2xl">
@@ -106,7 +117,25 @@ export default function CheckOut() {
           <h1 className="text-base font-extrabold tracking-wider">
             BILLING DETAILS
           </h1>
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (payment) {
+                setOrdersUser({
+                  id_user: localStorage.getItem("id"),
+                  orders: cart,
+                  payment_method: payment,
+                  no_telp: telp,
+                  address: `${detailAddress}, ${villages}, ${district}, ${regencies}, ${postcode}, ${province}, ${country}.`,
+                });
+                api
+                  .post("/order/add", ordersUser)
+                  .then((res) => alert(res.msg));
+              } else {
+                alert("Belum mengisi metode pembayaran");
+              }
+            }}
+          >
             <div className="flex gap-5">
               {/* Nama Depan */}
               <div className="grow mb-4">
@@ -181,6 +210,7 @@ export default function CheckOut() {
                   setIdP(e.target.value);
                   getP(e.target.value);
                 }}
+                required
               >
                 <option value="" disabled selected hidden>
                   Select province...
@@ -207,6 +237,7 @@ export default function CheckOut() {
                   setIdR(e.target.value);
                   getR(e.target.value);
                 }}
+                required
               >
                 <option value="" disabled selected hidden>
                   Select regencie...
@@ -233,6 +264,7 @@ export default function CheckOut() {
                   setIdD(e.target.value);
                   getD(e.target.value);
                 }}
+                required
               >
                 <option value="" disabled selected hidden>
                   Select district...
@@ -259,6 +291,7 @@ export default function CheckOut() {
                   setIdV(e.target.value);
                   getV(e.target.value);
                 }}
+                required
               >
                 <option value="" disabled selected hidden>
                   Select village...
@@ -270,21 +303,95 @@ export default function CheckOut() {
                 ))}
               </select>
             </div>
+            {/* DETAIL ADDRESS */}
+            <div className="grow mb-4">
+              <label
+                htmlFor="detailaddress"
+                className="block text-black font-bold mb-2"
+              >
+                Detail Address *
+              </label>
+              <input
+                type="text"
+                id="detailaddress"
+                name="detailaddress"
+                placeholder="House number, street name, unit, etc."
+                value={detailAddress}
+                onChange={(e) => setDetailAddress(e.target.value)}
+                required
+                className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
+              />
+            </div>
+            {/* POSTCODE / ZIP */}
+            <div className="grow mb-4">
+              <label
+                htmlFor="postcode"
+                className="block text-black font-bold mb-2"
+              >
+                Postcode / ZIP *
+              </label>
+              <input
+                type="text"
+                id="postcode"
+                name="postcode"
+                value={postcode}
+                onChange={(e) => setPoscode(e.target.value)}
+                required
+                className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
+              />
+            </div>
+            {/* NO TELP */}
+            <div className="grow mb-4">
+              <label htmlFor="telp" className="block text-black font-bold mb-2">
+                Phone *
+              </label>
+              <input
+                type="text"
+                id="telp"
+                name="telp"
+                value={telp}
+                onChange={(e) => setTelp(e.target.value)}
+                required
+                className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
+              />
+            </div>
+            <button
+              type="submit"
+              className="flex w-full justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
+            >
+              <h1 className="text-base font-extrabold tracking-wider">
+                PLACE ORDER NOW
+              </h1>
+            </button>
           </form>
         </div>
         <div className="w-1/3 border border-gray-700 px-4 py-2">
           <div className="flex flex-col gap-2  justify-between py-4 border-b-[1px] border-black">
             <h1 className="text-base font-extrabold tracking-wider">
-              COUPON CODE
+              YOUR ORDER
             </h1>
-            <div></div>
+            <div>
+              {cart?.map((c) => (
+                <div key={c.id} className="flex justify-between">
+                  <h1 className="text-sm font-semibold text-gray-500">
+                    {c.name_product} - {c.name_size} x {c.total_product}
+                  </h1>
+                  <h1 className="text-sm font-semibold text-gray-500">
+                    Rp
+                    {(
+                      parseInt(c.price) * parseInt(c.total_product)
+                    ).toLocaleString("id-ID")}
+                  </h1>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
             <h1 className="text-base font-extrabold tracking-wider">
               SUBTOTAL
             </h1>
             <h1 className="text-base font-extrabold tracking-wider">
-              {/* Rp{subTotal.toLocaleString("id-ID")} */}
+              Rp{subTotal.toLocaleString("id-ID")}
             </h1>
           </div>
           <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
@@ -294,18 +401,72 @@ export default function CheckOut() {
           <div className="flex flex-row items-center justify-between py-4 border-b-[1px] border-black">
             <h1 className="text-base font-extrabold tracking-wider">TOTAL</h1>
             <h1 className="text-base font-extrabold tracking-wider">
-              {/* Rp{(subTotal - diskon).toLocaleString("id-ID")} */}
+              Rp{(subTotal - diskon).toLocaleString("id-ID")}
             </h1>
           </div>
-          <div
-            onClick={() => {
-              // window.location.href = "/checkout";
-              //   navigate("/checkout");
-            }}
-            className="flex justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
-          >
+          <div className="flex flex-col gap-2 py-4 ">
             <h1 className="text-base font-extrabold tracking-wider">
-              CHECKOUT
+              PAYMENT METHOD
+            </h1>
+            <div className="">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="Bank Transfer - BCA"
+                  checked={payment === "Bank Transfer - BCA"}
+                  onChange={handleOptionPayment}
+                />
+                Bank Transfer - BCA
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="Bank Transfer - BNI"
+                  checked={payment === "Bank Transfer - BNI"}
+                  onChange={handleOptionPayment}
+                />
+                Bank Transfer - BNI
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="Bank Transfer - BRI"
+                  checked={payment === "Bank Transfer - BRI"}
+                  onChange={handleOptionPayment}
+                />
+                Bank Transfer - BRI
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="Bank Transfer - BSI"
+                  checked={payment === "Bank Transfer - BSI"}
+                  onChange={handleOptionPayment}
+                />
+                Bank Transfer - BSI
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="QRIS"
+                  checked={payment === "QRIS"}
+                  onChange={handleOptionPayment}
+                />
+                QRIS
+              </label>
+            </div>
+          </div>
+          <div onClick={() => {}} className="flex flex-col gap-3">
+            <h1 className="text-xs leading-relaxed font-semibold">
+              Dengan menggunakan metode pembayaran ini, Anda setuju bahwa semua
+              data yang dikirimkan untuk pesanan Anda akan diproses oleh
+              pemroses pembayaran.
+            </h1>
+            <h1 className="text-xs leading-relaxed font-semibold">
+              Data pribadi Anda akan digunakan untuk memproses pesanan Anda, dan
+              untuk tujuan lain yang dijelaskan dalam{" "}
+              <span className="underline cursor-pointer">privacy policy</span>{" "}
+              kami.
             </h1>
           </div>
         </div>
