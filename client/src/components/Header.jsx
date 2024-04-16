@@ -18,7 +18,7 @@ export default function Header() {
         </div>
         <nav className="grow flex justify-evenly space-x-4">
           <Link to="/" className="font-bold hover:text-gray-500 text-sm">
-            HOME
+            BERANDA
           </Link>
           {/* <Link
             to="/new-arrivals"
@@ -27,10 +27,13 @@ export default function Header() {
             NEW ARRIVALS
           </Link> */}
           <Link to="/shop" className="font-bold hover:text-gray-500 text-sm">
-            PRODUCT
+            PRODUK
           </Link>
-          <Link to="/about" className="font-bold hover:text-gray-500 text-sm">
-            ABOUT US
+          <Link
+            to="/about-us"
+            className="font-bold hover:text-gray-500 text-sm"
+          >
+            TENTANG KAMI
           </Link>
         </nav>
         <div className="flex justify-evenly space-x-4 w-1/5">
