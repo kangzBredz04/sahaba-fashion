@@ -18,7 +18,6 @@ export default function StockAdmin() {
     sizes,
   } = useContext(AdminContext);
 
-  console.log(sizes);
   const getProductNameById = (id) => {
     const product = products?.find((p) => p.id === id);
     return product?.name_product;
@@ -28,6 +27,8 @@ export default function StockAdmin() {
     const size = sizes?.find((s) => s.id === id);
     return size?.name_size;
   };
+
+  console.log(editedStock);
 
   return (
     <div className="p-5 bg-gray-100 min-h-64">
