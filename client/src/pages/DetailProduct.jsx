@@ -42,7 +42,7 @@ export default function DetailProduct() {
     });
   }, []);
 
-  console.log(cartProduct);
+  console.log(nameSize);
 
   if (products[0]?.id) {
     return (
@@ -87,7 +87,7 @@ export default function DetailProduct() {
                       <option
                         key={s.id}
                         value={s.id_size}
-                        className="w-full py-3 px-2 border border-gray-400 rounded-md"
+                        className="bg-gray-100 text-xl font-bold"
                       >
                         {s.name_size}
                       </option>
@@ -107,13 +107,18 @@ export default function DetailProduct() {
               <div className="my-10 mx-8 flex gap-5">
                 <div
                   onClick={() => {
-                    if (cartProduct.total_product == 0) {
-                      alert("Harap pilih dulu ukuran");
+                    if (localStorage.getItem("id")) {
+                      if (cartProduct.total_product == 0) {
+                        alert("Harap pilih dulu ukuran");
+                      } else {
+                        api.post("/cart/add", cartProduct).then((res) => {
+                          alert(res.msg);
+                          window.location.reload();
+                        });
+                      }
                     } else {
-                      api.post("/cart/add", cartProduct).then((res) => {
-                        alert(res.msg);
-                        window.location.reload();
-                      });
+                      alert("Anda harus login dahulu");
+                      navigate("/login");
                     }
                   }}
                   className=" w-full flex items-center py-3 px-2 bg-black cursor-pointer"
@@ -127,12 +132,17 @@ export default function DetailProduct() {
                 <div
                   className="flex gap-2 cursor-pointer"
                   onClick={() => {
-                    api
-                      .post("/wishlist/add", {
-                        id_user: localStorage.getItem("id"),
-                        id_product: id,
-                      })
-                      .then(() => window.location.reload());
+                    if (localStorage.getItem("id")) {
+                      api
+                        .post("/wishlist/add", {
+                          id_user: localStorage.getItem("id"),
+                          id_product: id,
+                        })
+                        .then(() => window.location.reload());
+                    } else {
+                      alert("Anda harus login dahulu");
+                      navigate("/login");
+                    }
                   }}
                 >
                   <IoBookmarkOutline />
