@@ -36,18 +36,40 @@ export const getAllOrder = async (req, res) => {
 };
 
 export const addOrderUser = async (req, res) => {
-  const { id_user, orders, payment_method, no_telp, address, status } =
-    req.body;
+  const { id_user, orders, payment_method, no_telp, address } = req.body;
   try {
-    for (const order of orders) {
-      const { id_product, id_size, total_product } = order;
+    if (orders?.length > 1) {
+      for (const order of orders) {
+        const { id_product, id_size, total_product } = order;
+        await pool.query(
+          "INSERT INTO orders (id_user, id_product, id_size, total_product, payment_method,no_telp, address) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+          [
+            id_user,
+            id_product,
+            id_size,
+            total_product,
+            payment_method,
+            no_telp,
+            address,
+          ]
+        );
+        await pool.query(
+          "DELETE FROM carts WHERE id_user = $1 AND id_product = $2 AND id_size = $3",
+          [id_user, id_product, id_size]
+        );
+        await pool.query(
+          "UPDATE stocks SET quantity = (quantity - $1) WHERE id_product = $2 AND id_size = $3",
+          [total_product, id_product, id_size]
+        );
+      }
+    } else {
       await pool.query(
         "INSERT INTO orders (id_user, id_product, id_size, total_product, payment_method,no_telp, address) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
         [
           id_user,
-          id_product,
-          id_size,
-          total_product,
+          orders[0]?.id_product,
+          orders[0]?.id_size,
+          orders[0]?.total_product,
           payment_method,
           no_telp,
           address,
@@ -55,15 +77,16 @@ export const addOrderUser = async (req, res) => {
       );
       await pool.query(
         "DELETE FROM carts WHERE id_user = $1 AND id_product = $2 AND id_size = $3",
-        [id_user, id_product, id_size]
+        [id_user, orders[0]?.id_product, orders[0]?.id_size]
       );
       await pool.query(
         "UPDATE stocks SET quantity = (quantity - $1) WHERE id_product = $2 AND id_size = $3",
-        [total_product, id_product, id_size]
+        [orders[0]?.total_product, orders[0]?.id_product, orders[0]?.id_size]
       );
     }
     res.status(200).json({ msg: "Pesanan telah berhasil" });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: error.message });
   }
 };
