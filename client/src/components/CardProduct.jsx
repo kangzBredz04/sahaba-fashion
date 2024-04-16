@@ -51,8 +51,9 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
         className="w-full"
         onClick={() => {
           localStorage.setItem("id_product", id);
-          navigate(`/product/${localStorage.getItem("id_product")}`);
-          window.location.reload();
+          window.location.href = `/product/${localStorage.getItem(
+            "id_product"
+          )}`;
         }}
       >
         <img src={image} alt="" className="h-1/2" />
