@@ -12,17 +12,23 @@ export default function Navbar() {
     >
       <div className="flex items-center">
         {/* <img src="/logo.png" alt="Logo" className="h-8 mr-4" /> */}
-        <h1 className="text-xl font-bold tracking-widest">ADMIN PAGE</h1>
+        <h1 className="text-xl font-bold tracking-widest">ADMIN</h1>
       </div>
       <div className="flex justify-evenly space-x-4 w-1/5">
-        {/* <Link>
-          {theme === "dark" ? (
-            <FaRegSun onClick={() => setTheme("light")} className="text-2xl" />
-          ) : (
-            <FiMoon onClick={() => setTheme("dark")} className="text-2xl" />
-          )}
-        </Link> */}
-        <Link to="/admin/a">
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            alert("Coming soon !!!");
+          }}
+        >
+          <FiMoon className="text-2xl" />
+        </Link>
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            alert("Coming soon !!!");
+          }}
+        >
           <MdOutlineLanguage className="text-2xl" />
         </Link>
         <Link to="/admin/profile">
