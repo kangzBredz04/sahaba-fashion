@@ -16,6 +16,11 @@ function App() {
   // const [carts, setCarts] = useState([]);
   const [orders, setOrders] = useState([]);
 
+  const [keyword, setKeyword] = useState("");
+  const [sortPrice, setSortPrice] = useState("asc");
+  const [sortBy, setSortBy] = useState("price");
+  const [category, setCategory] = useState("Semua");
+
   useEffect(() => {
     api.get("/product/get-all").then((response) => setProducts(response));
     api.get("/auth/my-account").then((response) => setUser(response.data));
@@ -44,6 +49,14 @@ function App() {
         setOrders,
         cart,
         setCart,
+        keyword,
+        setKeyword,
+        sortPrice,
+        setSortPrice,
+        sortBy,
+        setSortBy,
+        category,
+        setCategory,
       }}
     >
       <Header />

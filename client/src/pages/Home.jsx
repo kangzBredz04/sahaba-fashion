@@ -1,13 +1,17 @@
+/* eslint-disable no-unused-vars */
 import { useContext } from "react";
 import { AllContext } from "../App";
 import CardProduct from "../components/CardProduct";
 import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const { products, wishlist } = useContext(AllContext);
+  const { products, wishlist, setCategory } = useContext(AllContext);
   const filterProduct = (category) => {
     return products.filter((p) => p.category === category).slice(0, 4);
   };
+
+  const navigate = useNavigate();
 
   if (products[0]?.id) {
     return (
@@ -21,7 +25,12 @@ export default function Home() {
               </h1>
             </div>
             <div className="text-center">
-              <h3 className="text-sm underline">Tampilkan Semua</h3>
+              <h3
+                className="text-sm underline cursor-pointer"
+                onClick={() => navigate("/shop")}
+              >
+                Tampilkan Semua
+              </h3>
             </div>
           </div>
           <div className="grid grid-cols-4">
@@ -54,7 +63,13 @@ export default function Home() {
             <p className="text-2xl tracking-wide">
               Mechanical Strecth with durability materials
             </p>
-            <button className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline">
+            <button
+              onClick={() => {
+                setCategory("Essential Pants");
+                navigate("/shop");
+              }}
+              className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline"
+            >
               SHOP NOW
             </button>
           </div>
@@ -83,7 +98,13 @@ export default function Home() {
               ESSENTIAL SHIRT
             </p>
             <p className="text-2xl tracking-wide">Elegan dan Minimalis</p>
-            <button className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline">
+            <button
+              onClick={() => {
+                setCategory("Essential Shirt");
+                navigate("/shop");
+              }}
+              className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline"
+            >
               SHOP NOW
             </button>
           </div>
@@ -124,7 +145,13 @@ export default function Home() {
             <p className="text-2xl tracking-wide">
               Strong and durable strecth fabric with cool feel technology
             </p>
-            <button className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline">
+            <button
+              onClick={() => {
+                setCategory("T-Shirt");
+                navigate("/shop");
+              }}
+              className="py-4 px-2 text-white bg-black hover:text-black hover:bg-white outline"
+            >
               SHOP NOW
             </button>
           </div>
