@@ -6,12 +6,20 @@ import { FiSearch } from "react-icons/fi";
 import { TbSortDescending2, TbSortAscending2 } from "react-icons/tb";
 
 export default function Shop() {
-  const { products, wishlist } = useContext(AllContext);
-  const [keyword, setKeyword] = useState("");
-  const [sortPrice, setSortPrice] = useState("asc");
-  const [sortBy, setSortBy] = useState("price");
-  const [category, setCategory] = useState("Semua");
+  const {
+    products,
+    wishlist,
+    keyword,
+    setKeyword,
+    sortPrice,
+    setSortPrice,
+    sortBy,
+    setSortBy,
+    category,
+    setCategory,
+  } = useContext(AllContext);
 
+  console.log(category);
   const filteredSortedProducts = products
     .sort((a, b) => {
       if (sortPrice === "asc") {
@@ -25,6 +33,7 @@ export default function Shop() {
         product.name_product.toLowerCase().includes(keyword) &&
         (category === "Semua" || product.category === category)
     );
+
   return (
     <div className="flex flex-col">
       <div className="mx-5 my-5 flex justify-evenly flex-row gap-8 py-4 px-3 border border-gray-400  rounded-lg">
