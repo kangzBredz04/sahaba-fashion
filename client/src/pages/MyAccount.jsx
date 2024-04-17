@@ -205,12 +205,29 @@ export default function MyAccount() {
           )}
         </div>
         <div className="w-full flex mt-5 justify-end gap-3">
-          <button className="w-1/3 bg-black text-white py-3 hover:bg-white hover:text-black outline">
-            Delete Account
+          <button
+            onClick={() => {
+              if (confirm("Apakah yakin anda akan menghapus akun anda ?")) {
+                api
+                  .delete(`/auth/delete/${localStorage.getItem("id")}`)
+                  .then((res) => {
+                    alert(res.msg);
+                    setUser({});
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    localStorage.removeItem("id");
+                    window.location.reload();
+                    window.location.href = "/login";
+                  });
+              }
+            }}
+            className="w-1/3 bg-black text-white py-3 hover:bg-white hover:text-black outline"
+          >
+            Hapus Akun
           </button>
           <button
             onClick={() => {
-              if (confirm("Apakah yakin anda akan logout")) {
+              if (confirm("Apakah yakin anda akan logout ?")) {
                 api.get("/auth/logout").then((res) => {
                   alert(res.msg);
                   setUser({});
@@ -224,7 +241,7 @@ export default function MyAccount() {
             }}
             className="w-1/3 bg-black text-white py-3 hover:bg-white hover:text-black outline"
           >
-            Logout
+            Keluar
           </button>
         </div>
       </div>
