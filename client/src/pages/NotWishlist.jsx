@@ -17,7 +17,7 @@ export default function NotWishlist() {
       </div>
       <Link
         to="/shop"
-        className="bg-white text-black hover:bg-black hover:text-white py-3 px-7 outline outline-[1px]"
+        className="bg-black text-white hover:bg-white hover:text-black py-3 px-7 outline"
       >
         RETURN TO SHOP
       </Link>
