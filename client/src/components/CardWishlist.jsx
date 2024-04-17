@@ -43,9 +43,9 @@ export default function CardWishlist({
       </div>
       <Link
         to={`/product/${id_product}`}
-        className="flex items-center gap-3 border cursor-pointer border-black py-2 px-2"
+        className="flex items-center gap-3  cursor-pointer  py-2 px-2 text-black bg-white outline hover:bg-black hover:text-white *:hover:text-white"
       >
-        <MdGridView />
+        <MdGridView className="text-black" />
         <button className="text-base font-extrabold tracking-wider">
           VIEW PRODUCT
         </button>
