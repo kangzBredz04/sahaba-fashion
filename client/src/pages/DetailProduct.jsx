@@ -184,7 +184,7 @@ export default function DetailProduct() {
                 name={p.name_product}
                 image={p.image_1}
                 price={p.price}
-                tipe={"Koko"}
+                tipe={p.category}
                 status={
                   wishlist.find((item) => item.id_product === p.id)
                     ? true
