@@ -132,7 +132,7 @@ export default function CheckOut() {
       <div className="flex flex-row gap-10">
         <div className="w-2/3 flex flex-col gap-5">
           <h1 className="text-base font-extrabold tracking-wider">
-            BILLING DETAILS
+            RINCIAN PEMBAYARAN
           </h1>
           <form>
             <div className="flex gap-5">
@@ -142,7 +142,7 @@ export default function CheckOut() {
                   htmlFor="firstName"
                   className="block text-black font-bold mb-2"
                 >
-                  First Name *
+                  Nama Depan *
                 </label>
                 <input
                   type="text"
@@ -160,7 +160,7 @@ export default function CheckOut() {
                   htmlFor="lastName"
                   className="block text-black font-bold mb-2"
                 >
-                  Last Name *
+                  Nama Belakang *
                 </label>
                 <input
                   type="text"
@@ -179,7 +179,7 @@ export default function CheckOut() {
                 htmlFor="lastName"
                 className="block text-black font-bold mb-2"
               >
-                Country *
+                Negara *
               </label>
               <input
                 type="text"
@@ -200,7 +200,7 @@ export default function CheckOut() {
                 htmlFor="provinice"
                 className="block text-black font-bold mb-2"
               >
-                Provinice *
+                Provinsi *
               </label>
               <select
                 name="provinice"
@@ -212,7 +212,7 @@ export default function CheckOut() {
                 required
               >
                 <option value="" disabled selected hidden>
-                  Select province...
+                  Pilih provinsi...
                 </option>
                 {listProvince?.map((lp) => (
                   <option key={lp.id} value={lp.id}>
@@ -227,7 +227,7 @@ export default function CheckOut() {
                 htmlFor="regencies"
                 className="block text-black font-bold mb-2"
               >
-                Regencie *
+                Kota/Kabupaten *
               </label>
               <select
                 name="regencies"
@@ -239,7 +239,7 @@ export default function CheckOut() {
                 required
               >
                 <option value="" disabled selected hidden>
-                  Select regencie...
+                  Pilih kota/kabupaten...
                 </option>
                 {listRegencies?.map((lr) => (
                   <option key={lr.id} value={lr.id}>
@@ -254,7 +254,7 @@ export default function CheckOut() {
                 htmlFor="district"
                 className="block text-black font-bold mb-2"
               >
-                District *
+                Kecamatan *
               </label>
               <select
                 name="district"
@@ -266,7 +266,7 @@ export default function CheckOut() {
                 required
               >
                 <option value="" disabled selected hidden>
-                  Select district...
+                  Pilih kecamatan...
                 </option>
                 {listDirtrict?.map((ld) => (
                   <option key={ld.id} value={ld.id}>
@@ -281,7 +281,7 @@ export default function CheckOut() {
                 htmlFor="village"
                 className="block text-black font-bold mb-2"
               >
-                Village *
+                Kelurahan/Desa *
               </label>
               <select
                 name="village"
@@ -293,7 +293,7 @@ export default function CheckOut() {
                 required
               >
                 <option value="" disabled selected hidden>
-                  Select village...
+                  Pilih kelurahan/desa...
                 </option>
                 {listVillages?.map((lv) => (
                   <option key={lv.id} value={lv.id}>
@@ -308,13 +308,13 @@ export default function CheckOut() {
                 htmlFor="detailaddress"
                 className="block text-black font-bold mb-2"
               >
-                Detail Address *
+                Alamat tambahan *
               </label>
               <input
                 type="text"
                 id="detailaddress"
                 name="detailaddress"
-                placeholder="House number, street name, unit, etc."
+                placeholder="Nama jalan, nomo rumah, unit, dll."
                 value={detailAddress}
                 onChange={(e) => setDetailAddress(e.target.value)}
                 required
@@ -327,7 +327,7 @@ export default function CheckOut() {
                 htmlFor="postcode"
                 className="block text-black font-bold mb-2"
               >
-                Postcode / ZIP *
+                Kode Pos *
               </label>
               <input
                 type="text"
@@ -342,7 +342,7 @@ export default function CheckOut() {
             {/* NO TELP */}
             <div className="grow mb-4">
               <label htmlFor="telp" className="block text-black font-bold mb-2">
-                Phone *
+                No Telpon *
               </label>
               <input
                 type="text"
@@ -380,7 +380,7 @@ export default function CheckOut() {
               className="flex w-full justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
             >
               <h1 className="text-base font-extrabold tracking-wider">
-                PLACE ORDER NOW
+                PESAN SEKARANG
               </h1>
             </button>
           </form>
@@ -388,7 +388,7 @@ export default function CheckOut() {
         <div className="w-1/3 border border-gray-700 px-4 py-2">
           <div className="flex flex-col gap-2  justify-between py-4 border-b-[1px] border-black">
             <h1 className="text-base font-extrabold tracking-wider">
-              YOUR ORDER
+              PESANAN ANDA
             </h1>
             <div>
               {cart?.map((c) => (
@@ -426,7 +426,7 @@ export default function CheckOut() {
           </div>
           <div className="flex flex-col gap-2 py-4 ">
             <h1 className="text-base font-extrabold tracking-wider">
-              PAYMENT METHOD
+              METODE PEMBAYARAN
             </h1>
             <div className="">
               <label className="flex items-center gap-2">
