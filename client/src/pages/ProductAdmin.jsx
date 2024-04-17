@@ -1,7 +1,9 @@
-import { useContext } from "react";
+/* eslint-disable no-unused-vars */
+import { useContext, useState } from "react";
 import { AdminContext } from "./Admin";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 import { MdOutlineAddBox } from "react-icons/md";
 import { api } from "../utils";
 // import { useNavigate } from "react-router-dom";
@@ -21,13 +23,51 @@ export default function ProductAdmin() {
     setEditedSize,
   } = useContext(AdminContext);
 
+  const [keyword, setKeyword] = useState("");
+  const [category, setCategory] = useState("Semua");
+
+  const filteredSortedProducts = products?.filter(
+    (product) =>
+      product.name_product.toLowerCase().includes(keyword) &&
+      (category === "Semua" || product.category === category)
+  );
+
   return (
     <div className="flex flex-col gap-5 p-5 bg-gray-100">
       {/* CRUD PRODUCTS */}
       <div>
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold mb-4">Product List</h2>
-          <div>
+          <div className="flex flex-row mb-4 gap-4">
+            <div>
+              <select
+                name="category"
+                id=""
+                className="flex items-center bg-inherit border border-gray-300 rounded-md py-3 px-2 outline-none"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="" disabled selected hidden>
+                  Urut berdasarkan kategori...
+                </option>
+                <option value="Semua">Semua</option>
+                <option value="Koko Modern">Koko Modern</option>
+                <option value="Kurta Modern">Kurta Modern</option>
+                <option value="Essential Pants">Essential Pants</option>
+                <option value="Essential Shirt">Essential Shirt</option>
+                <option value="T-Shirt">T-Shirt</option>
+              </select>
+            </div>
+            <div className="flex items-center border px-2 border-gray-300 rounded-md">
+              <input
+                type="text"
+                placeholder="Cari nama produk"
+                className="py-2 px-2 outline-none bg-transparent placeholder:text-black"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+              <FiSearch className="text-gray-400" />
+            </div>
             <button
               onClick={() => {
                 setEditedProduct({});
@@ -53,71 +93,76 @@ export default function ProductAdmin() {
               <th className="border border-gray-300 ">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {/* Data rows */}
-            {products?.map((product, index) => (
-              <tr key={product.id}>
-                <td className="border border-gray-300 px-4 py-2">
-                  {index + 1}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.name_product}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.category}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.price}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.description.slice(0, 25)}
-                  {product.description.length > 25 && "..."}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.image_1.slice(0, 15)}
-                  {product.image_1.length > 15 && "..."}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {product.image_2.slice(0, 15)}
-                  {product.image_2.length > 15 && "..."}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 flex justify-evenly">
-                  <button
-                    onClick={() => {
-                      setEditedProduct(product);
-                      setPopUp(!popUp);
-                    }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    <HiOutlinePencilAlt />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (
-                        confirm(
-                          `Apakah anda yakin ingin menghapus produk ${product.name_product}`
-                        )
-                      ) {
-                        api
-                          .delete(`/product/delete/${product.id}`)
-                          .then(async (res) => {
-                            alert(res.message);
-                          })
-                          .catch((e) => {
-                            console.log(e);
-                          });
-                        window.location.href = "/admin/product";
-                      }
-                    }}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"
-                  >
-                    <FaRegTrashAlt />
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {/* More data rows */}
-          </tbody>
+          {filteredSortedProducts?.length > 0 ? (
+            <tbody>
+              {/* Data rows */}
+              {filteredSortedProducts?.map((product, index) => (
+                <tr key={product.id}>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {index + 1}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.name_product}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.category}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.price}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.description.slice(0, 25)}
+                    {product.description.length > 25 && "..."}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.image_1.slice(0, 15)}
+                    {product.image_1.length > 15 && "..."}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {product.image_2.slice(0, 15)}
+                    {product.image_2.length > 15 && "..."}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2 flex justify-evenly">
+                    <button
+                      onClick={() => {
+                        setEditedProduct(product);
+                        setPopUp(!popUp);
+                      }}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    >
+                      <HiOutlinePencilAlt />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (
+                          confirm(
+                            `Apakah anda yakin ingin menghapus produk ${product.name_product}`
+                          )
+                        ) {
+                          api
+                            .delete(`/product/delete/${product.id}`)
+                            .then(async (res) => {
+                              alert(res.message);
+                            })
+                            .catch((e) => {
+                              console.log(e);
+                            });
+                          window.location.href = "/admin/product";
+                        }
+                      }}
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <div className="flex items-center w-full">
+              <h1 className="text-center ">Tidak ada produk ditemukan</h1>
+            </div>
+          )}
         </table>
         {popUp && (
           <div className="fixed inset-0 flex items-center justify-center">
@@ -232,11 +277,11 @@ export default function ProductAdmin() {
                       })
                     }
                   >
-                    <option>Koko Modern</option>
-                    <option>Kurta Modern</option>
-                    <option>Essential Shirt</option>
-                    <option>Pants</option>
-                    <option>Kolaborasi</option>
+                    <option value="Koko Modern">Koko Modern</option>
+                    <option value="Kurta Modern">Kurta Modern</option>
+                    <option value="Essential Shirt">Essential Shirt</option>
+                    <option value="Essential Shirt">Essential Pants</option>
+                    <option value="T-Shirt">T-Shirt</option>
                   </select>
                 </div>
                 <div className="mb-4 flex justify-between gap-3">
