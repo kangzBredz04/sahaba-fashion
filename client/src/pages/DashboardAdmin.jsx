@@ -72,7 +72,7 @@ export default function DashboardAdmin() {
     <div className={`flex-1 `}>
       {/* Main Content */}
       <div className="p-4">
-        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        <h2 className="text-2xl font-bold mb-4">Beranda</h2>
         <div className="grid grid-cols-4 gap-4">
           {/* Product Count */}
           <Link
@@ -81,7 +81,7 @@ export default function DashboardAdmin() {
           >
             <IoIosShirt className="text-7xl" />
             <p className="text-4xl font-bold">{products?.length}</p>
-            <h3 className="text-2xl font-bold">Products</h3>
+            <h3 className="text-2xl font-bold">Produk</h3>
           </Link>
           {/* User Count */}
           <Link
@@ -90,7 +90,7 @@ export default function DashboardAdmin() {
           >
             <FaUsers className="text-7xl" />
             <p className="text-4xl font-bold">{user?.length}</p>
-            <h3 className="text-2xl font-bold">Users</h3>
+            <h3 className="text-2xl font-bold">Pengguna</h3>
           </Link>
           {/* Order Count */}
           <Link
@@ -99,7 +99,7 @@ export default function DashboardAdmin() {
           >
             <FaFileInvoiceDollar className="text-7xl" />
             <p className="text-4xl font-bold">{orders?.length}</p>
-            <h3 className="text-2xl font-bold">Orders</h3>
+            <h3 className="text-2xl font-bold">Pesanan</h3>
           </Link>
           {/* Stock Count */}
           <Link
@@ -108,13 +108,13 @@ export default function DashboardAdmin() {
           >
             <FaBoxes className="text-7xl" />
             <p className="text-4xl font-bold">{totalStock}</p>
-            <h3 className="text-2xl font-bold">Stocks</h3>
+            <h3 className="text-2xl font-bold">Stok</h3>
           </Link>
         </div>
         {/* Sales Chart */}
         <div className="mt-8">
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <h3 className="text-2xl font-bold mb-2">Order Chart</h3>
+            <h3 className="text-2xl font-bold mb-2">Grafik Pesanan Pengguna</h3>
             <canvas className="w-10" ref={chartRef}></canvas>
           </div>
         </div>
