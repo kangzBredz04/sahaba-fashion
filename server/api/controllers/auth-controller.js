@@ -100,13 +100,19 @@ export const logoutAccount = async (_req, res) => {
 export const updateAccount = async (req, res) => {
   const { first_name, last_name, username, role, email } = req.body;
   try {
-    await pool.query(
-      "UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4, role= $5 WHERE id = $6",
-      [first_name, last_name, username, email, role, req.params.id]
-    );
-    res.status(200).json({
-      msg: "Data berhasil diubah.",
-    });
+    if (req.params.id === "1") {
+      res.status(200).json({
+        msg: "Data admin utama tidak bisa diubah.",
+      });
+    } else {
+      await pool.query(
+        "UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4, role= $5 WHERE id = $6",
+        [first_name, last_name, username, email, role, req.params.id]
+      );
+      res.status(200).json({
+        msg: "Data berhasil diubah.",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: error.message });
@@ -135,8 +141,10 @@ export const updateRole = async (req, res) => {
 
 export const deleteAccount = async (req, res) => {
   try {
-    if (req.params.id == 1) {
-      res.send("Admin utama tidak bisa dihapus");
+    if (req.params.id === "1") {
+      res.status(200).json({
+        msg: "Data admin utama tidak bisa dihapus.",
+      });
     } else {
       await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
       res.status(200).json({ msg: "User berhasil dihapus." });
