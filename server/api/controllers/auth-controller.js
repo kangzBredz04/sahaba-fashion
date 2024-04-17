@@ -139,7 +139,7 @@ export const deleteAccount = async (req, res) => {
       res.send("Admin utama tidak bisa dihapus");
     } else {
       await pool.query("DELETE FROM users WHERE id = $1", [req.params.id]);
-      res.send("User berhasil dihapus.");
+      res.status(200).json({ msg: "User berhasil dihapus." });
     }
   } catch (error) {
     res.status(500).json({ msg: error.message });
