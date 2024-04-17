@@ -66,7 +66,7 @@ export default function UserAdmin() {
                 ******
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {u.role ? u.role : "-"}
+                {u.role ? u.role : "user"}
               </td>
               <td className="border border-gray-300 px-4 py-2 flex justify-evenly">
                 <button
@@ -88,7 +88,7 @@ export default function UserAdmin() {
                       api
                         .delete(`/auth/delete/${u.id}`)
                         .then(async (res) => {
-                          alert(res.message);
+                          alert(res.msg);
                         })
                         .catch((e) => {
                           console.log(e);
