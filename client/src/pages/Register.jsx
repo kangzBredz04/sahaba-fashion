@@ -18,7 +18,6 @@ export default function Register() {
           </h1>
           <form
             onSubmit={(e) => {
-              e.preventDefault();
               api.post("/auth/register", register).then((res) => {
                 alert(res.msg);
               });
