@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import { GoBookmark } from "react-icons/go";
 import { MdOutlineLanguage } from "react-icons/md";
@@ -37,12 +38,12 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex justify-evenly space-x-4 w-1/5">
-          <Link to="/" className="text-gray-700 hover:text-gray-900 ">
+          {/* <Link to="/" className="text-gray-700 hover:text-gray-900 ">
             <FiMoon className="text-xl" />
           </Link>
           <Link to="/" className="text-gray-700 hover:text-gray-900 ">
             <MdOutlineLanguage className="text-xl" />
-          </Link>
+          </Link> */}
           <Link to="/profile" className="text-gray-700 hover:text-gray-900 ">
             <FiUser className="text-xl" />
           </Link>
