@@ -6,7 +6,7 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
   const navigate = useNavigate();
 
   return (
-    <div className="border border-gray-200 hover:cursor-pointer">
+    <div className="border border-gray-200 hover:cursor-pointer flex flex-col justify-between">
       {status ? (
         <IoBookmark
           onClick={() => {
@@ -48,7 +48,7 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
         />
       )}
       <div
-        className="w-full"
+        className="w-full h-4/5"
         onClick={() => {
           localStorage.setItem("id_product", id);
           window.location.href = `/product/${localStorage.getItem(
@@ -56,9 +56,9 @@ export default function CardProduct({ id, name, image, tipe, price, status }) {
           )}`;
         }}
       >
-        <img src={image} alt="" className="h-1/2" />
+        <img src={image} alt="" className="w-full h-full" />
       </div>
-      <div className="p-4 flex flex-col gap-2">
+      <div className="p-4 flex flex-col gap-2 h-1/5">
         <p className="text-sm">{tipe}</p>
         <p className="text-sm font-semibold">{name}</p>
         <p className="text-sm font-light">
