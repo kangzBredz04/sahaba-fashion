@@ -66,7 +66,7 @@ export default function Login() {
                 className="block text-xs font-semibold mb-2 font-KumbhSans"
                 htmlFor="nama"
               >
-                USERNAME OR EMAIL ADDRESS *
+                USERNAME ATAU EMAIL *
               </label>
               <input
                 className="w-full px-3 py-2 border border-gray-300 focus:border-black focus:outline-none focus:ring-black focus:font-KumbhSans"
@@ -103,7 +103,7 @@ export default function Login() {
             </button>
             <div className="mb-4 text-center">
               <p className="font-KumbhSans text-xs">
-                Not A Member?{" "}
+                Belum punya akun ?{" "}
                 <a href="/register" className="underline">
                   Register
                 </a>
