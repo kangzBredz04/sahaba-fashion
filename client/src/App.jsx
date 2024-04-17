@@ -30,7 +30,7 @@ function App() {
       .then((res) => setOrders(res));
   }, [user?.id]);
 
-  // console.log(orders);
+  console.log(user);
   return (
     <AllContext.Provider
       value={{
