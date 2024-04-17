@@ -21,24 +21,13 @@ export default function Register() {
               e.preventDefault();
               api.post("/auth/register", register).then((res) => {
                 alert(res.msg);
-                window.location.href = "/";
               });
-              const data = api.get("/auth/my-account").then((res) => {
-                // console.log(res.data.role);
+              api.get("/auth/my-account").then((res) => {
                 setUser(res.data);
                 localStorage.setItem("role", res.data.role);
                 localStorage.setItem("id", res.data.id);
-                if (res.data.role === "admin") {
-                  console.log("Masuk sebagai admin");
-                  navigate("/admin");
-                  // window.location.reload();
-                } else {
-                  console.log("Masuk sebagai user");
-                  navigate("/");
-                  // window.location.reload();
-                }
+                window.location.href = "/";
               });
-              setUser(data);
             }}
           >
             <div className=" flex flex-row gap-4">
@@ -47,10 +36,10 @@ export default function Register() {
                   className="block text-xs font-semibold mb-2"
                   htmlFor="first_name"
                 >
-                  FIRST NAME *
+                  NAMA DEPAN *
                 </label>
                 <input
-                  className="w-full px-3 py-2 border border-gray-300 focus:border-black focus:outline-none focus:ring-black focus:font-KumbhSans"
+                  className="w-full px-3 py-2 border border-gray-300 focus:border-black focus:outline-none focus:font-KumbhSans "
                   type="text"
                   id="first_name"
                   name="first_name"
@@ -69,7 +58,7 @@ export default function Register() {
                   className="block text-xs font-semibold mb-2"
                   htmlFor="last_name"
                 >
-                  LAST NAME *
+                  NAMA BELAKANG *
                 </label>
                 <input
                   className="w-full px-3 py-2 border border-gray-300 focus:border-black focus:outline-none focus:ring-black focus:font-KumbhSans"
@@ -114,7 +103,7 @@ export default function Register() {
                 className="block text-xs font-semibold mb-2 "
                 htmlFor="email"
               >
-                EMAIL ADDRESS *
+                EMAIL *
               </label>
               <input
                 className="w-full px-3 py-2 border border-gray-300 focus:border-black focus:outline-none  focus:ring-black focus:font-KumbhSans"
@@ -168,7 +157,7 @@ export default function Register() {
               type="submit"
               className="w-full px-4 py-4 font-bold mb-4 text-white bg-black hover:bg-white hover:text-black outline"
             >
-              Register
+              Daftar Akun
             </button>
             <div className="mb-4 text-center">
               <p className="text-xs">
