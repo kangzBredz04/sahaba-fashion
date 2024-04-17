@@ -94,7 +94,7 @@ export default function OrderAdmin() {
                 {o.address}
               </td>
               <td className="border border-gray-300 px-4 py-2 text-center">
-                {o.quantity}
+                {o.total_product}
               </td>
               <td
                 className={`border border-gray-300 px-1 py-2 text-center font-semibold`}
