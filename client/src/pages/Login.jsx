@@ -24,12 +24,10 @@ export default function Login() {
     e.preventDefault();
     api.post("/auth/login", login).then((response) => {
       if (!response.token) {
-        console.log(response);
         alert(response.msg);
       } else {
         alert(response.message);
-        const data = api.get("/auth/my-account").then((res) => {
-          // console.log(res.data.role);
+        api.get("/auth/my-account").then((res) => {
           setUser(res.data);
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("id", res.data.id);
@@ -43,7 +41,6 @@ export default function Login() {
             // window.location.reload();
           }
         });
-        setUser(data);
         localStorage.setItem("token", response.token);
       }
     });
