@@ -19,7 +19,6 @@ export default function Login() {
     });
   }
 
-  // const decode = jwt.decode();
   const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +31,8 @@ export default function Login() {
         const data = api.get("/auth/my-account").then((res) => {
           // console.log(res.data.role);
           setUser(res.data);
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("id", res.data.id);
           if (res.data.role === "admin") {
             console.log("Masuk sebagai admin");
             navigate("/admin");
@@ -41,8 +42,6 @@ export default function Login() {
             navigate("/");
             // window.location.reload();
           }
-          localStorage.setItem("role", res.data.role);
-          localStorage.setItem("id", res.data.id);
         });
         setUser(data);
         localStorage.setItem("token", response.token);
@@ -76,6 +75,7 @@ export default function Login() {
                 name="usernameoremail"
                 value={login.usernameoremail}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="mb-4">
@@ -92,11 +92,12 @@ export default function Login() {
                 name="password"
                 value={login.password}
                 onChange={handleChange}
+                required
               />
             </div>
             <button
               type="submit"
-              className="w-full px-4 py-4 font-bold mb-4 text-sm text-white bg-black hover:bg-gray-500"
+              className="w-full px-4 py-4 font-bold mb-4 text-sm text-white bg-black hover:bg-white hover:text-black outline"
             >
               LOGIN
             </button>
