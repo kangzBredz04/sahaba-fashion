@@ -23,35 +23,35 @@ export default function SideBar() {
       <div className="flex flex-col justify-between h-full">
         <Link className="text-center flex flex-col gap-1 hover:cursor-pointer">
           <MdOutlineDashboard className="m-auto text-3xl" />
-          <h1 className="text-base font-medium">Dashboard</h1>
+          <h1 className="text-base font-medium">Beranda</h1>
         </Link>
         <Link
           to="/admin/user"
           className="text-center flex flex-col gap-1 hover:cursor-pointer"
         >
           <FiUsers className="m-auto text-3xl" />
-          <h1 className="text-base font-medium">Users</h1>
+          <h1 className="text-base font-medium">Pengguna</h1>
         </Link>
         <Link
           to="/admin/product"
           className="text-center flex flex-col gap-1 hover:cursor-pointer"
         >
           <RiShirtLine className="m-auto text-3xl" />
-          <h1 className="text-base font-medium">Products</h1>
+          <h1 className="text-base font-medium">Produk</h1>
         </Link>
         <Link
           to="/admin/order"
           className="text-center flex flex-col gap-1 hover:cursor-pointer"
         >
           <LiaFileInvoiceDollarSolid className="m-auto text-3xl" />
-          <h1 className="text-base font-medium">Orders</h1>
+          <h1 className="text-base font-medium">Pesanan</h1>
         </Link>
         <Link
           to="/admin/stock"
           className="text-center flex flex-col gap-1 hover:cursor-pointer"
         >
           <LuBoxes className="m-auto text-3xl" />
-          <h1 className="text-base font-medium">Stocks</h1>
+          <h1 className="text-base font-medium">Stok</h1>
         </Link>
         {/* <Link className="text-center flex flex-col gap-1 hover:cursor-pointer">
           <GrLogout className="m-auto text-3xl" />
