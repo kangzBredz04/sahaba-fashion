@@ -234,8 +234,7 @@ export default function ProductAdmin() {
                   >
                     <option>Koko Modern</option>
                     <option>Kurta Modern</option>
-                    <option>Essential</option>
-                    <option>Sarung</option>
+                    <option>Essential Shirt</option>
                     <option>Pants</option>
                     <option>Kolaborasi</option>
                   </select>
