@@ -103,7 +103,7 @@ export default function CartUser() {
                   // window.location.href = "/checkout";
                   navigate("/checkout");
                 }}
-                className="flex justify-center py-4 mb-2 bg-black text-white cursor-pointer hover:bg-gray-800"
+                className="flex justify-center py-4 mb-2 bg-white outline text-black cursor-pointer hover:bg-black hover:text-white"
               >
                 <h1 className="text-base font-extrabold tracking-wider">
                   CHECKOUT
