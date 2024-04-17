@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { api } from "../utils";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { AllContext } from "../App";
 
 export default function MyAccount() {
@@ -13,15 +13,6 @@ export default function MyAccount() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    api.get("/auth/get-all").then((res) => {
-      setAllUser(res);
-      console.log(allUser.find((us) => us.id == localStorage.getItem("id")));
-    });
-  }, [allUser]);
-
-  console.log(editedUser);
-
   function filterOrders(status) {
     return orders?.filter((order) => order.status === status);
   }
@@ -31,17 +22,7 @@ export default function MyAccount() {
       <div className="py-6 px-7 font-KumbhSans bg-gray-100">
         <h2 className="text-2xl font-bold mb-4">My Account</h2>
         {/* Form untuk mengubah data user */}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            api
-              .put(`/auth/update/${localStorage.getItem("id")}`, editedUser)
-              .then((res) => {
-                alert(res.msg);
-                window.location.href = "/profile";
-              });
-          }}
-        >
+        <div>
           <div className="flex gap-5">
             {/* Nama Depan */}
             <div className="grow mb-4">
@@ -55,13 +36,8 @@ export default function MyAccount() {
                 type="text"
                 id="firstName"
                 name="firstName"
-                value={editedUser.first_name}
-                onChange={(e) =>
-                  setEditedUser({
-                    ...editedUser,
-                    first_name: e.target.value,
-                  })
-                }
+                value={user?.first_name}
+                disabled
                 className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
               />
             </div>
@@ -77,13 +53,8 @@ export default function MyAccount() {
                 type="text"
                 id="lastName"
                 name="lastName"
-                value={editedUser.last_name}
-                onChange={(e) =>
-                  setEditedUser({
-                    ...editedUser,
-                    last_name: e.target.value,
-                  })
-                }
+                value={user?.last_name}
+                disabled
                 className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
               />
             </div>
@@ -100,13 +71,8 @@ export default function MyAccount() {
               type="text"
               id="username"
               name="username"
-              value={editedUser.username}
-              onChange={(e) =>
-                setEditedUser({
-                  ...editedUser,
-                  username: e.target.value,
-                })
-              }
+              value={user?.username}
+              disabled
               className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
             />
           </div>
@@ -119,36 +85,25 @@ export default function MyAccount() {
               type="email"
               id="email"
               name="email"
-              value={editedUser.email}
-              onChange={(e) =>
-                setEditedUser({
-                  ...editedUser,
-                  email: e.target.value,
-                })
-              }
+              value={user?.email}
+              disabled
               className="w-full border border-gray-400 px-2 py-2 focus:outline-none focus:border-gray-600"
             />
           </div>
-
-          {/* Tombol Save */}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className=" w-fit text-white py-2 px-4 rounded-sm flex items-center bg-black hover:bg-gray-700"
-            >
-              Save Changes
-            </button>
-          </div>
-        </form>
+        </div>
 
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">My Orders</h2>
-          <div className="flex flex-col gap-4">
-            <div>
-              <h1 className="font-semibold text-orange-400 mb-3">Processed</h1>
+          {orders?.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              {filterOrders("Processed").length != 0 && (
+                <h1 className="font-semibold text-orange-400 mb-3">
+                  Processed
+                </h1>
+              )}
               <table className="w-full">
                 <div className="flex flex-col gap-3">
-                  {filterOrders("Processed").length != 0 ? (
+                  {filterOrders("Processed").length != 0 &&
                     filterOrders("Processed")?.map((o) => (
                       <tr
                         key={o.id}
@@ -168,92 +123,89 @@ export default function MyAccount() {
                         <td className="text-center">{o.total_product}</td>
                         <td className="text-center">{o.status}</td>
                       </tr>
-                    ))
-                  ) : (
-                    <div className="py-1 mb-4">
-                      <h1 className="text-center font-bold text-xl">
-                        Tidak ada pesanan yang sedang dalam proses
-                      </h1>
-                    </div>
-                  )}
+                    ))}
                 </div>
               </table>
+
+              <div>
+                {filterOrders("Shipped").length != 0 && (
+                  <h1 className="font-semibold text-green-400 mb-3">Shipped</h1>
+                )}
+                <table className="w-full">
+                  <div className="flex flex-col gap-3">
+                    {filterOrders("Shipped").length != 0 &&
+                      filterOrders("Shipped")?.map((o) => (
+                        <tr
+                          key={o.id}
+                          className="border border-gray-300 py-2 px-4 flex justify-between items-center"
+                        >
+                          <td className="text-center">
+                            <img src={o.image_1} alt="" className="w-10" />
+                          </td>
+                          <td className="text-center">{o.name_product}</td>
+                          <td className="text-center">
+                            Rp
+                            {(
+                              parseInt(o.price) * parseInt(o.total_product)
+                            ).toLocaleString("id-ID")}
+                          </td>
+                          <td className="text-center">{o.name_size}</td>
+                          <td className="text-center">{o.total_product}</td>
+                          <td className="text-center">{o.status}</td>
+                        </tr>
+                      ))}
+                  </div>
+                </table>
+              </div>
+              <div>
+                {filterOrders("Finished").length != 0 && (
+                  <h1 className="font-semibold text-blue-400 mb-3">Finished</h1>
+                )}
+                <table className="w-full">
+                  <div className="flex flex-col gap-3">
+                    {filterOrders("Finished").length != 0 &&
+                      filterOrders("Finished")?.map((o) => (
+                        <tr
+                          key={o.id}
+                          className="border border-gray-300 py-2 px-4 flex justify-between items-center"
+                        >
+                          <td className="text-center">
+                            <img src={o.image_1} alt="" className="w-10" />
+                          </td>
+                          <td className="text-center">{o.name_product}</td>
+                          <td className="text-center">
+                            {" "}
+                            Rp
+                            {(
+                              parseInt(o.price) * parseInt(o.total_product)
+                            ).toLocaleString("id-ID")}
+                          </td>
+                          <td className="text-center">{o.name_size}</td>
+                          <td className="text-center">{o.total_product}</td>
+                          <td className="text-center">{o.status}</td>
+                        </tr>
+                      ))}
+                  </div>
+                </table>
+              </div>
             </div>
-            <div>
-              <h1 className="font-semibold text-green-400 mb-3">Shipped</h1>
-              <table className="w-full">
-                <div className="flex flex-col gap-3">
-                  {filterOrders("Shipped").length != 0 ? (
-                    filterOrders("Shipped")?.map((o) => (
-                      <tr
-                        key={o.id}
-                        className="border border-gray-300 py-2 px-4 flex justify-between items-center"
-                      >
-                        <td className="text-center">
-                          <img src={o.image_1} alt="" className="w-10" />
-                        </td>
-                        <td className="text-center">{o.name_product}</td>
-                        <td className="text-center">
-                          Rp
-                          {(
-                            parseInt(o.price) * parseInt(o.total_product)
-                          ).toLocaleString("id-ID")}
-                        </td>
-                        <td className="text-center">{o.name_size}</td>
-                        <td className="text-center">{o.total_product}</td>
-                        <td className="text-center">{o.status}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <div className="py-1 mb-4">
-                      <h1 className="text-center font-bold text-xl">
-                        Tidak ada pesanan yang sedang dalam pengiriman
-                      </h1>
-                    </div>
-                  )}
-                </div>
-              </table>
+          ) : (
+            <div className="flex flex-col items-center py-5 gap-5">
+              <h1 className="text-center font-bold text-xl">
+                Tidak ada pesanan yang sedang dalam proses, dikirim atau sudah
+                selesai.
+              </h1>
+              <Link
+                to="/shop"
+                className="bg-black w-1/4 text-center text-white hover:bg-white hover:text-black py-3 px-7 outline"
+              >
+                RETURN TO SHOP
+              </Link>
             </div>
-            <div>
-              <h1 className="font-semibold text-blue-400 mb-3">Finished</h1>
-              <table className="w-full">
-                <div className="flex flex-col gap-3">
-                  {filterOrders("Finished").length != 0 ? (
-                    filterOrders("Finished")?.map((o) => (
-                      <tr
-                        key={o.id}
-                        className="border border-gray-300 py-2 px-4 flex justify-between items-center"
-                      >
-                        <td className="text-center">
-                          <img src={o.image_1} alt="" className="w-10" />
-                        </td>
-                        <td className="text-center">{o.name_product}</td>
-                        <td className="text-center">
-                          {" "}
-                          Rp
-                          {(
-                            parseInt(o.price) * parseInt(o.total_product)
-                          ).toLocaleString("id-ID")}
-                        </td>
-                        <td className="text-center">{o.name_size}</td>
-                        <td className="text-center">{o.total_product}</td>
-                        <td className="text-center">{o.status}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <div className="py-1 mb-4">
-                      <h1 className="text-center font-bold text-xl">
-                        Tidak ada pesanan yang sudah selesai
-                      </h1>
-                    </div>
-                  )}
-                </div>
-              </table>
-            </div>
-          </div>
+          )}
         </div>
         <div className="w-full flex mt-5 justify-end gap-3">
-          <button className="w-1/3 bg-black text-white py-3">
+          <button className="w-1/3 bg-black text-white py-3 hover:bg-white hover:text-black outline">
             Delete Account
           </button>
           <button
@@ -261,16 +213,16 @@ export default function MyAccount() {
               if (confirm("Apakah yakin anda akan logout")) {
                 api.get("/auth/logout").then((res) => {
                   alert(res.msg);
-                  window.location.reload();
                   setUser({});
                   localStorage.removeItem("token");
                   localStorage.removeItem("role");
                   localStorage.removeItem("id");
+                  window.location.reload();
                   navigate("/login");
                 });
               }
             }}
-            className="w-1/3 bg-black text-white py-3"
+            className="w-1/3 bg-black text-white py-3 hover:bg-white hover:text-black outline"
           >
             Logout
           </button>
